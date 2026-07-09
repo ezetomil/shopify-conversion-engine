@@ -1,0 +1,126 @@
+/**
+ * DCE Design Tokens — see docs/02-design-system.md.
+ * Two-tier system: primitive tokens (raw scales) are never used directly in
+ * components. Components consume semantic tokens (the aliases below each
+ * primitive block). Re-theming the whole framework means editing this file
+ * (or the settings-driven overrides in layout/theme.liquid), never a component.
+ */
+@layer tokens {
+  :root {
+    /* ---- Color: neutral primitive scale ---- */
+    --dce-gray-0: #ffffff;
+    --dce-gray-25: #fcfcfd;
+    --dce-gray-50: #f8f9fa;
+    --dce-gray-100: #f1f2f4;
+    --dce-gray-200: #e4e6e9;
+    --dce-gray-300: #d0d3d8;
+    --dce-gray-400: #a8adb5;
+    --dce-gray-500: #7c828c;
+    --dce-gray-600: #5c6270;
+    --dce-gray-700: #3f4451;
+    --dce-gray-800: #262a33;
+    --dce-gray-900: #14161a;
+    --dce-gray-950: #0a0b0d;
+
+    /* ---- Color: accent primitive scale ----
+       Base value is overridden at runtime by settings.dce_accent_color
+       (see layout/theme.liquid) — this is the fallback when unset. */
+    --dce-accent-50: #eef0ff;
+    --dce-accent-100: #e0e3ff;
+    --dce-accent-300: #b3b8ff;
+    --dce-accent-500: #5b5bf6;
+    --dce-accent-600: #4646d6;
+    --dce-accent-700: #3535a8;
+
+    /* ---- Color: semantic ---- */
+    --dce-color-bg: var(--dce-gray-0);
+    --dce-color-bg-subtle: var(--dce-gray-50);
+    --dce-color-bg-inverse: var(--dce-gray-950);
+    --dce-color-border: var(--dce-gray-200);
+    --dce-color-border-strong: var(--dce-gray-300);
+    --dce-color-text: var(--dce-gray-900);
+    --dce-color-text-muted: var(--dce-gray-600);
+    --dce-color-text-inverse: var(--dce-gray-0);
+    --dce-color-accent: var(--dce-accent-500);
+    --dce-color-accent-hover: var(--dce-accent-600);
+    --dce-color-accent-subtle: var(--dce-accent-50);
+    --dce-color-on-accent: var(--dce-gray-0);
+    --dce-color-success: #16a34a;
+    --dce-color-warning: #d97706;
+    --dce-color-error: #dc2626;
+
+    /* ---- Typography ---- */
+    --dce-font-sans: 'dce_sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --dce-font-serif: 'dce_serif', Georgia, 'Times New Roman', serif;
+
+    --dce-weight-regular: 400;
+    --dce-weight-medium: 500;
+    --dce-weight-semibold: 600;
+    --dce-weight-bold: 700;
+
+    --dce-text-xs: clamp(0.75rem, 0.72rem + 0.1vw, 0.8125rem);
+    --dce-text-sm: clamp(0.875rem, 0.84rem + 0.15vw, 0.9375rem);
+    --dce-text-base: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+    --dce-text-md: clamp(1.125rem, 1.06rem + 0.3vw, 1.25rem);
+    --dce-text-lg: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+    --dce-text-xl: clamp(1.5rem, 1.3rem + 0.9vw, 1.875rem);
+    --dce-text-2xl: clamp(1.875rem, 1.55rem + 1.4vw, 2.375rem);
+    --dce-text-3xl: clamp(2.25rem, 1.8rem + 2vw, 3rem);
+    --dce-text-4xl: clamp(2.75rem, 2.1rem + 2.8vw, 3.75rem);
+    --dce-text-5xl: clamp(3.25rem, 2.3rem + 4vw, 4.75rem);
+    --dce-text-6xl: clamp(3.75rem, 2.5rem + 5.5vw, 6rem);
+
+    --dce-leading-tight: 1.1;
+    --dce-leading-snug: 1.25;
+    --dce-leading-normal: 1.5;
+    --dce-leading-relaxed: 1.65;
+
+    --dce-tracking-tight: -0.02em;
+    --dce-tracking-normal: 0em;
+
+    /* ---- Spacing (4px base unit) ---- */
+    --dce-space-1: 0.25rem;
+    --dce-space-2: 0.5rem;
+    --dce-space-3: 0.75rem;
+    --dce-space-4: 1rem;
+    --dce-space-5: 1.25rem;
+    --dce-space-6: 1.5rem;
+    --dce-space-8: 2rem;
+    --dce-space-10: 2.5rem;
+    --dce-space-12: 3rem;
+    --dce-space-16: 4rem;
+    --dce-space-20: 5rem;
+    --dce-space-24: 6rem;
+    --dce-space-32: 8rem;
+
+    --dce-section-padding-y: clamp(4rem, 8vw, 8rem);
+
+    /* ---- Grid & container ---- */
+    --dce-container-max: 1200px;
+    --dce-container-max-wide: 1440px;
+    --dce-container-padding-x: clamp(1.25rem, 4vw, 3rem);
+    --dce-grid-gap: var(--dce-space-6);
+
+    /* ---- Radii ---- */
+    --dce-radius-sm: 6px;
+    --dce-radius-md: 10px;
+    --dce-radius-lg: 16px;
+    --dce-radius-xl: 24px;
+    --dce-radius-full: 999px;
+
+    /* ---- Shadows ---- */
+    --dce-shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.05);
+    --dce-shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.08), 0 1px 2px rgba(16, 24, 40, 0.04);
+    --dce-shadow-md: 0 4px 8px rgba(16, 24, 40, 0.08), 0 2px 4px rgba(16, 24, 40, 0.04);
+    --dce-shadow-lg: 0 12px 24px rgba(16, 24, 40, 0.1), 0 4px 8px rgba(16, 24, 40, 0.04);
+    --dce-shadow-xl: 0 24px 48px rgba(16, 24, 40, 0.12);
+
+    /* ---- Motion ---- */
+    --dce-duration-fast: 150ms;
+    --dce-duration-base: 250ms;
+    --dce-duration-slow: 400ms;
+    --dce-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --dce-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --dce-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}

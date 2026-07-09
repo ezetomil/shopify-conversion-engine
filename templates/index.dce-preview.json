@@ -1,0 +1,34 @@
+{
+  "sections": {
+    "hero": {
+      "type": "dce-hero-v1",
+      "settings": {
+        "badge_text": "+1.200 alumnos ya lo hicieron",
+        "eyebrow": "Digital Conversion Engine",
+        "heading": "El framework para vender productos digitales en Shopify",
+        "subheading": "Componentes reutilizables, contenido separado del diseño y foco total en Core Web Vitals — construido para escalar a cientos de productos sin repetir una sola línea de código.",
+        "cta_primary_label": "Empezar ahora",
+        "cta_primary_url": "#",
+        "cta_secondary_label": "Ver cómo funciona",
+        "cta_secondary_url": "#",
+        "height": "auto"
+      },
+      "blocks": {
+        "trust-1": {
+          "type": "trust_badge",
+          "settings": {
+            "label": "Shopify Partners"
+          }
+        },
+        "trust-2": {
+          "type": "trust_badge",
+          "settings": {
+            "label": "Hecho con Dawn"
+          }
+        }
+      },
+      "block_order": ["trust-1", "trust-2"]
+    }
+  },
+  "order": ["hero"]
+}

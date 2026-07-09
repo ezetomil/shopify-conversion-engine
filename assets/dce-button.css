@@ -1,0 +1,85 @@
+/**
+ * DCE Button primitive. Loaded conditionally by any section that renders
+ * snippets/dce-button.liquid — see docs/03-css-architecture.md.
+ */
+@layer components {
+  .dce-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--dce-space-2);
+    font-family: var(--dce-font-sans);
+    font-weight: var(--dce-weight-semibold);
+    text-align: center;
+    white-space: nowrap;
+    border-radius: var(--dce-radius-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition:
+      background-color var(--dce-duration-fast) var(--dce-ease-standard),
+      border-color var(--dce-duration-fast) var(--dce-ease-standard),
+      color var(--dce-duration-fast) var(--dce-ease-standard),
+      transform var(--dce-duration-fast) var(--dce-ease-standard);
+  }
+
+  .dce-button:active {
+    transform: translateY(1px);
+  }
+
+  /* Sizes */
+  .dce-button--sm {
+    font-size: var(--dce-text-sm);
+    padding: var(--dce-space-2) var(--dce-space-4);
+  }
+
+  .dce-button--md {
+    font-size: var(--dce-text-base);
+    padding: var(--dce-space-3) var(--dce-space-5);
+  }
+
+  .dce-button--lg {
+    font-size: var(--dce-text-md);
+    padding: var(--dce-space-4) var(--dce-space-8);
+  }
+
+  /* Variants */
+  .dce-button--primary {
+    background-color: var(--dce-color-accent);
+    color: var(--dce-color-on-accent);
+  }
+
+  .dce-button--primary:hover {
+    background-color: var(--dce-color-accent-hover);
+  }
+
+  .dce-button--secondary {
+    background-color: var(--dce-color-bg);
+    color: var(--dce-color-text);
+    border-color: var(--dce-color-border-strong);
+  }
+
+  .dce-button--secondary:hover {
+    background-color: var(--dce-color-bg-subtle);
+  }
+
+  .dce-button--ghost {
+    background-color: transparent;
+    color: var(--dce-color-text);
+  }
+
+  .dce-button--ghost:hover {
+    background-color: var(--dce-color-bg-subtle);
+  }
+
+  .dce-button--link {
+    background-color: transparent;
+    color: var(--dce-color-accent);
+    padding-inline: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .dce-button--link:hover {
+    color: var(--dce-color-accent-hover);
+  }
+}

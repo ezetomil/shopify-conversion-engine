@@ -102,6 +102,22 @@
     ]
   },
   {
+    "name": "Digital Conversion Engine",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Design system"
+      },
+      {
+        "type": "color",
+        "id": "dce_accent_color",
+        "label": "Color de acento",
+        "info": "Color principal del framework DCE: CTAs, estados activos y acentos. No usar para decorar libremente — ver docs/02-design-system.md.",
+        "default": "#5B5BF6"
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.typography.name",
     "settings": [
       {

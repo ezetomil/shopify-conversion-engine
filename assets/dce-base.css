@@ -1,0 +1,103 @@
+/* DCE Base — cascade layer order, reset, element defaults. See docs/03-css-architecture.md. */
+@layer tokens, reset, base, layout, utilities, components, overrides;
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  figure,
+  blockquote,
+  dl,
+  dd {
+    margin: 0;
+  }
+
+  ul[class],
+  ol[class] {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  img,
+  picture,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@layer base {
+  html {
+    font-family: var(--dce-font-sans);
+  }
+
+  body {
+    font-size: var(--dce-text-base);
+    line-height: var(--dce-leading-normal);
+    color: var(--dce-color-text);
+    background-color: var(--dce-color-bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: var(--dce-weight-semibold);
+    line-height: var(--dce-leading-tight);
+    letter-spacing: var(--dce-tracking-tight);
+  }
+
+  /* Accessibility, not optional: disables non-essential motion for users who request it. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

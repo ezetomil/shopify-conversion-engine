@@ -1,0 +1,30 @@
+{%- doc -%}
+  Renders a DCE button primitive. Shared across every component that needs a
+  call to action — see docs/02-design-system.md.
+
+  @param {string} label - Visible button text.
+  @param {string} url - Link destination.
+  @param {string} [variant] - 'primary' | 'secondary' | 'ghost' | 'link' (default: 'primary').
+  @param {string} [size] - 'sm' | 'md' | 'lg' (default: 'md').
+  @param {boolean} [new_tab] - Opens the link in a new tab (default: false).
+
+  @example
+  {% render 'dce-button', label: section.settings.cta_label, url: section.settings.cta_url, variant: 'primary', size: 'lg' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign dce_button_variant = variant | default: 'primary'
+  assign dce_button_size = size | default: 'md'
+-%}
+{%- if label != blank and url != blank -%}
+  <a
+    href="{{ url }}"
+    class="dce-button dce-button--{{ dce_button_variant }} dce-button--{{ dce_button_size }}"
+    {%- if new_tab %}
+      target="_blank"
+      rel="noopener"
+    {%- endif %}
+  >
+    {{ label }}
+  </a>
+{%- endif -%}

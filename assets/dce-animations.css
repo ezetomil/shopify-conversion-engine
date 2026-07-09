@@ -1,0 +1,19 @@
+/**
+ * DCE Animations — scroll-reveal primitive used across components via the
+ * `data-dce-animate` attribute (activated by dce-core.js). Respects
+ * prefers-reduced-motion globally (see dce-base.css).
+ */
+@layer components {
+  [data-dce-animate] {
+    opacity: 0;
+    transform: translateY(var(--dce-space-4));
+    transition:
+      opacity var(--dce-duration-slow) var(--dce-ease-out),
+      transform var(--dce-duration-slow) var(--dce-ease-out);
+  }
+
+  [data-dce-animate].dce-is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,112 @@
+/**
+ * DCE Hero v1 (centered). Isolated component — see docs/00-principles.md, point 4.
+ * Never reference another component's classes from here, and never let this
+ * file be referenced by another component.
+ */
+@layer components {
+  .dce-hero-v1__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 46rem;
+  }
+
+  .dce-hero-v1--viewport {
+    display: flex;
+    align-items: center;
+    min-height: 100svh;
+  }
+
+  .dce-hero-v1--viewport .dce-hero-v1__inner {
+    margin-inline: auto;
+  }
+
+  .dce-hero-v1__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--dce-space-1) var(--dce-space-4);
+    margin-bottom: var(--dce-space-4);
+    border-radius: var(--dce-radius-full);
+    background-color: var(--dce-color-accent-subtle);
+    color: var(--dce-color-accent);
+    font-size: var(--dce-text-xs);
+    font-weight: var(--dce-weight-semibold);
+  }
+
+  .dce-hero-v1__eyebrow {
+    margin: 0 0 var(--dce-space-3);
+    color: var(--dce-color-text-muted);
+    font-size: var(--dce-text-sm);
+    font-weight: var(--dce-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .dce-hero-v1__heading {
+    margin: 0;
+    font-size: var(--dce-text-5xl);
+    font-weight: var(--dce-weight-bold);
+    letter-spacing: var(--dce-tracking-tight);
+    color: var(--dce-color-text);
+  }
+
+  .dce-hero-v1__subheading {
+    margin: var(--dce-space-5) 0 0;
+    color: var(--dce-color-text-muted);
+    font-size: var(--dce-text-lg);
+    line-height: var(--dce-leading-relaxed);
+    max-width: 38rem;
+  }
+
+  .dce-hero-v1__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--dce-space-4);
+    margin-top: var(--dce-space-8);
+  }
+
+  .dce-hero-v1__visual {
+    width: 100%;
+    margin-top: var(--dce-space-12);
+  }
+
+  .dce-hero-v1__visual img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--dce-radius-lg);
+    box-shadow: var(--dce-shadow-lg);
+  }
+
+  .dce-hero-v1__trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--dce-space-6);
+    margin-top: var(--dce-space-12);
+    padding: 0;
+  }
+
+  .dce-hero-v1__trust-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--dce-space-2);
+    color: var(--dce-color-text-muted);
+    font-size: var(--dce-text-sm);
+    opacity: 0.8;
+  }
+
+  .dce-hero-v1__trust-badge img {
+    max-height: 1.5rem;
+    width: auto;
+  }
+
+  @media (min-width: 768px) {
+    .dce-hero-v1__heading {
+      font-size: var(--dce-text-6xl);
+    }
+  }
+}

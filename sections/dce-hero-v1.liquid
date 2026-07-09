@@ -1,0 +1,211 @@
+{%- comment -%}
+  DCE Hero — variant 1 (centered).
+
+  First implementation of the Hero component family. Fixes the content
+  contract (settings/block ids) that every future Hero variant (v2, v3...)
+  must also implement — see docs/00-principles.md, point 2, and
+  docs/05-components-catalog.md.
+
+  This section owns no design decisions in its content: every visible
+  string, image and link comes from section settings/blocks, so a product's
+  templates/product.{handle}.json is the only file that changes to produce
+  a different Hero — never this file. See docs/06-content-engine.md.
+{%- endcomment -%}
+
+{{ 'dce-hero-v1.css' | asset_url | stylesheet_tag }}
+{{ 'dce-button.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign dce_has_actions = false
+  if section.settings.cta_primary_label != blank or section.settings.cta_secondary_label != blank
+    assign dce_has_actions = true
+  endif
+
+  assign dce_trust_badges = section.blocks | where: 'type', 'trust_badge'
+-%}
+
+<section
+  class="dce-hero-v1 dce-section{% if section.settings.height == 'viewport' %} dce-hero-v1--viewport{% endif %}"
+  {% if section.settings.background_color != blank %}
+    style="background-color: {{ section.settings.background_color }};"
+  {% endif %}
+>
+  <div class="dce-container dce-hero-v1__inner">
+    {%- if section.settings.badge_text != blank -%}
+      <span class="dce-hero-v1__badge">{{ section.settings.badge_text }}</span>
+    {%- endif -%}
+
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="dce-hero-v1__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    <h1 class="dce-hero-v1__heading">{{ section.settings.heading }}</h1>
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="dce-hero-v1__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    {%- if dce_has_actions -%}
+      <div class="dce-hero-v1__actions">
+        {%- render 'dce-button',
+          label: section.settings.cta_primary_label,
+          url: section.settings.cta_primary_url,
+          variant: 'primary',
+          size: 'lg'
+        -%}
+        {%- render 'dce-button',
+          label: section.settings.cta_secondary_label,
+          url: section.settings.cta_secondary_url,
+          variant: 'ghost',
+          size: 'lg'
+        -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.image != blank -%}
+      <div class="dce-hero-v1__visual">
+        {{
+          section.settings.image
+          | image_url: width: 1920
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '640, 960, 1280, 1600, 1920',
+            sizes: '(min-width: 1024px) 960px, 100vw',
+            alt: section.settings.image.alt | default: section.settings.heading
+        }}
+      </div>
+    {%- endif -%}
+
+    {%- if dce_trust_badges.size > 0 -%}
+      <ul class="dce-hero-v1__trust-badges" role="list" data-dce-animate>
+        {%- for block in dce_trust_badges -%}
+          <li class="dce-hero-v1__trust-badge" {{ block.shopify_attributes }}>
+            {%- if block.settings.logo != blank -%}
+              {{
+                block.settings.logo
+                | image_url: width: 240
+                | image_tag: loading: 'lazy', widths: '120, 180, 240', alt: block.settings.label
+              }}
+            {%- endif -%}
+            {%- if block.settings.label != blank -%}
+              <span>{{ block.settings.label }}</span>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DCE — Hero v1",
+  "tag": "section",
+  "class": "dce-section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge de prueba social",
+      "info": "Opcional. Ej: \"+1.200 alumnos\". Se muestra arriba del eyebrow."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "info": "Texto corto arriba del título."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Un título que comunique tu promesa en una frase"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "Una frase que amplíe la promesa del título y sume contexto."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen"
+    },
+    {
+      "type": "header",
+      "content": "Llamado a la acción principal"
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_label",
+      "label": "Texto del botón",
+      "default": "Empezar ahora"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_url",
+      "label": "Link del botón"
+    },
+    {
+      "type": "header",
+      "content": "Llamado a la acción secundario"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_label",
+      "label": "Texto del botón"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_url",
+      "label": "Link del botón"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Altura",
+      "options": [
+        { "value": "auto", "label": "Automática (según el contenido)" },
+        { "value": "viewport", "label": "Pantalla completa" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "info": "Opcional. Si se deja vacío, usa el fondo por defecto del tema."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Logo de confianza",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DCE — Hero v1",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}
