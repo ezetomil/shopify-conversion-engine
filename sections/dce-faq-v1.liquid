@@ -30,7 +30,12 @@
     {%- if dce_faqs.size > 0 -%}
       <div class="dce-faq-v1__list">
         {%- for block in dce_faqs -%}
-          <details class="dce-faq-v1__item" {{ block.shopify_attributes }}>
+          <details
+            class="dce-faq-v1__item"
+            data-dce-animate
+            style="transition-delay: {{ forloop.index0 | times: 60 }}ms"
+            {{ block.shopify_attributes }}
+          >
             <summary class="dce-faq-v1__question">
               <span>{{ block.settings.question }}</span>
               <span class="dce-faq-v1__caret" aria-hidden="true">{%- render 'dce-icon', name: 'caret' -%}</span>

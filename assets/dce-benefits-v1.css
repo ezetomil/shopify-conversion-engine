@@ -19,6 +19,13 @@
     background-color: var(--dce-color-bg);
     border: 1px solid var(--dce-color-border);
     border-radius: var(--dce-radius-lg);
+    transition: transform var(--dce-duration-base) var(--dce-ease-out), box-shadow var(--dce-duration-base) var(--dce-ease-out), border-color var(--dce-duration-base) var(--dce-ease-out);
+  }
+
+  .dce-benefits-v1__item:hover {
+    transform: translateX(4px);
+    box-shadow: var(--dce-shadow-md);
+    border-color: var(--dce-color-accent);
   }
 
   .dce-benefits-v1__number {

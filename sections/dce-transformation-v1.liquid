@@ -13,7 +13,7 @@
 -%}
 
 <section
-  class="dce-transformation-v1 dce-section"
+  class="dce-transformation-v1 dce-section{% if section.settings.dark_mode %} dce-transformation-v1--dark{% endif %}"
   {% if section.settings.background_color != blank %}
     style="background-color: {{ section.settings.background_color }};"
   {% endif %}
@@ -31,7 +31,11 @@
           <h3 class="dce-transformation-v1__column-title">{{ section.settings.before_label | default: 'Antes' }}</h3>
           <ul role="list">
             {%- for block in dce_rows -%}
-              <li {{ block.shopify_attributes }}>
+              <li
+                data-dce-animate
+                style="transition-delay: {{ forloop.index0 | times: 80 }}ms"
+                {{ block.shopify_attributes }}
+              >
                 <span class="dce-transformation-v1__row-icon">{%- render 'dce-icon', name: 'close' -%}</span>
                 <span>{{ block.settings.before_text }}</span>
               </li>
@@ -42,7 +46,11 @@
           <h3 class="dce-transformation-v1__column-title">{{ section.settings.after_label | default: 'Después' }}</h3>
           <ul role="list">
             {%- for block in dce_rows -%}
-              <li {{ block.shopify_attributes }}>
+              <li
+                data-dce-animate
+                style="transition-delay: {{ forloop.index0 | times: 80 | plus: 120 }}ms"
+                {{ block.shopify_attributes }}
+              >
                 <span class="dce-transformation-v1__row-icon">{%- render 'dce-icon', name: 'check_mark' -%}</span>
                 <span>{{ block.settings.after_text }}</span>
               </li>
@@ -89,9 +97,17 @@
       "default": "Después"
     },
     {
+      "type": "checkbox",
+      "id": "dark_mode",
+      "label": "Fondo oscuro",
+      "info": "Genera contraste dramático con las secciones vecinas — recomendado.",
+      "default": true
+    },
+    {
       "type": "color",
       "id": "background_color",
-      "label": "Color de fondo"
+      "label": "Color de fondo",
+      "info": "Sobrescribe el fondo oscuro por defecto si se completa."
     }
   ],
   "blocks": [

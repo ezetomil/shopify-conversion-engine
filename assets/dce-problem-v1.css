@@ -18,6 +18,16 @@
     background-color: var(--dce-color-bg);
     border: 1px solid var(--dce-color-border);
     border-radius: var(--dce-radius-lg);
+    transition:
+      transform var(--dce-duration-base) var(--dce-ease-out),
+      box-shadow var(--dce-duration-base) var(--dce-ease-out),
+      border-color var(--dce-duration-base) var(--dce-ease-out);
+  }
+
+  .dce-problem-v1__item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--dce-shadow-md);
+    border-color: var(--dce-color-border-strong);
   }
 
   .dce-problem-v1__icon {
@@ -30,6 +40,12 @@
     border-radius: var(--dce-radius-full);
     background-color: var(--dce-gray-100);
     color: var(--dce-gray-700);
+    transition: background-color var(--dce-duration-base) var(--dce-ease-out), color var(--dce-duration-base) var(--dce-ease-out);
+  }
+
+  .dce-problem-v1__item:hover .dce-problem-v1__icon {
+    background-color: var(--dce-color-accent-subtle);
+    color: var(--dce-color-accent);
   }
 
   .dce-problem-v1__text {

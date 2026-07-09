@@ -28,7 +28,12 @@
     {%- if dce_benefits.size > 0 -%}
       <ol class="dce-benefits-v1__list">
         {%- for block in dce_benefits -%}
-          <li class="dce-benefits-v1__item" data-dce-animate {{ block.shopify_attributes }}>
+          <li
+            class="dce-benefits-v1__item"
+            data-dce-animate
+            style="transition-delay: {{ forloop.index0 | times: 70 }}ms"
+            {{ block.shopify_attributes }}
+          >
             <span class="dce-benefits-v1__number">{{ forloop.index }}</span>
             <div class="dce-benefits-v1__body">
               <p class="dce-benefits-v1__title">{{ block.settings.title }}</p>

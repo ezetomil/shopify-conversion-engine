@@ -29,7 +29,12 @@
     {%- if dce_pain_points.size > 0 -%}
       <ul class="dce-problem-v1__grid" role="list">
         {%- for block in dce_pain_points -%}
-          <li class="dce-problem-v1__item" data-dce-animate {{ block.shopify_attributes }}>
+          <li
+            class="dce-problem-v1__item"
+            data-dce-animate
+            style="transition-delay: {{ forloop.index0 | times: 90 }}ms"
+            {{ block.shopify_attributes }}
+          >
             {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
               <span class="dce-problem-v1__icon">
                 {%- render 'dce-icon', name: block.settings.icon -%}

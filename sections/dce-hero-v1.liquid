@@ -22,6 +22,12 @@
   endif
 
   assign dce_trust_badges = section.blocks | where: 'type', 'trust_badge'
+
+  assign dce_heading = section.settings.heading
+  if section.settings.heading_accent != blank and section.settings.heading contains section.settings.heading_accent
+    assign dce_accent_markup = section.settings.heading_accent | prepend: '<span class="dce-hero-v1__heading-accent">' | append: '</span>'
+    assign dce_heading = section.settings.heading | replace: section.settings.heading_accent, dce_accent_markup
+  endif
 -%}
 
 <section
@@ -30,23 +36,24 @@
     style="background-color: {{ section.settings.background_color }};"
   {% endif %}
 >
+  <div class="dce-hero-v1__glow" aria-hidden="true"></div>
   <div class="dce-container dce-hero-v1__inner">
     {%- if section.settings.badge_text != blank -%}
-      <span class="dce-hero-v1__badge">{{ section.settings.badge_text }}</span>
+      <span class="dce-hero-v1__badge" data-dce-animate>{{ section.settings.badge_text }}</span>
     {%- endif -%}
 
     {%- if section.settings.eyebrow != blank -%}
-      <p class="dce-hero-v1__eyebrow">{{ section.settings.eyebrow }}</p>
+      <p class="dce-hero-v1__eyebrow" data-dce-animate style="transition-delay: 60ms">{{ section.settings.eyebrow }}</p>
     {%- endif -%}
 
-    <h1 class="dce-hero-v1__heading">{{ section.settings.heading }}</h1>
+    <h1 class="dce-hero-v1__heading" data-dce-animate style="transition-delay: 120ms">{{ dce_heading }}</h1>
 
     {%- if section.settings.subheading != blank -%}
-      <p class="dce-hero-v1__subheading">{{ section.settings.subheading }}</p>
+      <p class="dce-hero-v1__subheading" data-dce-animate style="transition-delay: 180ms">{{ section.settings.subheading }}</p>
     {%- endif -%}
 
     {%- if dce_has_actions -%}
-      <div class="dce-hero-v1__actions">
+      <div class="dce-hero-v1__actions" data-dce-animate style="transition-delay: 240ms">
         {%- render 'dce-button',
           label: section.settings.cta_primary_label,
           url: section.settings.cta_primary_url,
@@ -63,7 +70,7 @@
     {%- endif -%}
 
     {%- if section.settings.image != blank -%}
-      <div class="dce-hero-v1__visual">
+      <div class="dce-hero-v1__visual" data-dce-animate style="transition-delay: 300ms">
         {{
           section.settings.image
           | image_url: width: 1920
@@ -121,6 +128,12 @@
       "id": "heading",
       "label": "Título",
       "default": "Un título que comunique tu promesa en una frase"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Palabra o frase destacada del título",
+      "info": "Opcional. Debe ser un fragmento exacto del título — se resalta con un degradé de color."
     },
     {
       "type": "textarea",

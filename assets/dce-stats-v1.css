@@ -1,0 +1,33 @@
+/**
+ * DCE Stats v1 (impact numbers strip). Isolated component.
+ */
+@layer components {
+  .dce-stats-v1--compact {
+    padding-block: var(--dce-space-12);
+  }
+
+  .dce-stats-v1__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: var(--dce-space-8);
+    text-align: center;
+  }
+
+  .dce-stats-v1__value {
+    display: block;
+    font-size: var(--dce-text-5xl);
+    font-weight: var(--dce-weight-bold);
+    letter-spacing: var(--dce-tracking-tight);
+    background: linear-gradient(135deg, var(--dce-color-text) 30%, var(--dce-color-accent) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .dce-stats-v1__label {
+    margin: var(--dce-space-2) 0 0;
+    color: var(--dce-color-text-muted);
+    font-size: var(--dce-text-sm);
+    font-weight: var(--dce-weight-medium);
+  }
+}

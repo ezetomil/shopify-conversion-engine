@@ -35,8 +35,22 @@
   }
 
   .dce-story-v1__text .dce-story-v1__closing-line {
-    margin-top: var(--dce-space-6);
+    position: relative;
+    margin-top: var(--dce-space-8);
+    padding-left: var(--dce-space-8);
     color: var(--dce-color-accent);
+    font-size: var(--dce-text-lg);
     font-weight: var(--dce-weight-semibold);
+  }
+
+  .dce-story-v1__text .dce-story-v1__closing-line::before {
+    content: '\201C';
+    position: absolute;
+    left: -0.25rem;
+    top: -1.25rem;
+    font-size: 4rem;
+    font-weight: var(--dce-weight-bold);
+    color: var(--dce-color-accent-subtle);
+    line-height: 1;
   }
 }

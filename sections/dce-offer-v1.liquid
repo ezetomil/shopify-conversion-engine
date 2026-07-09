@@ -33,6 +33,13 @@
     -%}
 
     {%- if product != blank -%}
+      {%- comment -%}
+        No data-dce-animate here on purpose: this box holds the buy button,
+        the single highest-stakes element on the page. If the reveal script
+        ever failed to run, an opacity:0 buy button would silently kill
+        every conversion from that visit — not a risk worth taking for a
+        cosmetic entrance effect.
+      {%- endcomment -%}
       <product-info
         id="DceOfferProduct-{{ section.id }}"
         class="dce-offer-v1__box"

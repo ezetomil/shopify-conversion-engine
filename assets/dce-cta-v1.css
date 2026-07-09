@@ -2,13 +2,38 @@
  * DCE CTA v1 (final close). Isolated component.
  */
 @layer components {
+  .dce-cta-v1 {
+    position: relative;
+    overflow: hidden;
+  }
+
   .dce-cta-v1__box {
+    position: relative;
+    z-index: 1;
     max-width: 40rem;
     margin-inline: auto;
     padding: var(--dce-space-16) var(--dce-space-8);
     text-align: center;
     background-color: var(--dce-color-bg-inverse);
     border-radius: var(--dce-radius-xl);
+    overflow: hidden;
+  }
+
+  .dce-cta-v1__box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(32rem 20rem at 50% 0%, var(--dce-accent-700) 0%, transparent 70%);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .dce-cta-v1__heading,
+  .dce-cta-v1__subheading,
+  .dce-cta-v1__action,
+  .dce-cta-v1__reassurance {
+    position: relative;
+    z-index: 1;
   }
 
   .dce-cta-v1__heading {

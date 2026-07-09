@@ -2,9 +2,16 @@
  * DCE Animations — scroll-reveal primitive used across components via the
  * `data-dce-animate` attribute (activated by dce-core.js). Respects
  * prefers-reduced-motion globally (see dce-base.css).
+ *
+ * Progressive enhancement, deliberately: the opacity:0 starting state only
+ * applies once html.dce-js is present (set synchronously in theme.liquid
+ * before first paint). If JS never runs — blocked, failed, disabled —
+ * every animated element stays fully visible instead of silently hiding
+ * content. A missed entrance animation is a cosmetic loss; content that
+ * never appears is a lost sale.
  */
 @layer components {
-  [data-dce-animate] {
+  html.dce-js [data-dce-animate] {
     opacity: 0;
     transform: translateY(var(--dce-space-4));
     transition:

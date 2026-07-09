@@ -5,6 +5,7 @@
       "settings": {
         "badge_text": "Ebook Digital",
         "heading": "De la Impotencia a los Ingresos",
+        "heading_accent": "los Ingresos",
         "subheading": "Cómo pasar de sentirte atrapado a construir ingresos digitales y recuperar el control de tu vida — sin experiencia previa.",
         "image": "shopify://shop_images/ChatGPTImage6jun2026_02_21_10p.m._a8be85eb-3e42-482c-9e5b-423be4ad05f5.png",
         "cta_primary_label": "Comprar ahora",
@@ -18,6 +19,15 @@
         "t4": { "type": "trust_badge", "settings": { "label": "Plan de 30 días" } }
       },
       "block_order": ["t1", "t2", "t3", "t4"]
+    },
+    "stats": {
+      "type": "dce-stats-v1",
+      "blocks": {
+        "s1": { "type": "stat_item", "settings": { "value": "35+", "label": "Páginas de contenido real" } },
+        "s2": { "type": "stat_item", "settings": { "value": "30", "label": "Días de plan de acción" } },
+        "s3": { "type": "stat_item", "settings": { "value": "4", "label": "Habilidades clave" } }
+      },
+      "block_order": ["s1", "s2", "s3"]
     },
     "problem": {
       "type": "dce-problem-v1",
@@ -93,7 +103,8 @@
     "faq": {
       "type": "dce-faq-v1",
       "settings": {
-        "heading": "Preguntas frecuentes"
+        "heading": "Preguntas frecuentes",
+        "background_color": "#F8F9FA"
       },
       "blocks": {
         "f1": { "type": "faq_item", "settings": { "question": "¿Cómo recibo el ebook después de pagar?", "answer": "<p>Al completar el pago recibís acceso inmediato para descargar el PDF. También te llega la confirmación por email.</p>" } },
@@ -115,5 +126,5 @@
       }
     }
   },
-  "order": ["hero", "problem", "transformation", "benefits", "story", "offer", "faq", "cta"]
+  "order": ["hero", "stats", "problem", "transformation", "benefits", "story", "offer", "faq", "cta"]
 }

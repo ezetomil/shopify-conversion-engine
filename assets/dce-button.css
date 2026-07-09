@@ -19,7 +19,8 @@
       background-color var(--dce-duration-fast) var(--dce-ease-standard),
       border-color var(--dce-duration-fast) var(--dce-ease-standard),
       color var(--dce-duration-fast) var(--dce-ease-standard),
-      transform var(--dce-duration-fast) var(--dce-ease-standard);
+      transform var(--dce-duration-fast) var(--dce-ease-standard),
+      box-shadow var(--dce-duration-fast) var(--dce-ease-standard);
   }
 
   .dce-button:active {
@@ -50,6 +51,8 @@
 
   .dce-button--primary:hover {
     background-color: var(--dce-color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -8px var(--dce-accent-500);
   }
 
   .dce-button--secondary {

@@ -2,6 +2,14 @@
  * DCE Transformation v1 (antes/después columns). Isolated component.
  */
 @layer components {
+  .dce-transformation-v1--dark {
+    background-color: var(--dce-color-bg-inverse);
+    --dce-color-text: var(--dce-color-text-inverse);
+    --dce-color-text-muted: var(--dce-gray-400);
+    --dce-color-border: var(--dce-gray-800);
+    --dce-color-bg: var(--dce-gray-900);
+  }
+
   .dce-transformation-v1__columns {
     display: grid;
     grid-template-columns: 1fr;
@@ -14,6 +22,12 @@
     border-radius: var(--dce-radius-lg);
     border: 1px solid var(--dce-color-border);
     background-color: var(--dce-color-bg);
+    transition: transform var(--dce-duration-base) var(--dce-ease-out), box-shadow var(--dce-duration-base) var(--dce-ease-out);
+  }
+
+  .dce-transformation-v1__column:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--dce-shadow-lg);
   }
 
   .dce-transformation-v1__column-title {
