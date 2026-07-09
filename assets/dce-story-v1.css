@@ -1,0 +1,42 @@
+/**
+ * DCE Story v1 (narrative). Isolated component.
+ */
+@layer components {
+  .dce-story-v1 .dce-section-header {
+    margin-inline: 0;
+  }
+
+  .dce-story-v1__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--dce-space-8);
+    margin-top: var(--dce-space-8);
+    max-width: 42rem;
+  }
+
+  .dce-story-v1__image img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--dce-radius-lg);
+  }
+
+  .dce-story-v1__text {
+    color: var(--dce-color-text);
+    font-size: var(--dce-text-md);
+    line-height: var(--dce-leading-relaxed);
+  }
+
+  .dce-story-v1__text p {
+    margin: 0 0 var(--dce-space-4);
+  }
+
+  .dce-story-v1__text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .dce-story-v1__text .dce-story-v1__closing-line {
+    margin-top: var(--dce-space-6);
+    color: var(--dce-color-accent);
+    font-weight: var(--dce-weight-semibold);
+  }
+}

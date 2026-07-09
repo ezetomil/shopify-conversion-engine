@@ -1,0 +1,72 @@
+{%- comment -%}
+  DCE CTA — variant 1 (final close).
+  Funnel role: last chance to convert before the footer. Reinforces the
+  decision, not new information — the button routes back to the Offer
+  section's buy box rather than duplicating cart/checkout logic here.
+{%- endcomment -%}
+
+{{ 'dce-cta-v1.css' | asset_url | stylesheet_tag }}
+{{ 'dce-button.css' | asset_url | stylesheet_tag }}
+
+<section class="dce-cta-v1 dce-section">
+  <div class="dce-container">
+    <div class="dce-cta-v1__box">
+      <h2 class="dce-cta-v1__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="dce-cta-v1__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      {%- if section.settings.cta_label != blank and section.settings.cta_url != blank -%}
+        <div class="dce-cta-v1__action">
+          {%- render 'dce-button', label: section.settings.cta_label, url: section.settings.cta_url, variant: 'primary', size: 'lg' -%}
+        </div>
+      {%- endif -%}
+      {%- if section.settings.reassurance_text != blank -%}
+        <p class="dce-cta-v1__reassurance">{{ section.settings.reassurance_text }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DCE — CTA v1",
+  "tag": "section",
+  "class": "dce-section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "¿Seguís esperando el momento perfecto?"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "El momento perfecto no existe. Lo que existe es la decisión de empezar."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto del botón",
+      "default": "Quiero empezar ahora"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Link del botón",
+      "info": "Normalmente un ancla a la sección Oferta, ej: #dce-offer-{id de la sección}."
+    },
+    {
+      "type": "text",
+      "id": "reassurance_text",
+      "label": "Texto de confianza"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DCE — CTA v1"
+    }
+  ]
+}
+{% endschema %}

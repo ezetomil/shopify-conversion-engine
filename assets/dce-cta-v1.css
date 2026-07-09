@@ -1,0 +1,38 @@
+/**
+ * DCE CTA v1 (final close). Isolated component.
+ */
+@layer components {
+  .dce-cta-v1__box {
+    max-width: 40rem;
+    margin-inline: auto;
+    padding: var(--dce-space-16) var(--dce-space-8);
+    text-align: center;
+    background-color: var(--dce-color-bg-inverse);
+    border-radius: var(--dce-radius-xl);
+  }
+
+  .dce-cta-v1__heading {
+    margin: 0;
+    color: var(--dce-color-text-inverse);
+    font-size: var(--dce-text-3xl);
+    font-weight: var(--dce-weight-bold);
+    letter-spacing: var(--dce-tracking-tight);
+  }
+
+  .dce-cta-v1__subheading {
+    margin: var(--dce-space-4) 0 0;
+    color: var(--dce-gray-400);
+    font-size: var(--dce-text-lg);
+    line-height: var(--dce-leading-relaxed);
+  }
+
+  .dce-cta-v1__action {
+    margin-top: var(--dce-space-8);
+  }
+
+  .dce-cta-v1__reassurance {
+    margin: var(--dce-space-5) 0 0;
+    color: var(--dce-gray-500);
+    font-size: var(--dce-text-sm);
+  }
+}

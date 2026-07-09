@@ -1,0 +1,128 @@
+{%- comment -%}
+  DCE Transformation — variant 1 (antes/después columns).
+  Funnel role: makes the promised outcome concrete by contrasting the
+  reader's current state against the state after using the product.
+{%- endcomment -%}
+
+{{ 'dce-transformation-v1.css' | asset_url | stylesheet_tag }}
+{{ 'dce-section-header.css' | asset_url | stylesheet_tag }}
+{{ 'dce-icon.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign dce_rows = section.blocks | where: 'type', 'comparison_item'
+-%}
+
+<section
+  class="dce-transformation-v1 dce-section"
+  {% if section.settings.background_color != blank %}
+    style="background-color: {{ section.settings.background_color }};"
+  {% endif %}
+>
+  <div class="dce-container">
+    {%- render 'dce-section-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      subheading: section.settings.subheading
+    -%}
+
+    {%- if dce_rows.size > 0 -%}
+      <div class="dce-transformation-v1__columns">
+        <div class="dce-transformation-v1__column dce-transformation-v1__column--before">
+          <h3 class="dce-transformation-v1__column-title">{{ section.settings.before_label | default: 'Antes' }}</h3>
+          <ul role="list">
+            {%- for block in dce_rows -%}
+              <li {{ block.shopify_attributes }}>
+                <span class="dce-transformation-v1__row-icon">{%- render 'dce-icon', name: 'close' -%}</span>
+                <span>{{ block.settings.before_text }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        <div class="dce-transformation-v1__column dce-transformation-v1__column--after">
+          <h3 class="dce-transformation-v1__column-title">{{ section.settings.after_label | default: 'Después' }}</h3>
+          <ul role="list">
+            {%- for block in dce_rows -%}
+              <li {{ block.shopify_attributes }}>
+                <span class="dce-transformation-v1__row-icon">{%- render 'dce-icon', name: 'check_mark' -%}</span>
+                <span>{{ block.settings.after_text }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DCE — Transformación v1",
+  "tag": "section",
+  "class": "dce-section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "El antes y el después"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "text",
+      "id": "before_label",
+      "label": "Etiqueta columna izquierda",
+      "default": "Antes"
+    },
+    {
+      "type": "text",
+      "id": "after_label",
+      "label": "Etiqueta columna derecha",
+      "default": "Después"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comparison_item",
+      "name": "Fila antes/después",
+      "settings": [
+        {
+          "type": "text",
+          "id": "before_text",
+          "label": "Texto — antes",
+          "default": "Describí el estado actual del lector."
+        },
+        {
+          "type": "text",
+          "id": "after_text",
+          "label": "Texto — después",
+          "default": "Describí el resultado después de usar el producto."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DCE — Transformación v1",
+      "blocks": [
+        { "type": "comparison_item" },
+        { "type": "comparison_item" },
+        { "type": "comparison_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

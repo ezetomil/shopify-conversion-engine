@@ -1,0 +1,170 @@
+{%- comment -%}
+  DCE Offer — variant 1 (price box).
+  Funnel role: the conversion moment. Must remove every remaining doubt in
+  one glance (what's included, what it costs, that checkout is safe) and
+  hand off to Shopify's native purchase flow — never reimplement cart/
+  checkout logic here, only reuse Dawn's.
+
+  Only valid on product templates: reads the global `product` object.
+{%- endcomment -%}
+
+{{ 'dce-offer-v1.css' | asset_url | stylesheet_tag }}
+{{ 'dce-section-header.css' | asset_url | stylesheet_tag }}
+{{ 'dce-icon.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{%- unless product.has_only_default_variant -%}
+  {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
+  {{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
+  {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
+{%- endunless -%}
+
+{%- liquid
+  assign dce_includes = section.blocks | where: 'type', 'include_item'
+  assign dce_buy_box_block = section.blocks | where: 'type', 'buy_box' | first
+  assign product_form_id = 'dce-offer-form-' | append: section.id
+-%}
+
+<section class="dce-offer-v1 dce-section" id="dce-offer-{{ section.id }}">
+  <div class="dce-container dce-offer-v1__container">
+    {%- render 'dce-section-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      subheading: section.settings.subheading
+    -%}
+
+    {%- if product != blank -%}
+      <product-info
+        id="DceOfferProduct-{{ section.id }}"
+        class="dce-offer-v1__box"
+        data-section="{{ section.id }}"
+        data-product-id="{{ product.id }}"
+        data-update-url="false"
+      >
+        {%- if section.settings.badge_text != blank -%}
+          <span class="dce-offer-v1__badge">{{ section.settings.badge_text }}</span>
+        {%- endif -%}
+
+        {%- if dce_includes.size > 0 -%}
+          <ul class="dce-offer-v1__includes" role="list">
+            {%- for block in dce_includes -%}
+              <li {{ block.shopify_attributes }}>
+                <span class="dce-offer-v1__includes-icon">{%- render 'dce-icon', name: 'check_mark' -%}</span>
+                <span>{{ block.settings.text }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <div class="dce-offer-v1__price" id="price-{{ section.id }}" role="status">
+          {%- render 'price', product: product, use_variant: true, show_badges: true, price_class: 'price--large' -%}
+        </div>
+
+        <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
+        <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+        {%- unless product.has_only_default_variant -%}
+          {%- render 'product-variant-picker', product: product, product_form_id: product_form_id, section: section, update_url: false -%}
+        {%- endunless -%}
+
+        {%- comment -%}
+          Reuses Dawn's own buy-buttons snippet (cart form, dynamic checkout,
+          error handling) instead of reimplementing add-to-cart — see
+          docs/00-principles.md on not duplicating logic. Visual styling is
+          re-skinned to DCE tokens via a scoped override in dce-offer-v1.css,
+          the underlying form/JS is untouched.
+        {%- endcomment -%}
+        <div class="dce-offer-v1__buy-buttons">
+          {%- render 'buy-buttons',
+            block: dce_buy_box_block,
+            product: product,
+            product_form_id: product_form_id,
+            section_id: section.id,
+            show_pickup_availability: false
+          -%}
+        </div>
+
+        {%- if section.settings.reassurance_text != blank -%}
+          <p class="dce-offer-v1__reassurance">
+            <span class="dce-offer-v1__reassurance-icon">{%- render 'dce-icon', name: 'lock' -%}</span>
+            {{ section.settings.reassurance_text }}
+          </p>
+        {%- endif -%}
+      </product-info>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DCE — Oferta v1",
+  "tag": "section",
+  "class": "dce-section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Llevate el acceso hoy"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge",
+      "info": "Ej: \"Precio de lanzamiento\"."
+    },
+    {
+      "type": "text",
+      "id": "reassurance_text",
+      "label": "Texto de confianza",
+      "default": "Pago 100% seguro · Acceso inmediato al comprar"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "include_item",
+      "name": "Qué incluye",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Un ítem de lo que incluye la oferta."
+        }
+      ]
+    },
+    {
+      "type": "buy_box",
+      "name": "Botón de compra",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "label": "Mostrar botones de pago dinámico",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DCE — Oferta v1",
+      "blocks": [
+        { "type": "include_item" },
+        { "type": "include_item" },
+        { "type": "buy_box" }
+      ]
+    }
+  ]
+}
+{% endschema %}

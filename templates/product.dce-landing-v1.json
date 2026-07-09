@@ -1,0 +1,119 @@
+{
+  "sections": {
+    "hero": {
+      "type": "dce-hero-v1",
+      "settings": {
+        "badge_text": "Ebook Digital",
+        "heading": "De la Impotencia a los Ingresos",
+        "subheading": "Cómo pasar de sentirte atrapado a construir ingresos digitales y recuperar el control de tu vida — sin experiencia previa.",
+        "image": "shopify://shop_images/ChatGPTImage6jun2026_02_21_10p.m._a8be85eb-3e42-482c-9e5b-423be4ad05f5.png",
+        "cta_primary_label": "Comprar ahora",
+        "cta_primary_url": "#dce-offer-offer",
+        "height": "auto"
+      },
+      "blocks": {
+        "t1": { "type": "trust_badge", "settings": { "label": "Mentalidad" } },
+        "t2": { "type": "trust_badge", "settings": { "label": "Ventas" } },
+        "t3": { "type": "trust_badge", "settings": { "label": "Inteligencia Artificial" } },
+        "t4": { "type": "trust_badge", "settings": { "label": "Plan de 30 días" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"]
+    },
+    "problem": {
+      "type": "dce-problem-v1",
+      "settings": {
+        "eyebrow": "¿Te sentís identificado?",
+        "heading": "Esto es lo que probablemente te está pasando"
+      },
+      "blocks": {
+        "p1": { "type": "pain_point_item", "settings": { "icon": "lock", "text": "Sentís que estás atrapado en la misma rutina, sin margen para crecer." } },
+        "p2": { "type": "pain_point_item", "settings": { "icon": "stopwatch", "text": "Tenés poco tiempo libre y no querés desperdiciarlo en algo que no funciona." } },
+        "p3": { "type": "pain_point_item", "settings": { "icon": "question_mark", "text": "No sabés por dónde empezar a generar ingresos por tu cuenta." } },
+        "p4": { "type": "pain_point_item", "settings": { "icon": "price_tag", "text": "Dependés 100% de un sueldo fijo y sentís que no alcanza." } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"]
+    },
+    "transformation": {
+      "type": "dce-transformation-v1",
+      "settings": {
+        "heading": "El antes y el después",
+        "before_label": "Antes",
+        "after_label": "Después"
+      },
+      "blocks": {
+        "c1": { "type": "comparison_item", "settings": { "before_text": "Dependiendo de un sueldo fijo", "after_text": "Con un plan claro para generar ingresos propios" } },
+        "c2": { "type": "comparison_item", "settings": { "before_text": "Sin rumbo ni dirección", "after_text": "Construyendo algo propio, paso a paso" } },
+        "c3": { "type": "comparison_item", "settings": { "before_text": "Consumiendo contenido y sin aplicar nada", "after_text": "Usando IA para avanzar más rápido" } },
+        "c4": { "type": "comparison_item", "settings": { "before_text": "Sin ingresos digitales", "after_text": "Generando tus primeros ingresos digitales" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"]
+    },
+    "benefits": {
+      "type": "dce-benefits-v1",
+      "settings": {
+        "eyebrow": "Contenido del ebook",
+        "heading": "¿Qué vas a aprender?"
+      },
+      "blocks": {
+        "b1": { "type": "benefit_item", "settings": { "title": "Cómo salir del estancamiento", "text": "Entendé por qué te sentís atrapado y qué hacer para retomar el control de tu dirección hoy mismo." } },
+        "b2": { "type": "benefit_item", "settings": { "title": "Cómo encontrar una oportunidad de ingresos", "text": "No necesitás inventar nada nuevo. Aprendé a identificar lo que ya funciona y conectarlo con quien lo necesita." } },
+        "b3": { "type": "benefit_item", "settings": { "title": "Cómo conseguir tus primeras ventas", "text": "Sin miles de seguidores, sin marca perfecta. Solo las conversaciones correctas con las personas correctas." } },
+        "b4": { "type": "benefit_item", "settings": { "title": "Cómo usar la IA para avanzar 10 veces más rápido", "text": "La herramienta que más tiempo te habría ahorrado si la hubieras conocido antes." } },
+        "b5": { "type": "benefit_item", "settings": { "title": "Plan de acción de 30 días", "text": "Semana por semana, paso a paso. Sin excusas, sin parálisis. Solo movimiento real." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4", "b5"]
+    },
+    "story": {
+      "type": "dce-story-v1",
+      "settings": {
+        "eyebrow": "¿Quién escribió esto?",
+        "heading": "Una persona común, no un gurú",
+        "body": "<p>Este ebook no fue escrito por un millonario ni por un gurú. Fue escrito por una persona común que trabajó durante años en una fábrica, sintiéndose atrapada en la misma rutina sin poder crecer.</p><p>Hasta que tomé una decisión que lo cambió todo. Empecé a investigar, a aprender, a probar. La primera oportunidad que tomé me generó más de lo que ganaba en un mes de trabajo.</p><p>Hoy vivo de ingresos digitales. Este documento existe para ahorrarte años de prueba y error.</p>",
+        "closing_line": "— No vine a este mundo para hacer solamente esto. Y vos tampoco."
+      }
+    },
+    "offer": {
+      "type": "dce-offer-v1",
+      "settings": {
+        "heading": "Llevate el ebook hoy",
+        "subheading": "Acceso inmediato · Descarga digital · Pago único",
+        "badge_text": "Precio de lanzamiento",
+        "reassurance_text": "Pago 100% seguro · Acceso inmediato al comprar"
+      },
+      "blocks": {
+        "i1": { "type": "include_item", "settings": { "text": "Ebook completo en PDF (35+ páginas)" } },
+        "i2": { "type": "include_item", "settings": { "text": "Plan de acción de 30 días paso a paso" } },
+        "i3": { "type": "include_item", "settings": { "text": "Capítulo de IA aplicada a negocios digitales" } },
+        "i4": { "type": "include_item", "settings": { "text": "Las 4 habilidades que cambian tu vida" } },
+        "i5": { "type": "include_item", "settings": { "text": "Acceso de por vida al material" } },
+        "buy": { "type": "buy_box", "settings": { "show_dynamic_checkout": true } }
+      },
+      "block_order": ["i1", "i2", "i3", "i4", "i5", "buy"]
+    },
+    "faq": {
+      "type": "dce-faq-v1",
+      "settings": {
+        "heading": "Preguntas frecuentes"
+      },
+      "blocks": {
+        "f1": { "type": "faq_item", "settings": { "question": "¿Cómo recibo el ebook después de pagar?", "answer": "<p>Al completar el pago recibís acceso inmediato para descargar el PDF. También te llega la confirmación por email.</p>" } },
+        "f2": { "type": "faq_item", "settings": { "question": "¿Necesito experiencia previa?", "answer": "<p>No. El ebook está pensado para personas que están empezando desde cero, sin experiencia en negocios digitales.</p>" } },
+        "f3": { "type": "faq_item", "settings": { "question": "¿Puedo pagar en cuotas?", "answer": "<p>Sí, podés abonar con tarjeta de crédito en cuotas a través del checkout.</p>" } },
+        "f4": { "type": "faq_item", "settings": { "question": "¿Esto funciona si no tengo seguidores?", "answer": "<p>Sí. El método no depende de tener una audiencia. Te enseña a generar tus primeras ventas sin necesitar miles de seguidores.</p>" } },
+        "f5": { "type": "faq_item", "settings": { "question": "¿En qué formato viene el ebook?", "answer": "<p>Viene en PDF, podés leerlo desde el celular, tablet o computadora sin problema.</p>" } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4", "f5"]
+    },
+    "cta": {
+      "type": "dce-cta-v1",
+      "settings": {
+        "heading": "¿Seguís esperando el momento perfecto?",
+        "subheading": "El momento perfecto no existe. Lo que existe es la decisión de empezar.",
+        "cta_label": "Quiero empezar ahora",
+        "cta_url": "#dce-offer-offer",
+        "reassurance_text": "Pago único · Acceso inmediato"
+      }
+    }
+  },
+  "order": ["hero", "problem", "transformation", "benefits", "story", "offer", "faq", "cta"]
+}
