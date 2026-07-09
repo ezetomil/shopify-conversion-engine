@@ -11,16 +11,21 @@
  * never appears is a lost sale.
  */
 @layer components {
-  html.dce-js [data-dce-animate] {
-    opacity: 0;
-    transform: translateY(var(--dce-space-4));
+  [data-dce-animate] {
     transition:
       opacity var(--dce-duration-slow) var(--dce-ease-out),
       transform var(--dce-duration-slow) var(--dce-ease-out);
   }
 
-  [data-dce-animate].dce-is-visible {
-    opacity: 1;
-    transform: none;
+  /*
+    :not(.dce-is-visible) instead of relying on rule order/specificity to
+    beat a separate "visible" rule — once JS adds .dce-is-visible, this
+    selector simply stops matching and opacity/transform fall back to
+    their unset defaults (1 / none). No specificity race between the two
+    states, which is what silently broke the reveal in the previous version.
+  */
+  html.dce-js [data-dce-animate]:not(.dce-is-visible) {
+    opacity: 0;
+    transform: translateY(var(--dce-space-4));
   }
 }
