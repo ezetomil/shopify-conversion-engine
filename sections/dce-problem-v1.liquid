@@ -1,0 +1,126 @@
+{%- comment -%}
+  DCE Problem — variant 1 (icon grid).
+
+  Funnel role: builds identification with the reader's current friction
+  before the offer is introduced. Fixes the content contract for the
+  Problem family (v2, v3...) — see docs/00-principles.md and
+  docs/05-components-catalog.md.
+{%- endcomment -%}
+
+{{ 'dce-problem-v1.css' | asset_url | stylesheet_tag }}
+{{ 'dce-section-header.css' | asset_url | stylesheet_tag }}
+{{ 'dce-icon.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign dce_pain_points = section.blocks | where: 'type', 'pain_point_item'
+-%}
+
+<section
+  class="dce-problem-v1 dce-section"
+  style="background-color: {{ section.settings.background_color | default: 'var(--dce-color-bg-subtle)' }};"
+>
+  <div class="dce-container">
+    {%- render 'dce-section-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      subheading: section.settings.subheading
+    -%}
+
+    {%- if dce_pain_points.size > 0 -%}
+      <ul class="dce-problem-v1__grid" role="list">
+        {%- for block in dce_pain_points -%}
+          <li class="dce-problem-v1__item" data-dce-animate {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
+              <span class="dce-problem-v1__icon">
+                {%- render 'dce-icon', name: block.settings.icon -%}
+              </span>
+            {%- endif -%}
+            <p class="dce-problem-v1__text">{{ block.settings.text }}</p>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DCE — Problema v1",
+  "tag": "section",
+  "class": "dce-section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "¿Te sentís identificado?"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Esto es lo que probablemente te está pasando"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "info": "Opcional. Por defecto usa un gris muy suave para diferenciarse del Hero."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pain_point_item",
+      "name": "Punto de dolor",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícono",
+          "options": [
+            { "value": "none", "label": "Sin ícono" },
+            { "value": "check_mark", "label": "Check" },
+            { "value": "question_mark", "label": "Signo de pregunta" },
+            { "value": "stopwatch", "label": "Cronómetro (tiempo)" },
+            { "value": "lock", "label": "Candado (bloqueo)" },
+            { "value": "heart", "label": "Corazón" },
+            { "value": "star", "label": "Estrella" },
+            { "value": "lightning_bolt", "label": "Rayo (urgencia)" },
+            { "value": "price_tag", "label": "Etiqueta de precio" },
+            { "value": "chat_bubble", "label": "Globo de chat" },
+            { "value": "eye", "label": "Ojo" },
+            { "value": "return", "label": "Flecha de retorno" },
+            { "value": "map_pin", "label": "Pin de mapa" },
+            { "value": "plane", "label": "Avión" },
+            { "value": "fire", "label": "Fuego" },
+            { "value": "clipboard", "label": "Portapapeles" },
+            { "value": "plant", "label": "Planta (crecimiento)" }
+          ],
+          "default": "question_mark"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Texto",
+          "default": "Describí un punto de dolor concreto de tu audiencia."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DCE — Problema v1",
+      "blocks": [
+        { "type": "pain_point_item" },
+        { "type": "pain_point_item" },
+        { "type": "pain_point_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

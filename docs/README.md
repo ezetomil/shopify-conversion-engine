@@ -14,6 +14,7 @@ Esta carpeta documenta la arquitectura completa. No se sube a la tienda (ver `.s
 5. [Catálogo de componentes](05-components-catalog.md) — spec completa de los 15 componentes de conversión + primitivas.
 6. [Motor de contenido](06-content-engine.md) — cómo un JSON de Shopify se convierte en la única fuente de contenido de una landing.
 7. [Filosofía y roadmap](07-philosophy-roadmap.md) — visión de generación automática, qué no construimos todavía, metodología de trabajo.
+8. [Registro de decisiones](08-decisions-log.md) — mejoras y correcciones de arquitectura descubiertas durante la implementación, más recientes primero.
 
 ## Estado
 

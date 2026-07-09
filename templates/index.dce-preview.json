@@ -28,7 +28,46 @@
         }
       },
       "block_order": ["trust-1", "trust-2"]
+    },
+    "problem": {
+      "type": "dce-problem-v1",
+      "settings": {
+        "eyebrow": "¿Te sentís identificado?",
+        "heading": "Esto es lo que probablemente te está pasando",
+        "subheading": "Antes de mostrarte la solución, quiero que sepas que no sos el único que pasa por esto."
+      },
+      "blocks": {
+        "p1": {
+          "type": "pain_point_item",
+          "settings": {
+            "icon": "question_mark",
+            "text": "No sabés por dónde empezar y cada tutorial te lleva a otro tutorial distinto."
+          }
+        },
+        "p2": {
+          "type": "pain_point_item",
+          "settings": {
+            "icon": "stopwatch",
+            "text": "Tenés poco tiempo libre y no querés perderlo en algo que no funciona."
+          }
+        },
+        "p3": {
+          "type": "pain_point_item",
+          "settings": {
+            "icon": "lock",
+            "text": "Sentís que te falta una pieza clave que nadie te explicó todavía."
+          }
+        },
+        "p4": {
+          "type": "pain_point_item",
+          "settings": {
+            "icon": "price_tag",
+            "text": "Ya gastaste dinero en cursos o herramientas que no te dieron resultados."
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"]
     }
   },
-  "order": ["hero"]
+  "order": ["hero", "problem"]
 }

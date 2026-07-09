@@ -1,0 +1,13 @@
+/**
+ * DCE Icon primitive. Loaded conditionally by any section that renders
+ * snippets/dce-icon.liquid. Scoped independently from Dawn's own .icon
+ * class so it never inherits unrelated Dawn styling.
+ */
+@layer components {
+  .dce-icon svg {
+    display: block;
+    width: 1.25em;
+    height: 1.25em;
+    fill: currentColor;
+  }
+}

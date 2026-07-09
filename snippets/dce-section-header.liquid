@@ -1,0 +1,38 @@
+{%- doc -%}
+  Shared eyebrow + heading + subheading pattern, used by most DCE sections.
+  See docs/02-design-system.md (Section Header primitive).
+
+  @param {string} [eyebrow]
+  @param {string} heading
+  @param {string} [subheading]
+  @param {string} [heading_tag] - 'h1' | 'h2' | 'h3' (default: 'h2'). Keep
+    exactly one h1 per page — normally the Hero — for correct heading
+    hierarchy and SEO.
+  @param {string} [alignment] - 'center' | 'left' (default: 'center')
+
+  @example
+  {% render 'dce-section-header', eyebrow: section.settings.eyebrow, heading: section.settings.heading, subheading: section.settings.subheading %}
+{%- enddoc -%}
+
+{%- liquid
+  assign dce_heading_tag = heading_tag | default: 'h2'
+  assign dce_alignment = alignment | default: 'center'
+-%}
+<div class="dce-section-header dce-section-header--{{ dce_alignment }}">
+  {%- if eyebrow != blank -%}
+    <p class="dce-section-header__eyebrow">{{ eyebrow }}</p>
+  {%- endif -%}
+
+  {%- case dce_heading_tag -%}
+    {%- when 'h1' -%}
+      <h1 class="dce-section-header__heading">{{ heading }}</h1>
+    {%- when 'h3' -%}
+      <h3 class="dce-section-header__heading">{{ heading }}</h3>
+    {%- else -%}
+      <h2 class="dce-section-header__heading">{{ heading }}</h2>
+  {%- endcase -%}
+
+  {%- if subheading != blank -%}
+    <p class="dce-section-header__subheading">{{ subheading }}</p>
+  {%- endif -%}
+</div>

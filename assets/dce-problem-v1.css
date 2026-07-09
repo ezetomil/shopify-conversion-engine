@@ -1,0 +1,48 @@
+/**
+ * DCE Problem v1 (icon grid). Isolated component — see docs/00-principles.md, point 4.
+ */
+@layer components {
+  .dce-problem-v1__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--dce-space-6);
+    margin-top: var(--dce-space-12);
+    padding: 0;
+  }
+
+  .dce-problem-v1__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--dce-space-4);
+    padding: var(--dce-space-6);
+    background-color: var(--dce-color-bg);
+    border: 1px solid var(--dce-color-border);
+    border-radius: var(--dce-radius-lg);
+  }
+
+  .dce-problem-v1__icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--dce-radius-full);
+    background-color: var(--dce-gray-100);
+    color: var(--dce-gray-700);
+  }
+
+  .dce-problem-v1__text {
+    margin: 0;
+    padding-top: var(--dce-space-2);
+    color: var(--dce-color-text);
+    font-size: var(--dce-text-base);
+    line-height: var(--dce-leading-relaxed);
+  }
+
+  @media (min-width: 768px) {
+    .dce-problem-v1__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}

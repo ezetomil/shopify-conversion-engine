@@ -1,0 +1,48 @@
+/**
+ * DCE Section Header primitive. Loaded conditionally by any section that
+ * renders snippets/dce-section-header.liquid.
+ */
+@layer components {
+  .dce-section-header {
+    max-width: 42rem;
+  }
+
+  .dce-section-header--center {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .dce-section-header--left {
+    text-align: left;
+  }
+
+  .dce-section-header__eyebrow {
+    margin: 0 0 var(--dce-space-3);
+    color: var(--dce-color-text-muted);
+    font-size: var(--dce-text-sm);
+    font-weight: var(--dce-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .dce-section-header__heading {
+    margin: 0;
+    font-size: var(--dce-text-3xl);
+    font-weight: var(--dce-weight-bold);
+    letter-spacing: var(--dce-tracking-tight);
+    color: var(--dce-color-text);
+  }
+
+  .dce-section-header__subheading {
+    margin: var(--dce-space-4) 0 0;
+    color: var(--dce-color-text-muted);
+    font-size: var(--dce-text-lg);
+    line-height: var(--dce-leading-relaxed);
+  }
+
+  @media (min-width: 768px) {
+    .dce-section-header__heading {
+      font-size: var(--dce-text-4xl);
+    }
+  }
+}

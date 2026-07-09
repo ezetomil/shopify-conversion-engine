@@ -1,0 +1,19 @@
+{%- doc -%}
+  Renders a DCE icon inline (zero extra HTTP requests — see docs/02-design-system.md).
+  Reuses Dawn's existing assets/icon-*.svg set instead of shipping a second
+  icon system: less to maintain, same result. Never reference
+  snippets/icon-accordion.liquid directly from a DCE component — its class
+  output (`icon-accordion`) is coupled to accordion-specific CSS elsewhere
+  in Dawn. This snippet wraps the same files under our own clean namespace.
+
+  @param {string} name - Icon name with underscores, e.g. 'check_mark', 'lock', 'star'.
+    See assets/icon-*.svg for the full list Dawn ships.
+
+  @example
+  {% render 'dce-icon', name: 'check_mark' %}
+{%- enddoc -%}
+
+{%- if name != blank and name != 'none' -%}
+  {%- assign dce_icon_file = name | replace: '_', '-' | prepend: 'icon-' | append: '.svg' -%}
+  <span class="dce-icon">{{ dce_icon_file | inline_asset_content }}</span>
+{%- endif -%}

@@ -149,9 +149,13 @@ Regla: toda animación respeta `prefers-reduced-motion: reduce` (se desactivan t
 
 ## Iconografía
 
-- Estilo: trazo fino (1.5px), grilla 24×24, terminaciones redondeadas — línea Phosphor/Lucide, coherente con Linear/Notion/Raycast.
-- Entrega: **un solo sprite SVG** (`assets/dce-icons.svg` con `<symbol>` definidos), incluido una vez en `theme.liquid`. Cero requests adicionales por ícono, cacheable, colorable vía `currentColor`.
-- Uso: `{% render 'dce-icon', name: 'check' %}` → snippet que resuelve a `<svg class="dce-icon"><use href="#dce-icon-check"/></svg>`.
+> Implementación actualizada respecto a la versión original de este documento — ver [08-decisions-log.md](08-decisions-log.md).
+
+- Se reutilizan los ~36 íconos que ya trae Dawn (`assets/icon-*.svg`) en vez de dibujar un set propio — menos superficie nueva, mismo resultado visual limpio.
+- Entrega: `snippets/dce-icon.liquid`, que inlinea el SVG correspondiente vía el filtro nativo `inline_asset_content` (cero requests adicionales, cacheable, colorable vía `currentColor`), bajo el namespace `.dce-icon` para no heredar CSS de otros usos de Dawn.
+- Uso: `{% render 'dce-icon', name: 'check_mark' %}`.
+- Cada campo `icon` de un block expone un **subconjunto curado** de esos íconos relevante al componente (no los 36 completos, muchos son de retail/moda/alimentos) — ver la lista canónica en `sections/dce-problem-v1.liquid`.
+- Color: reservado para uso neutro (`--dce-gray-700` sobre `--dce-gray-100`) salvo que el ícono esté directamente asociado a un CTA o estado activo — el acento no se usa para decorar íconos informativos.
 
 ## Componentes reutilizables (primitivas)
 
