@@ -6,6 +6,7 @@ Esta carpeta documenta la arquitectura completa. No se sube a la tienda (ver `.s
 
 ## Índice
 
+0. [Principios no negociables](00-principles.md) — reglas obligatorias: alcance multi-producto, sistema de variantes, A/B testing, desacople total, prioridades. Se lee primero.
 1. [Arquitectura del proyecto](01-architecture.md) — estructura de carpetas, convenciones de nombres, separación infraestructura/framework, escalabilidad.
 2. [Design System](02-design-system.md) — tokens: color, tipografía, spacing, grid, breakpoints, radios, sombras, motion, iconografía.
 3. [Arquitectura CSS](03-css-architecture.md) — CSS Cascade Layers, sin build step, carga condicional, nomenclatura BEM.

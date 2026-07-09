@@ -1,5 +1,7 @@
 # 01 — Arquitectura del Proyecto
 
+> Este documento se lee junto con [00-principles.md](00-principles.md), que define las reglas no negociables (variantes, desacople, alcance de producto) que toda decisión de acá abajo debe respetar.
+
 ## Principio rector
 
 Dawn es **infraestructura heredada**: motor de tienda (header, footer, carrito, checkout, cuentas, búsqueda, páginas legales). El **framework propio (DCE — Digital Conversion Engine)** es una capa de componentes de conversión que vive por encima de Dawn, separada por convención de nombres, porque Shopify no permite subcarpetas reales dentro del tema.
@@ -42,6 +44,8 @@ Regla práctica: si dudás si un archivo es infraestructura o framework, pregunt
 - Un componente = mismo nombre base en sus tres archivos posibles:
   `sections/dce-hero.liquid`, `assets/dce-hero.css`, `assets/dce-hero.js`.
   Con este nombre, cualquiera puede encontrar "todo lo que compone el Hero" con un solo `grep dce-hero`.
+- **Variantes de un componente** (ver [00-principles.md](00-principles.md), punto 2) agregan un sufijo `-v{n}` y son archivos completamente independientes, nunca un `{% case %}` dentro de un único archivo:
+  `sections/dce-hero-v1.liquid`, `sections/dce-hero-v2.liquid`, cada uno con su propio `dce-hero-v1.css` / `dce-hero-v2.css` si lo necesita. Todas las variantes de un mismo componente comparten el mismo contrato de settings/blocks.
 - Snippets compartidos (usados por 2+ secciones): `snippets/dce-{nombre}.liquid`.
   Ej: `dce-button.liquid`, `dce-icon.liquid`, `dce-section-header.liquid`, `dce-badge.liquid`.
 - Clases CSS: BEM namespaced. `.dce-hero`, `.dce-hero__title`, `.dce-hero--split`.
@@ -62,41 +66,43 @@ Regla práctica: si dudás si un archivo es infraestructura o framework, pregunt
 │   ├── dce-animations.css         → keyframes + utilidades de motion
 │   ├── dce-core.js                → runtime compartido: lazy loader, utils, event bus
 │   ├── dce-icons.svg              → sprite SVG (símbolos)
-│   ├── dce-hero.css / .js
-│   ├── dce-problem.css
-│   ├── dce-story.css
-│   ├── dce-benefits.css
-│   ├── dce-transformation.css
-│   ├── dce-comparison.css / .js
-│   ├── dce-offer.css / .js        (countdown)
-│   ├── dce-bonuses.css
-│   ├── dce-author.css
-│   ├── dce-chapters.css
-│   ├── dce-testimonials.css / .js (carrusel)
-│   ├── dce-faq.css / .js          (accordion)
-│   ├── dce-guarantee.css
-│   ├── dce-cta.css
-│   └── dce-footer.css             (si reemplazamos el de Dawn)
+│   ├── dce-hero-v1.css / .js
+│   ├── dce-hero-v2.css / .js      (variante adicional, archivo independiente)
+│   ├── dce-problem-v1.css
+│   ├── dce-story-v1.css
+│   ├── dce-benefits-v1.css
+│   ├── dce-transformation-v1.css
+│   ├── dce-comparison-v1.css / .js
+│   ├── dce-offer-v1.css / .js     (countdown)
+│   ├── dce-bonuses-v1.css
+│   ├── dce-author-v1.css
+│   ├── dce-chapters-v1.css
+│   ├── dce-testimonials-v1.css / .js (carrusel)
+│   ├── dce-faq-v1.css / .js       (accordion)
+│   ├── dce-guarantee-v1.css
+│   ├── dce-cta-v1.css
+│   └── dce-footer.css             (si reemplazamos el de Dawn — sin variantes por ahora)
 ├── config/                        (Dawn, se mantiene)
 ├── layout/
 │   ├── theme.liquid                → Dawn, modificado mínimamente (carga global de dce-tokens.css)
 │   └── password.liquid
 ├── locales/                       (Dawn, se mantiene)
 ├── sections/                      (plano)
-│   ├── dce-hero.liquid
-│   ├── dce-problem.liquid
-│   ├── dce-story.liquid
-│   ├── dce-benefits.liquid
-│   ├── dce-transformation.liquid
-│   ├── dce-comparison.liquid
-│   ├── dce-offer.liquid
-│   ├── dce-bonuses.liquid
-│   ├── dce-author.liquid
-│   ├── dce-chapters.liquid
-│   ├── dce-testimonials.liquid
-│   ├── dce-faq.liquid
-│   ├── dce-guarantee.liquid
-│   ├── dce-cta.liquid
+│   ├── dce-hero-v1.liquid
+│   ├── dce-hero-v2.liquid         (variante adicional cuando exista)
+│   ├── dce-problem-v1.liquid
+│   ├── dce-story-v1.liquid
+│   ├── dce-benefits-v1.liquid
+│   ├── dce-transformation-v1.liquid
+│   ├── dce-comparison-v1.liquid
+│   ├── dce-offer-v1.liquid
+│   ├── dce-bonuses-v1.liquid
+│   ├── dce-author-v1.liquid
+│   ├── dce-chapters-v1.liquid
+│   ├── dce-testimonials-v1.liquid
+│   ├── dce-faq-v1.liquid
+│   ├── dce-guarantee-v1.liquid
+│   ├── dce-cta-v1.liquid
 │   ├── dce-footer.liquid
 │   └── ... (secciones nativas de Dawn intactas: header, footer-group, main-cart, etc.)
 ├── snippets/                      (plano)

@@ -19,15 +19,15 @@ Esto es directamente lo que pediste: cero JS innecesario, Core Web Vitals como p
   - Utilidad de **scroll-reveal** genérica vía `IntersectionObserver` (`data-dce-animate` en cualquier elemento).
   - Micro event-bus para comunicación entre componentes desacoplados (ej. el countdown de Oferta notifica a un sticky CTA sin que se conozcan directamente).
   - Helper de breakpoint (`matchMedia` wrapper) para lógica JS que necesite saber el viewport actual.
-- **`dce-{componente}.js`** — un archivo por componente interactivo, **cargado solo en la sección que lo usa**, igual que el CSS:
+- **`dce-{componente}-v{n}.js`** — un archivo por variante de componente interactivo, **cargado solo en la sección que lo usa**, igual que el CSS (ver [00-principles.md](00-principles.md), punto 2):
   ```liquid
-  <script src="{{ 'dce-testimonials.js' | asset_url }}" type="module" defer></script>
+  <script src="{{ 'dce-testimonials-v1.js' | asset_url }}" type="module" defer></script>
   ```
 
 ## Carga y performance
 
 1. **Defer/module por defecto** — nada bloquea el parseo del HTML.
-2. **Carga condicional por sección** — si un producto no tiene Comparativa, `dce-comparison.js` nunca se pide.
+2. **Carga condicional por sección** — si un producto no tiene Comparativa, `dce-comparison-v1.js` nunca se pide; si usa otra variante, solo se pide el JS de esa variante puntual.
 3. **`import()` dinámico para lo pesado** — componentes con costo real (ej. un modal de video, un carrusel con librería de gestos) se cargan recién cuando:
    - entran en viewport (`IntersectionObserver`), o
    - el usuario interactúa (click) — ej. el JS de un modal no se descarga hasta que se hace click en "ver video".
@@ -35,7 +35,7 @@ Esto es directamente lo que pediste: cero JS innecesario, Core Web Vitals como p
 
 ## Convenciones
 
-- Un custom element por componente interactivo, nombre `<dce-{nombre}>`, definido en `dce-{nombre}.js`.
+- Un custom element por variante de componente interactivo, nombre `<dce-{nombre}-v{n}>`, definido en `dce-{nombre}-v{n}.js`.
 - Comunicación entre componentes vía **CustomEvent** namespaced: `dce:{componente}:{accion}` (ej. `dce:countdown:expired`, `dce:carousel:slide-change`), nunca acoplamiento directo entre clases.
 - Sin manipulación de estado global fuera del DOM — el estado vive en el custom element o se refleja en atributos (`data-*`), consistente con cómo Shopify espera que funcionen los temas (server-rendered + progressive enhancement).
 - Accesibilidad no es opcional: todo componente interactivo (accordion, carrusel, modal) maneja foco, `aria-*` y navegación por teclado desde el día uno, no como agregado posterior.

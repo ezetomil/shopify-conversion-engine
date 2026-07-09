@@ -67,6 +67,20 @@ Flujo de creación de una landing nueva:
 2. Se le asigna el template suffix `product.{handle}`.
 3. Se escribe/genera `templates/product.{handle}.json` combinando los componentes del catálogo con el contenido de ese producto específico.
 
+## Variantes y A/B testing: swap de `"type"`, contenido intacto
+
+Porque cada familia de componentes comparte un contrato de settings/blocks entre todas sus variantes ([00-principles.md](00-principles.md), punto 2 y [05-components-catalog.md](05-components-catalog.md)), armar una landing alternativa (Landing B) a partir de una existente (Landing A) es, técnicamente, copiar el JSON y cambiar el campo `"type"` de la sección que se quiere testear — el bloque de `settings`/`blocks` no se toca:
+
+```json
+// Landing A
+"hero": { "type": "dce-hero-v1", "settings": { "headline": "Domina el diseño en 30 días", ... } }
+
+// Landing B — mismo contenido, otra variante visual del Hero
+"hero": { "type": "dce-hero-v2", "settings": { "headline": "Domina el diseño en 30 días", ... } }
+```
+
+Esto es lo que hace viable, más adelante, generar variantes de una misma landing para A/B testing sin duplicar ni reescribir contenido — la infraestructura de reparto de tráfico es una capa posterior (ver [07-philosophy-roadmap.md](07-philosophy-roadmap.md)), pero la condición técnica que la habilita (componentes intercambiables sin tocar contenido) ya es parte del motor desde el día uno.
+
 ## Regla de oro para cada componente nuevo
 
 Todo campo que un componente exponga en su `schema` (settings o block settings) es, por definición, **contenido válido para el motor**. Si un componente necesita algo que hoy es "diseño" (ej. un color fijo, un layout hardcodeado), y en el futuro eso necesita variar por producto, la solución es **exponerlo como setting**, nunca como excepción hardcodeada en el `.liquid`. Esto mantiene la frontera "JSON = contenido, Liquid = diseño" sin fugas con el tiempo.

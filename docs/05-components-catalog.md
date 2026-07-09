@@ -1,6 +1,10 @@
 # 05 — Catálogo de Componentes
 
-Cada componente es una sección Shopify (`sections/dce-{nombre}.liquid`) **independiente**: no depende de que otra sección exista, no asume un orden fijo, y todo su contenido variable entra por `settings` (campos únicos) o `blocks` (listas repetibles). Esto es lo que permite que cualquier producto combine los componentes que necesite, en el orden que necesite, con el contenido que necesite — sin tocar código.
+Cada componente es una sección Shopify (`sections/dce-{nombre}-v{n}.liquid`) **independiente**: no depende de que otra sección exista, no asume un orden fijo, y todo su contenido variable entra por `settings` (campos únicos) o `blocks` (listas repetibles). Esto es lo que permite que cualquier producto combine los componentes que necesite, en el orden que necesite, con el contenido que necesite — sin tocar código.
+
+## Variantes y contrato de contenido
+
+Cada componente descrito abajo es una **familia**: la sección "Variantes" de cada uno lista layouts que, con el sistema de variantes ([00-principles.md](00-principles.md), punto 2), se implementan como archivos independientes `dce-{nombre}-v1.liquid`, `dce-{nombre}-v2.liquid`, etc. Todas las variantes de una familia comparten el mismo **contrato de contenido** (mismos `settings`/`blocks`, mismo `id` y tipo de dato) — la primera variante implementada (v1) fija ese contrato; las siguientes se diseñan contra él, y solo pueden *agregar* campos opcionales, nunca quitar o renombrar los del contrato base. Esto es lo que hace posible el A/B testing descrito en [06-content-engine.md](06-content-engine.md): cambiar de v1 a v2 es cambiar un `"type"` en el JSON, el contenido no se reescribe.
 
 Plantilla de especificación usada para cada componente:
 
