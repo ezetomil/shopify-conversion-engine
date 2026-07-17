@@ -1,0 +1,23 @@
+/**
+ * DCE Rating Stars primitive. Loaded conditionally by any section that
+ * renders snippets/dce-rating-stars.liquid.
+ */
+@layer components {
+  .dce-rating-stars {
+    display: inline-flex;
+    gap: 0.125rem;
+  }
+
+  .dce-rating-stars__star {
+    display: flex;
+    color: var(--dce-color-accent);
+  }
+
+  .dce-rating-stars__star .dce-icon svg {
+    fill: currentColor;
+  }
+
+  .dce-rating-stars__star--empty {
+    color: var(--dce-color-border-strong);
+  }
+}

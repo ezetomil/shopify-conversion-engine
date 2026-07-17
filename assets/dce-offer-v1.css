@@ -1,26 +1,46 @@
 /**
- * DCE Offer v1 (price box). Isolated component. The add-to-cart button
- * itself is Dawn's native `.product-form__submit` (rendered by the reused
- * buy-buttons snippet) — re-skinned below to DCE tokens, scoped strictly
- * to this component so it never affects Dawn's cart drawer or other
- * native buy-button instances elsewhere on the site.
+ * DCE Offer v1 (glassmorphic price box). Isolated component. The
+ * add-to-cart button itself is Dawn's native `.product-form__submit`
+ * (rendered by the reused buy-buttons snippet) — re-skinned below to DCE
+ * tokens, scoped strictly to this component so it never affects Dawn's
+ * cart drawer or other native buy-button instances elsewhere on the site.
  */
 @layer components {
+  .dce-offer-v1 {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dce-offer-v1__backdrop {
+    position: absolute;
+    z-index: 0;
+    inset: -10% -10% 0 -10%;
+    pointer-events: none;
+    background:
+      radial-gradient(30rem 20rem at 20% 20%, color-mix(in srgb, var(--dce-color-accent) 16%, transparent) 0%, transparent 65%),
+      radial-gradient(24rem 18rem at 85% 60%, color-mix(in srgb, var(--dce-accent-300) 14%, transparent) 0%, transparent 65%);
+  }
+
   .dce-offer-v1__container {
+    position: relative;
+    z-index: 1;
     max-width: 34rem;
   }
 
   .dce-offer-v1__box {
     position: relative;
     display: block;
-    margin-top: var(--dce-space-12);
+    margin-top: var(--dce-space-10);
     padding: var(--dce-space-8);
-    background-color: var(--dce-color-bg);
-    border: 1px solid var(--dce-color-border);
+    background-color: color-mix(in srgb, var(--dce-color-bg) 68%, transparent);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid color-mix(in srgb, var(--dce-color-border) 70%, transparent);
     border-radius: var(--dce-radius-xl);
-    box-shadow: var(--dce-shadow-xl), 0 0 0 1px var(--dce-color-border);
+    box-shadow: var(--dce-shadow-xl), 0 0 0 1px color-mix(in srgb, var(--dce-color-border) 50%, transparent);
     text-align: center;
     overflow: hidden;
+    animation: dce-offer-v1-float 7s ease-in-out infinite;
   }
 
   .dce-offer-v1__box::before {
@@ -34,15 +54,24 @@
   }
 
   .dce-offer-v1__badge {
+    position: relative;
     display: inline-flex;
     padding: var(--dce-space-1) var(--dce-space-4);
     margin-bottom: var(--dce-space-5);
     border-radius: var(--dce-radius-full);
     background-color: var(--dce-color-accent-subtle);
     color: var(--dce-color-accent);
-    animation: dce-offer-v1-pulse 2.4s ease-in-out infinite;
     font-size: var(--dce-text-xs);
     font-weight: var(--dce-weight-semibold);
+  }
+
+  .dce-offer-v1__badge::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 0 0 var(--dce-accent-100);
+    animation: dce-offer-v1-pulse 2.4s ease-in-out infinite;
   }
 
   .dce-offer-v1__includes {
@@ -76,18 +105,24 @@
 
   .dce-offer-v1__buy-buttons .product-form__submit {
     width: 100%;
-    padding: var(--dce-space-4) var(--dce-space-8);
+    padding: var(--dce-space-5) var(--dce-space-8);
     border-radius: var(--dce-radius-md);
     background-color: var(--dce-color-accent);
     color: var(--dce-color-on-accent);
-    font-size: var(--dce-text-md);
+    font-size: var(--dce-text-lg);
     font-weight: var(--dce-weight-semibold);
     border-color: transparent;
-    box-shadow: none;
+    box-shadow: 0 8px 20px -6px var(--dce-accent-500);
+    transition:
+      transform var(--dce-duration-fast) var(--dce-ease-standard),
+      box-shadow var(--dce-duration-fast) var(--dce-ease-standard),
+      background-color var(--dce-duration-fast) var(--dce-ease-standard);
   }
 
   .dce-offer-v1__buy-buttons .product-form__submit:hover {
     background-color: var(--dce-color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -8px var(--dce-accent-500);
   }
 
   .dce-offer-v1__reassurance {
@@ -105,21 +140,21 @@
     color: var(--dce-color-text-muted);
   }
 
-  .dce-offer-v1__buy-buttons .product-form__submit {
-    transition: transform var(--dce-duration-fast) var(--dce-ease-standard), box-shadow var(--dce-duration-fast) var(--dce-ease-standard), background-color var(--dce-duration-fast) var(--dce-ease-standard);
-  }
-
-  .dce-offer-v1__buy-buttons .product-form__submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px -8px var(--dce-accent-500);
+  @keyframes dce-offer-v1-float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
   }
 
   @keyframes dce-offer-v1-pulse {
-    0%, 100% {
-      box-shadow: 0 0 0 0 var(--dce-accent-100);
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--dce-color-accent) 35%, transparent);
     }
-    50% {
-      box-shadow: 0 0 0 6px transparent;
+    70%, 100% {
+      box-shadow: 0 0 0 8px transparent;
     }
   }
 }

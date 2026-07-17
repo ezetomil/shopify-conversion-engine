@@ -9,23 +9,61 @@
  * every animated element stays fully visible instead of silently hiding
  * content. A missed entrance animation is a cosmetic loss; content that
  * never appears is a lost sale.
+ *
+ * Variants — `data-dce-animate="{variant}"`, default is fade-up when the
+ * attribute is empty. Deliberately varied per section so consecutive
+ * sections never repeat the same entrance (see docs/05-components-catalog.md
+ * usage in each section file):
+ *   fade-up (default) · fade-left · fade-right · blur-in · scale-in
+ *
+ * All variants animate only opacity/transform/filter — compositor-friendly,
+ * no layout thrashing, safe for the Lighthouse performance budget.
  */
 @layer components {
   [data-dce-animate] {
     transition:
       opacity var(--dce-duration-slow) var(--dce-ease-out),
-      transform var(--dce-duration-slow) var(--dce-ease-out);
+      transform var(--dce-duration-slow) var(--dce-ease-out),
+      filter var(--dce-duration-slow) var(--dce-ease-out);
   }
 
   /*
     :not(.dce-is-visible) instead of relying on rule order/specificity to
     beat a separate "visible" rule — once JS adds .dce-is-visible, this
     selector simply stops matching and opacity/transform fall back to
-    their unset defaults (1 / none). No specificity race between the two
-    states, which is what silently broke the reveal in the previous version.
+    their unset defaults. No specificity race between the two states.
   */
   html.dce-js [data-dce-animate]:not(.dce-is-visible) {
     opacity: 0;
-    transform: translateY(var(--dce-space-4));
+    transform: translateY(var(--dce-space-6));
+  }
+
+  html.dce-js [data-dce-animate='fade-left']:not(.dce-is-visible) {
+    transform: translateX(-1.75rem);
+  }
+
+  html.dce-js [data-dce-animate='fade-right']:not(.dce-is-visible) {
+    transform: translateX(1.75rem);
+  }
+
+  html.dce-js [data-dce-animate='blur-in']:not(.dce-is-visible) {
+    transform: translateY(var(--dce-space-3));
+    filter: blur(14px);
+  }
+
+  html.dce-js [data-dce-animate='scale-in']:not(.dce-is-visible) {
+    transform: scale(0.94);
+  }
+
+  [data-dce-animate].dce-is-visible {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  /* Magnetic hover — see dce-core.js. Pointer-fine devices only. */
+  [data-dce-magnetic] {
+    transition: transform var(--dce-duration-fast) var(--dce-ease-spring);
+    will-change: transform;
   }
 }

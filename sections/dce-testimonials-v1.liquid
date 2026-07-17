@@ -1,0 +1,151 @@
+{%- comment -%}
+  DCE Testimonials — variant 1 (grid).
+
+  Funnel role: direct social proof, the component that most reduces
+  decision friction right before the offer. Fixes the content contract for
+  the Testimonials family (v2, v3...) — see docs/00-principles.md and
+  docs/05-components-catalog.md.
+
+  NOT currently included in templates/product.dce-landing-v1.json: built
+  and ready, but only real, verifiable testimonials should ever populate
+  it — never placeholder/fabricated reviews. Add it to a product template
+  once real testimonial content exists.
+{%- endcomment -%}
+
+{{ 'dce-testimonials-v1.css' | asset_url | stylesheet_tag }}
+{{ 'dce-section-header.css' | asset_url | stylesheet_tag }}
+{{ 'dce-rating-stars.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign dce_testimonials = section.blocks | where: 'type', 'testimonial_item'
+-%}
+
+<section
+  class="dce-testimonials-v1 dce-section"
+  {% if section.settings.background_color != blank %}
+    style="background-color: {{ section.settings.background_color }};"
+  {% endif %}
+>
+  <div class="dce-container">
+    {%- render 'dce-section-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      subheading: section.settings.subheading
+    -%}
+
+    {%- if dce_testimonials.size > 0 -%}
+      <ul class="dce-testimonials-v1__grid" role="list">
+        {%- for block in dce_testimonials -%}
+          <li
+            class="dce-testimonials-v1__card"
+            data-dce-animate="scale-in"
+            style="transition-delay: {{ forloop.index0 | times: 90 }}ms"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.rating > 0 -%}
+              {%- render 'dce-rating-stars', rating: block.settings.rating -%}
+            {%- endif -%}
+
+            <p class="dce-testimonials-v1__quote">"{{ block.settings.quote }}"</p>
+
+            <div class="dce-testimonials-v1__author">
+              {%- if block.settings.photo != blank -%}
+                <div class="dce-testimonials-v1__photo">
+                  {{ block.settings.photo | image_url: width: 96 | image_tag: loading: 'lazy', widths: '48, 64, 96', alt: block.settings.name }}
+                </div>
+              {%- endif -%}
+              <div>
+                {%- if block.settings.name != blank -%}
+                  <p class="dce-testimonials-v1__name">{{ block.settings.name }}</p>
+                {%- endif -%}
+                {%- if block.settings.context != blank -%}
+                  <p class="dce-testimonials-v1__context">{{ block.settings.context }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DCE — Testimonios v1",
+  "tag": "section",
+  "class": "dce-section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Lo que dicen quienes ya lo probaron"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial_item",
+      "name": "Testimonio",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Testimonio",
+          "info": "Usá siempre contenido real de compradores — nunca inventado."
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Calificación",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "image_picker",
+          "id": "photo",
+          "label": "Foto"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nombre"
+        },
+        {
+          "type": "text",
+          "id": "context",
+          "label": "Contexto",
+          "info": "Ej: \"Compradora verificada\"."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DCE — Testimonios v1",
+      "blocks": [
+        { "type": "testimonial_item" },
+        { "type": "testimonial_item" },
+        { "type": "testimonial_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

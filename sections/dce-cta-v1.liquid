@@ -10,14 +10,14 @@
 
 <section class="dce-cta-v1 dce-section">
   <div class="dce-container">
-    <div class="dce-cta-v1__box" data-dce-animate>
+    <div class="dce-cta-v1__box" data-dce-animate="scale-in">
       <h2 class="dce-cta-v1__heading">{{ section.settings.heading }}</h2>
       {%- if section.settings.subheading != blank -%}
         <p class="dce-cta-v1__subheading">{{ section.settings.subheading }}</p>
       {%- endif -%}
       {%- if section.settings.cta_label != blank and section.settings.cta_url != blank -%}
         <div class="dce-cta-v1__action">
-          {%- render 'dce-button', label: section.settings.cta_label, url: section.settings.cta_url, variant: 'primary', size: 'lg' -%}
+          {%- render 'dce-button', label: section.settings.cta_label, url: section.settings.cta_url, variant: 'primary', size: 'xl', magnetic: true -%}
         </div>
       {%- endif -%}
       {%- if section.settings.reassurance_text != blank -%}

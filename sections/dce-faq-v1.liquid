@@ -9,6 +9,7 @@
 {{ 'dce-faq-v1.css' | asset_url | stylesheet_tag }}
 {{ 'dce-section-header.css' | asset_url | stylesheet_tag }}
 {{ 'dce-icon.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'dce-faq-v1.js' | asset_url }}" type="module"></script>
 
 {%- liquid
   assign dce_faqs = section.blocks | where: 'type', 'faq_item'
@@ -32,7 +33,7 @@
         {%- for block in dce_faqs -%}
           <details
             class="dce-faq-v1__item"
-            data-dce-animate
+            data-dce-animate="fade-up"
             style="transition-delay: {{ forloop.index0 | times: 60 }}ms"
             {{ block.shopify_attributes }}
           >

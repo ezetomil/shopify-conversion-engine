@@ -1,10 +1,12 @@
 {%- comment -%}
-  DCE Hero — variant 1 (centered).
+  DCE Hero — variant 1 (centered, cinematic).
 
   First implementation of the Hero component family. Fixes the content
   contract (settings/block ids) that every future Hero variant (v2, v3...)
   must also implement — see docs/00-principles.md, point 2, and
-  docs/05-components-catalog.md.
+  docs/05-components-catalog.md. All additions below this comment since
+  the original v1 are additive (new optional settings/blocks) — nothing
+  already shipped was renamed or removed.
 
   This section owns no design decisions in its content: every visible
   string, image and link comes from section settings/blocks, so a product's
@@ -14,6 +16,8 @@
 
 {{ 'dce-hero-v1.css' | asset_url | stylesheet_tag }}
 {{ 'dce-button.css' | asset_url | stylesheet_tag }}
+{{ 'dce-icon.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'dce-hero-v1.js' | asset_url }}" type="module"></script>
 
 {%- liquid
   assign dce_has_actions = false
@@ -36,41 +40,71 @@
     style="background-color: {{ section.settings.background_color }};"
   {% endif %}
 >
-  <div class="dce-hero-v1__glow" aria-hidden="true"></div>
-  <div class="dce-container dce-hero-v1__inner">
-    {%- if section.settings.badge_text != blank -%}
-      <span class="dce-hero-v1__badge" data-dce-animate>{{ section.settings.badge_text }}</span>
-    {%- endif -%}
+  <div class="dce-hero-v1__backdrop" aria-hidden="true">
+    <div class="dce-hero-v1__glow"></div>
+    <div class="dce-hero-v1__noise"></div>
+  </div>
 
-    {%- if section.settings.eyebrow != blank -%}
-      <p class="dce-hero-v1__eyebrow" data-dce-animate style="transition-delay: 60ms">{{ section.settings.eyebrow }}</p>
-    {%- endif -%}
+  <div class="dce-container dce-hero-v1__grid">
+    <div class="dce-hero-v1__inner">
+      {%- if dce_trust_badges.size > 0 -%}
+        <ul class="dce-hero-v1__trust-badges" role="list" data-dce-animate="fade-up">
+          {%- for block in dce_trust_badges -%}
+            <li class="dce-hero-v1__trust-badge" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
+                {%- render 'dce-icon', name: block.settings.icon -%}
+              {%- endif -%}
+              {%- if block.settings.logo != blank -%}
+                {{
+                  block.settings.logo
+                  | image_url: width: 240
+                  | image_tag: loading: 'lazy', widths: '120, 180, 240', alt: block.settings.label
+                }}
+              {%- endif -%}
+              {%- if block.settings.label != blank -%}
+                <span>{{ block.settings.label }}</span>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
 
-    <h1 class="dce-hero-v1__heading" data-dce-animate style="transition-delay: 120ms">{{ dce_heading }}</h1>
+      {%- if section.settings.badge_text != blank -%}
+        <span class="dce-hero-v1__badge" data-dce-animate="fade-up" style="transition-delay: 60ms">{{ section.settings.badge_text }}</span>
+      {%- endif -%}
 
-    {%- if section.settings.subheading != blank -%}
-      <p class="dce-hero-v1__subheading" data-dce-animate style="transition-delay: 180ms">{{ section.settings.subheading }}</p>
-    {%- endif -%}
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="dce-hero-v1__eyebrow" data-dce-animate="fade-up" style="transition-delay: 120ms">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
 
-    {%- if dce_has_actions -%}
-      <div class="dce-hero-v1__actions" data-dce-animate style="transition-delay: 240ms">
-        {%- render 'dce-button',
-          label: section.settings.cta_primary_label,
-          url: section.settings.cta_primary_url,
-          variant: 'primary',
-          size: 'lg'
-        -%}
-        {%- render 'dce-button',
-          label: section.settings.cta_secondary_label,
-          url: section.settings.cta_secondary_url,
-          variant: 'ghost',
-          size: 'lg'
-        -%}
-      </div>
-    {%- endif -%}
+      <h1 class="dce-hero-v1__heading" data-dce-animate="blur-in" style="transition-delay: 180ms">{{ dce_heading }}</h1>
+
+      {%- if section.settings.subheading != blank -%}
+        <p class="dce-hero-v1__subheading" data-dce-animate="fade-up" style="transition-delay: 260ms">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+
+      {%- if dce_has_actions -%}
+        <div class="dce-hero-v1__actions" data-dce-animate="fade-up" style="transition-delay: 340ms">
+          {%- render 'dce-button',
+            label: section.settings.cta_primary_label,
+            url: section.settings.cta_primary_url,
+            variant: 'primary',
+            size: 'xl',
+            magnetic: true
+          -%}
+          {%- render 'dce-button',
+            label: section.settings.cta_secondary_label,
+            url: section.settings.cta_secondary_url,
+            variant: 'ghost',
+            size: 'xl'
+          -%}
+        </div>
+      {%- endif -%}
+    </div>
 
     {%- if section.settings.image != blank -%}
-      <div class="dce-hero-v1__visual" data-dce-animate style="transition-delay: 300ms">
+      <dce-tilt class="dce-hero-v1__visual" data-dce-animate="scale-in" style="transition-delay: 260ms">
+        <div class="dce-hero-v1__visual-shadow" aria-hidden="true"></div>
         {{
           section.settings.image
           | image_url: width: 1920
@@ -78,29 +112,10 @@
             loading: 'eager',
             fetchpriority: 'high',
             widths: '640, 960, 1280, 1600, 1920',
-            sizes: '(min-width: 1024px) 960px, 100vw',
+            sizes: '(min-width: 1024px) 560px, 80vw',
             alt: section.settings.image.alt | default: section.settings.heading
         }}
-      </div>
-    {%- endif -%}
-
-    {%- if dce_trust_badges.size > 0 -%}
-      <ul class="dce-hero-v1__trust-badges" role="list" data-dce-animate>
-        {%- for block in dce_trust_badges -%}
-          <li class="dce-hero-v1__trust-badge" {{ block.shopify_attributes }}>
-            {%- if block.settings.logo != blank -%}
-              {{
-                block.settings.logo
-                | image_url: width: 240
-                | image_tag: loading: 'lazy', widths: '120, 180, 240', alt: block.settings.label
-              }}
-            {%- endif -%}
-            {%- if block.settings.label != blank -%}
-              <span>{{ block.settings.label }}</span>
-            {%- endif -%}
-          </li>
-        {%- endfor -%}
-      </ul>
+      </dce-tilt>
     {%- endif -%}
   </div>
 </section>
@@ -193,23 +208,40 @@
       "type": "color",
       "id": "background_color",
       "label": "Color de fondo",
-      "info": "Opcional. Si se deja vacío, usa el fondo por defecto del tema."
+      "info": "Opcional. Si se deja vacío, usa el fondo oscuro cinematográfico por defecto."
     }
   ],
   "blocks": [
     {
       "type": "trust_badge",
-      "name": "Logo de confianza",
+      "name": "Indicador de confianza",
       "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícono",
+          "options": [
+            { "value": "none", "label": "Sin ícono" },
+            { "value": "check_mark", "label": "Check" },
+            { "value": "lock", "label": "Candado" },
+            { "value": "lightning_bolt", "label": "Rayo" },
+            { "value": "star", "label": "Estrella" },
+            { "value": "clipboard", "label": "Portapapeles" },
+            { "value": "heart", "label": "Corazón" }
+          ],
+          "default": "check_mark"
+        },
         {
           "type": "image_picker",
           "id": "logo",
-          "label": "Logo"
+          "label": "Logo",
+          "info": "Opcional, reemplaza al ícono si se completa."
         },
         {
           "type": "text",
           "id": "label",
-          "label": "Texto"
+          "label": "Texto",
+          "info": "Usá solo afirmaciones reales y verificables — nunca cifras inventadas."
         }
       ]
     }

@@ -13,21 +13,12 @@
         "height": "auto"
       },
       "blocks": {
-        "t1": { "type": "trust_badge", "settings": { "label": "Mentalidad" } },
-        "t2": { "type": "trust_badge", "settings": { "label": "Ventas" } },
-        "t3": { "type": "trust_badge", "settings": { "label": "Inteligencia Artificial" } },
-        "t4": { "type": "trust_badge", "settings": { "label": "Plan de 30 días" } }
+        "t1": { "type": "trust_badge", "settings": { "icon": "lock", "label": "Pago 100% seguro" } },
+        "t2": { "type": "trust_badge", "settings": { "icon": "lightning_bolt", "label": "Acceso inmediato" } },
+        "t3": { "type": "trust_badge", "settings": { "icon": "clipboard", "label": "35+ páginas de contenido" } },
+        "t4": { "type": "trust_badge", "settings": { "icon": "check_mark", "label": "Sin experiencia previa" } }
       },
       "block_order": ["t1", "t2", "t3", "t4"]
-    },
-    "stats": {
-      "type": "dce-stats-v1",
-      "blocks": {
-        "s1": { "type": "stat_item", "settings": { "value": "35+", "label": "Páginas de contenido real" } },
-        "s2": { "type": "stat_item", "settings": { "value": "30", "label": "Días de plan de acción" } },
-        "s3": { "type": "stat_item", "settings": { "value": "4", "label": "Habilidades clave" } }
-      },
-      "block_order": ["s1", "s2", "s3"]
     },
     "problem": {
       "type": "dce-problem-v1",
@@ -73,6 +64,15 @@
       },
       "block_order": ["b1", "b2", "b3", "b4", "b5"]
     },
+    "stats": {
+      "type": "dce-stats-v1",
+      "blocks": {
+        "s1": { "type": "stat_item", "settings": { "value": "35+", "label": "Páginas de contenido real" } },
+        "s2": { "type": "stat_item", "settings": { "value": "30", "label": "Días de plan de acción" } },
+        "s3": { "type": "stat_item", "settings": { "value": "4", "label": "Habilidades clave" } }
+      },
+      "block_order": ["s1", "s2", "s3"]
+    },
     "story": {
       "type": "dce-story-v1",
       "settings": {
@@ -80,7 +80,13 @@
         "heading": "Una persona común, no un gurú",
         "body": "<p>Este ebook no fue escrito por un millonario ni por un gurú. Fue escrito por una persona común que trabajó durante años en una fábrica, sintiéndose atrapada en la misma rutina sin poder crecer.</p><p>Hasta que tomé una decisión que lo cambió todo. Empecé a investigar, a aprender, a probar. La primera oportunidad que tomé me generó más de lo que ganaba en un mes de trabajo.</p><p>Hoy vivo de ingresos digitales. Este documento existe para ahorrarte años de prueba y error.</p>",
         "closing_line": "— No vine a este mundo para hacer solamente esto. Y vos tampoco."
-      }
+      },
+      "blocks": {
+        "ts1": { "type": "timeline_step", "settings": { "label": "Antes", "text": "Atrapado en una fábrica, sin margen para crecer." } },
+        "ts2": { "type": "timeline_step", "settings": { "label": "El cambio", "text": "Empecé a investigar, aprender y probar por mi cuenta." } },
+        "ts3": { "type": "timeline_step", "settings": { "label": "Hoy", "text": "Vivo de ingresos digitales y armé esta guía para acelerar tu camino." } }
+      },
+      "block_order": ["ts1", "ts2", "ts3"]
     },
     "offer": {
       "type": "dce-offer-v1",
@@ -126,5 +132,5 @@
       }
     }
   },
-  "order": ["hero", "stats", "problem", "transformation", "benefits", "story", "offer", "faq", "cta"]
+  "order": ["hero", "problem", "transformation", "benefits", "stats", "story", "offer", "faq", "cta"]
 }

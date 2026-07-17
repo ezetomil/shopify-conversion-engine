@@ -1,52 +1,61 @@
 /**
- * DCE Benefits v1 (numbered list). Isolated component.
+ * DCE Benefits v1 (premium card grid). Isolated component.
  */
 @layer components {
   .dce-benefits-v1__list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--dce-space-4);
-    max-width: 42rem;
-    margin: var(--dce-space-12) auto 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--dce-space-5);
+    max-width: 64rem;
+    margin: var(--dce-space-10) auto 0;
     padding: 0;
   }
 
   .dce-benefits-v1__item {
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     gap: var(--dce-space-4);
-    padding: var(--dce-space-5) var(--dce-space-6);
+    padding: var(--dce-space-6);
     background-color: var(--dce-color-bg);
     border: 1px solid var(--dce-color-border);
-    border-radius: var(--dce-radius-lg);
-    transition: transform var(--dce-duration-base) var(--dce-ease-out), box-shadow var(--dce-duration-base) var(--dce-ease-out), border-color var(--dce-duration-base) var(--dce-ease-out);
+    border-radius: var(--dce-radius-xl);
+    transition:
+      transform var(--dce-duration-base) var(--dce-ease-out),
+      box-shadow var(--dce-duration-base) var(--dce-ease-out),
+      border-color var(--dce-duration-base) var(--dce-ease-out);
   }
 
   .dce-benefits-v1__item:hover {
-    transform: translateX(4px);
-    box-shadow: var(--dce-shadow-md);
+    transform: translateY(-6px);
+    box-shadow: var(--dce-shadow-lg);
     border-color: var(--dce-color-accent);
   }
 
-  .dce-benefits-v1__number {
+  .dce-benefits-v1__badge {
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: var(--dce-radius-full);
-    background-color: var(--dce-color-accent-subtle);
-    color: var(--dce-color-accent);
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--dce-radius-md);
+    background: linear-gradient(135deg, var(--dce-color-accent), var(--dce-accent-700));
+    color: var(--dce-color-on-accent);
     font-size: var(--dce-text-sm);
     font-weight: var(--dce-weight-bold);
+    transition: transform var(--dce-duration-base) var(--dce-ease-spring);
+  }
+
+  .dce-benefits-v1__item:hover .dce-benefits-v1__badge {
+    transform: scale(1.08) rotate(4deg);
   }
 
   .dce-benefits-v1__title {
     margin: 0;
     color: var(--dce-color-text);
     font-weight: var(--dce-weight-semibold);
-    font-size: var(--dce-text-base);
+    font-size: var(--dce-text-md);
   }
 
   .dce-benefits-v1__text {
@@ -54,5 +63,17 @@
     color: var(--dce-color-text-muted);
     font-size: var(--dce-text-sm);
     line-height: var(--dce-leading-relaxed);
+  }
+
+  @media (min-width: 768px) {
+    .dce-benefits-v1__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dce-benefits-v1__list {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 }

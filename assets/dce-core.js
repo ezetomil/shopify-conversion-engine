@@ -61,5 +61,44 @@ function initScrollReveal() {
   targets.forEach((el) => observer.observe(el));
 }
 
+/**
+ * Magnetic hover: elements with [data-dce-magnetic] nudge a few px toward
+ * the cursor while hovered, spring back on leave. Pointer-fine devices
+ * only (skips touch entirely) and off under prefers-reduced-motion —
+ * this is a decorative micro-interaction, never load-bearing.
+ */
+function initMagnetic() {
+  if (!window.matchMedia('(pointer: fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  const strength = 0.25;
+  const maxOffset = 10;
+
+  document.querySelectorAll('[data-dce-magnetic]').forEach((el) => {
+    if (el.dataset.dceMagneticBound) return;
+    el.dataset.dceMagneticBound = 'true';
+
+    el.addEventListener('mousemove', (event) => {
+      const rect = el.getBoundingClientRect();
+      const offsetX = clamp((event.clientX - rect.left - rect.width / 2) * strength, -maxOffset, maxOffset);
+      const offsetY = clamp((event.clientY - rect.top - rect.height / 2) * strength, -maxOffset, maxOffset);
+      el.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+    });
+
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = '';
+    });
+  });
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
 initScrollReveal();
-document.addEventListener('shopify:section:load', initScrollReveal);
+initMagnetic();
+document.addEventListener('shopify:section:load', () => {
+  initScrollReveal();
+  initMagnetic();
+});

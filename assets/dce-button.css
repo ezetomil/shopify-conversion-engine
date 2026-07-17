@@ -43,6 +43,12 @@
     padding: var(--dce-space-4) var(--dce-space-8);
   }
 
+  .dce-button--xl {
+    font-size: var(--dce-text-lg);
+    padding: var(--dce-space-5) var(--dce-space-10);
+    border-radius: var(--dce-radius-lg);
+  }
+
   /* Variants */
   .dce-button--primary {
     background-color: var(--dce-color-accent);

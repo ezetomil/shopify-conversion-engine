@@ -5,8 +5,9 @@
   @param {string} label - Visible button text.
   @param {string} url - Link destination.
   @param {string} [variant] - 'primary' | 'secondary' | 'ghost' | 'link' (default: 'primary').
-  @param {string} [size] - 'sm' | 'md' | 'lg' (default: 'md').
+  @param {string} [size] - 'sm' | 'md' | 'lg' | 'xl' (default: 'md').
   @param {boolean} [new_tab] - Opens the link in a new tab (default: false).
+  @param {boolean} [magnetic] - Adds the magnetic cursor-follow hover (default: false). Reserve for the single most important CTA per page — overusing it dilutes the effect.
 
   @example
   {% render 'dce-button', label: section.settings.cta_label, url: section.settings.cta_url, variant: 'primary', size: 'lg' %}
@@ -20,6 +21,9 @@
   <a
     href="{{ url }}"
     class="dce-button dce-button--{{ dce_button_variant }} dce-button--{{ dce_button_size }}"
+    {%- if magnetic %}
+      data-dce-magnetic
+    {%- endif %}
     {%- if new_tab %}
       target="_blank"
       rel="noopener"

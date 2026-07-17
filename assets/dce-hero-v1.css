@@ -1,32 +1,78 @@
 /**
- * DCE Hero v1 (centered). Isolated component — see docs/00-principles.md, point 4.
- * Never reference another component's classes from here, and never let this
- * file be referenced by another component.
+ * DCE Hero v1 (cinematic, dark by default). Isolated component — see
+ * docs/00-principles.md, point 4. Never reference another component's
+ * classes from here, and never let this file be referenced by another
+ * component.
+ *
+ * Dark by default: overrides the semantic color tokens locally (same
+ * two-tier token trick as dce-transformation-v1--dark) so every class
+ * below that consumes var(--dce-color-text) etc. automatically adapts —
+ * no per-class dark-mode duplication needed.
  */
 @layer components {
   .dce-hero-v1 {
     position: relative;
     overflow: hidden;
+    background: linear-gradient(160deg, var(--dce-gray-950) 0%, var(--dce-gray-900) 55%, color-mix(in srgb, var(--dce-accent-700) 25%, var(--dce-gray-900)) 100%);
+    --dce-color-text: var(--dce-color-text-inverse);
+    --dce-color-text-muted: var(--dce-gray-400);
+    --dce-color-border: var(--dce-gray-800);
+    --dce-color-bg: var(--dce-gray-900);
+    padding-block: calc(var(--dce-section-padding-y) * 1.15);
   }
 
-  .dce-hero-v1__glow {
+  .dce-hero-v1__backdrop {
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
+    overflow: hidden;
+  }
+
+  .dce-hero-v1__glow {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    width: 70rem;
+    height: 50rem;
+    transform: translateX(-50%);
     background:
-      radial-gradient(45rem 24rem at 50% -10%, var(--dce-accent-100) 0%, transparent 65%);
-    opacity: 0.6;
+      radial-gradient(38rem 26rem at 30% 20%, color-mix(in srgb, var(--dce-color-accent) 35%, transparent) 0%, transparent 60%),
+      radial-gradient(30rem 22rem at 75% 60%, color-mix(in srgb, var(--dce-accent-300) 25%, transparent) 0%, transparent 65%);
+    animation: dce-hero-v1-drift 22s ease-in-out infinite;
+  }
+
+  .dce-hero-v1__noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @keyframes dce-hero-v1-drift {
+    0%, 100% {
+      transform: translateX(-50%) translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateX(-48%) translateY(2%) rotate(2deg);
+    }
+  }
+
+  .dce-hero-v1__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    gap: var(--dce-space-16);
   }
 
   .dce-hero-v1__inner {
-    position: relative;
-    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    max-width: 46rem;
   }
 
   .dce-hero-v1--viewport {
@@ -35,8 +81,36 @@
     min-height: 100svh;
   }
 
-  .dce-hero-v1--viewport .dce-hero-v1__inner {
-    margin-inline: auto;
+  .dce-hero-v1__trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--dce-space-3);
+    margin: 0 0 var(--dce-space-6);
+    padding: 0;
+  }
+
+  .dce-hero-v1__trust-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--dce-space-2);
+    padding: var(--dce-space-1) var(--dce-space-3);
+    border-radius: var(--dce-radius-full);
+    border: 1px solid var(--dce-gray-800);
+    background-color: color-mix(in srgb, var(--dce-gray-900) 60%, transparent);
+    color: var(--dce-gray-300);
+    font-size: var(--dce-text-xs);
+    font-weight: var(--dce-weight-medium);
+  }
+
+  .dce-hero-v1__trust-badge .dce-icon {
+    color: var(--dce-color-accent);
+  }
+
+  .dce-hero-v1__trust-badge img {
+    max-height: 1.25rem;
+    width: auto;
   }
 
   .dce-hero-v1__badge {
@@ -45,8 +119,8 @@
     padding: var(--dce-space-1) var(--dce-space-4);
     margin-bottom: var(--dce-space-4);
     border-radius: var(--dce-radius-full);
-    background-color: var(--dce-color-accent-subtle);
-    color: var(--dce-color-accent);
+    background-color: color-mix(in srgb, var(--dce-color-accent) 18%, transparent);
+    color: var(--dce-accent-300);
     font-size: var(--dce-text-xs);
     font-weight: var(--dce-weight-semibold);
   }
@@ -69,7 +143,7 @@
   }
 
   .dce-hero-v1__heading-accent {
-    background: linear-gradient(135deg, var(--dce-color-accent) 0%, var(--dce-accent-700) 100%);
+    background: linear-gradient(135deg, var(--dce-accent-300) 0%, var(--dce-color-accent) 100%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
@@ -80,7 +154,7 @@
     color: var(--dce-color-text-muted);
     font-size: var(--dce-text-lg);
     line-height: var(--dce-leading-relaxed);
-    max-width: 38rem;
+    max-width: 34rem;
   }
 
   .dce-hero-v1__actions {
@@ -89,51 +163,67 @@
     align-items: center;
     justify-content: center;
     gap: var(--dce-space-4);
-    margin-top: var(--dce-space-8);
+    margin-top: var(--dce-space-10);
   }
 
+  /* dce-tilt custom element — perspective wrapper for the 3D hover tilt, see dce-hero-v1.js */
   .dce-hero-v1__visual {
+    position: relative;
+    display: block;
     width: 100%;
-    margin-top: var(--dce-space-12);
+    max-width: 22rem;
+    margin-inline: auto;
+    perspective: 1200px;
   }
 
   .dce-hero-v1__visual img {
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: auto;
     border-radius: var(--dce-radius-lg);
     box-shadow: var(--dce-shadow-xl);
-    transition: transform var(--dce-duration-slow) var(--dce-ease-out);
+    transform: rotateX(var(--dce-tilt-y, 0deg)) rotateY(var(--dce-tilt-x, 0deg));
+    transition: transform var(--dce-duration-base) var(--dce-ease-out);
+    transform-style: preserve-3d;
   }
 
-  .dce-hero-v1__visual:hover img {
-    transform: translateY(-4px) scale(1.01);
+  .dce-hero-v1__visual-shadow {
+    position: absolute;
+    z-index: 0;
+    inset: 10% 4% -6% 4%;
+    background: color-mix(in srgb, var(--dce-color-accent) 55%, black 20%);
+    filter: blur(40px);
+    opacity: 0.35;
+    border-radius: var(--dce-radius-lg);
+    transform: translate(calc(var(--dce-tilt-x, 0deg) * -1.2px), calc(var(--dce-tilt-y, 0deg) * 1.2px));
+    transition: transform var(--dce-duration-base) var(--dce-ease-out), opacity var(--dce-duration-base) var(--dce-ease-out);
   }
 
-  .dce-hero-v1__trust-badges {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: var(--dce-space-6);
-    margin-top: var(--dce-space-12);
-    padding: 0;
+  .dce-hero-v1__visual:hover .dce-hero-v1__visual-shadow {
+    opacity: 0.5;
   }
 
-  .dce-hero-v1__trust-badge {
-    display: flex;
-    align-items: center;
-    gap: var(--dce-space-2);
-    color: var(--dce-color-text-muted);
-    font-size: var(--dce-text-sm);
-    opacity: 0.8;
-  }
+  @media (min-width: 1024px) {
+    .dce-hero-v1__grid {
+      grid-template-columns: 1.05fr 0.85fr;
+      text-align: left;
+    }
 
-  .dce-hero-v1__trust-badge img {
-    max-height: 1.5rem;
-    width: auto;
-  }
+    .dce-hero-v1__inner {
+      align-items: flex-start;
+      text-align: left;
+    }
 
-  @media (min-width: 768px) {
+    .dce-hero-v1__trust-badges,
+    .dce-hero-v1__actions {
+      justify-content: flex-start;
+    }
+
+    .dce-hero-v1__subheading {
+      max-width: 32rem;
+    }
+
     .dce-hero-v1__heading {
       font-size: var(--dce-text-6xl);
     }

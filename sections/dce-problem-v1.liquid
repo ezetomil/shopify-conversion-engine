@@ -31,7 +31,7 @@
         {%- for block in dce_pain_points -%}
           <li
             class="dce-problem-v1__item"
-            data-dce-animate
+            data-dce-animate="fade-left"
             style="transition-delay: {{ forloop.index0 | times: 90 }}ms"
             {{ block.shopify_attributes }}
           >

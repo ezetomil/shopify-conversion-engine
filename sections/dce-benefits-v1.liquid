@@ -7,6 +7,7 @@
 
 {{ 'dce-benefits-v1.css' | asset_url | stylesheet_tag }}
 {{ 'dce-section-header.css' | asset_url | stylesheet_tag }}
+{{ 'dce-icon.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
   assign dce_benefits = section.blocks | where: 'type', 'benefit_item'
@@ -30,11 +31,17 @@
         {%- for block in dce_benefits -%}
           <li
             class="dce-benefits-v1__item"
-            data-dce-animate
+            data-dce-animate="fade-right"
             style="transition-delay: {{ forloop.index0 | times: 70 }}ms"
             {{ block.shopify_attributes }}
           >
-            <span class="dce-benefits-v1__number">{{ forloop.index }}</span>
+            <span class="dce-benefits-v1__badge">
+              {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
+                {%- render 'dce-icon', name: block.settings.icon -%}
+              {%- else -%}
+                {{ forloop.index }}
+              {%- endif -%}
+            </span>
             <div class="dce-benefits-v1__body">
               <p class="dce-benefits-v1__title">{{ block.settings.title }}</p>
               {%- if block.settings.text != blank -%}
@@ -81,6 +88,23 @@
       "type": "benefit_item",
       "name": "Beneficio",
       "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícono",
+          "info": "Opcional. Sin ícono, muestra el número de orden.",
+          "options": [
+            { "value": "none", "label": "Sin ícono (mostrar número)" },
+            { "value": "lightning_bolt", "label": "Rayo" },
+            { "value": "check_mark", "label": "Check" },
+            { "value": "star", "label": "Estrella" },
+            { "value": "heart", "label": "Corazón" },
+            { "value": "clipboard", "label": "Portapapeles" },
+            { "value": "plant", "label": "Planta (crecimiento)" },
+            { "value": "map_pin", "label": "Pin de mapa" }
+          ],
+          "default": "none"
+        },
         {
           "type": "text",
           "id": "title",

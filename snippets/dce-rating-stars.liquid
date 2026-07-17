@@ -1,0 +1,20 @@
+{%- doc -%}
+  Renders a 1-5 star rating using the shared icon primitive.
+
+  @param {number} [rating] - 1-5, decimals rounded down to the nearest
+    whole star (no partial-star rendering, keeps this dependency-free).
+
+  @example
+  {% render 'dce-rating-stars', rating: block.settings.rating %}
+{%- enddoc -%}
+
+{%- liquid
+  assign dce_rating = rating | default: 5 | at_most: 5 | at_least: 1 | round
+-%}
+<span class="dce-rating-stars" role="img" aria-label="{{ dce_rating }} de 5 estrellas">
+  {%- for i in (1..5) -%}
+    <span class="dce-rating-stars__star{% if i > dce_rating %} dce-rating-stars__star--empty{% endif %}" aria-hidden="true">
+      {%- render 'dce-icon', name: 'star' -%}
+    </span>
+  {%- endfor -%}
+</span>
