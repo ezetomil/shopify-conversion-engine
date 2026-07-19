@@ -125,5 +125,5 @@
       }
     }
   },
-  "order": ["hero", "problem", "transformation", "benefits", "story", "promise", "offer", "faq", "cta"]
+  "order": ["hero", "problem", "transformation", "benefits", "gallery", "story", "promise", "offer", "faq", "cta"]
 }
