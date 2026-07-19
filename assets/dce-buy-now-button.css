@@ -1,9 +1,31 @@
 /**
  * DCE Buy Now Button primitive. Loaded conditionally by any section that
  * renders snippets/dce-buy-now-button.liquid.
+ *
+ * Deliberately centered and fixed-width in every context (mobile-first,
+ * per the request that drove this file: nothing left-aligned, nothing
+ * "corrido"). If a section ever needs a left-aligned buy-now button,
+ * that's a new modifier class, not a change to this default.
  */
 @layer components {
+  .dce-buy-now {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 24rem;
+    margin-inline: auto;
+  }
+
   .dce-buy-now__form {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .dce-buy-now__form .dce-button {
+    width: 100%;
   }
 }

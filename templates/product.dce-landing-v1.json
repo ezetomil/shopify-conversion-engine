@@ -1,4 +1,5 @@
 {
+  "layout": "dce-landing",
   "sections": {
     "hero": {
       "type": "dce-hero-v1",

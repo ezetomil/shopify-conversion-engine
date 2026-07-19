@@ -1,6 +1,10 @@
 /**
  * DCE Micro Trust primitive. Loaded conditionally by any section that
  * renders snippets/dce-micro-trust.liquid.
+ *
+ * Mobile-first: centered, uniform gap, each item kept on one line
+ * (emoji never separates from its label) — wraps to a new row only when
+ * an iPhone-width viewport genuinely can't fit all three side by side.
  */
 @layer components {
   .dce-micro-trust {
@@ -8,11 +12,27 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: var(--dce-space-2) var(--dce-space-4);
+    gap: var(--dce-space-2);
+    width: 100%;
     margin: var(--dce-space-4) 0 0;
     color: var(--dce-color-text-muted);
     font-size: var(--dce-text-xs);
     font-weight: var(--dce-weight-medium);
     text-align: center;
+  }
+
+  .dce-micro-trust span {
+    white-space: nowrap;
+  }
+
+  /*
+    The separator lives inside the preceding item (not as its own flex
+    child), so it always wraps together with the text before it — never
+    left stranded alone at the end of a line.
+  */
+  .dce-micro-trust span:not(:last-child)::after {
+    content: '•';
+    margin-left: var(--dce-space-2);
+    color: var(--dce-color-border-strong);
   }
 }
