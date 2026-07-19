@@ -213,6 +213,33 @@
   }
 
   /*
+    Breathing CTA — reserved for the Hero's primary button only (the
+    single first decision point on the page), not the shared .dce-button
+    class, so buttons elsewhere never breathe. Lives on .dce-buy-now__form
+    (a plain wrapper with no other transform use), never on the button
+    itself, so it can't fight the button's own :hover/:active transforms
+    — the composition pattern used throughout this file.
+  */
+  .dce-hero-v1__actions .dce-buy-now__form {
+    animation: dce-hero-v1-breathe 4.5s ease-in-out infinite;
+  }
+
+  @keyframes dce-hero-v1-breathe {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.015);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-hero-v1__actions .dce-buy-now__form {
+      animation: none;
+    }
+  }
+
+  /*
     dce-tilt custom element — perspective wrapper. Its own transform is
     reserved for the scale-in entrance (data-dce-animate) only. Scroll
     parallax and the continuous float live on separate nested layers

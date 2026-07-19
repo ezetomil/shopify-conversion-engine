@@ -2,7 +2,22 @@
  * DCE Promise v1 (what it doesn't / does promise). Isolated component.
  */
 @layer components {
+  .dce-promise-v1 {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dce-promise-v1__ambient {
+    top: -10%;
+    left: -14%;
+    width: 32rem;
+    height: 32rem;
+    background: color-mix(in srgb, var(--dce-color-accent) 7%, transparent);
+  }
+
   .dce-promise-v1__container {
+    position: relative;
+    z-index: 1;
     max-width: 42rem;
     text-align: center;
   }
