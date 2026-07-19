@@ -7,8 +7,8 @@
         "heading_accent": "cambiar esto",
         "subheading": "Una guía corta para dar el primer paso, aunque sientas que no tenés tiempo ni experiencia.",
         "image": "shopify://shop_images/ChatGPTImage6jun2026_02_21_10p.m._a8be85eb-3e42-482c-9e5b-423be4ad05f5.png",
+        "cta_primary_style": "buy_now",
         "cta_primary_label": "Empezar ahora",
-        "cta_primary_url": "#dce-offer-offer",
         "height": "viewport"
       }
     },
@@ -81,15 +81,15 @@
         "heading": "Llevate la guía",
         "subheading": "Acceso inmediato. Pago único.",
         "badge_text": "Precio de lanzamiento",
-        "reassurance_text": "Pago 100% seguro · Acceso inmediato"
+        "checkout_style": "instant",
+        "cta_label": "Comprar ahora"
       },
       "blocks": {
         "i1": { "type": "include_item", "settings": { "text": "Guía completa en PDF (35+ páginas)" } },
         "i2": { "type": "include_item", "settings": { "text": "Plan de acción de 30 días" } },
-        "i3": { "type": "include_item", "settings": { "text": "Acceso de por vida al material" } },
-        "buy": { "type": "buy_box", "settings": { "show_dynamic_checkout": false } }
+        "i3": { "type": "include_item", "settings": { "text": "Acceso de por vida al material" } }
       },
-      "block_order": ["i1", "i2", "i3", "buy"]
+      "block_order": ["i1", "i2", "i3"]
     },
     "faq": {
       "type": "dce-faq-v1",
@@ -109,9 +109,8 @@
       "settings": {
         "heading": "¿Seguís esperando el momento perfecto?",
         "subheading": "El momento perfecto no existe. Lo que existe es la decisión de empezar.",
-        "cta_label": "Quiero empezar",
-        "cta_url": "#dce-offer-offer",
-        "reassurance_text": "Pago único · Acceso inmediato"
+        "cta_style": "buy_now",
+        "cta_label": "Quiero empezar"
       }
     }
   },

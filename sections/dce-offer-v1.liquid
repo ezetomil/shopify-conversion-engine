@@ -2,8 +2,14 @@
   DCE Offer — variant 1 (price box).
   Funnel role: the conversion moment. Must remove every remaining doubt in
   one glance (what's included, what it costs, that checkout is safe) and
-  hand off to Shopify's native purchase flow — never reimplement cart/
-  checkout logic here, only reuse Dawn's.
+  hand off to Shopify's native purchase flow.
+
+  checkout_style 'instant' uses the same one-click add-to-cart-then-
+  checkout button as Hero/CTA final (see snippets/dce-buy-now-button.liquid)
+  — every buy action on the page behaves identically by design, see
+  docs/00-principles.md, point 4. 'standard' falls back to Dawn's own
+  buy-buttons snippet (cart drawer, dynamic checkout, gift-card support)
+  for products that need that fuller flow.
 
   Only valid on product templates: reads the global `product` object.
 {%- endcomment -%}
@@ -12,6 +18,10 @@
 {{ 'dce-section-header.css' | asset_url | stylesheet_tag }}
 {{ 'dce-icon.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.checkout_style == 'instant' -%}
+  {{ 'dce-buy-now-button.css' | asset_url | stylesheet_tag }}
+  {{ 'dce-micro-trust.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
 {%- unless product.has_only_default_variant -%}
   {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
   {{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
@@ -74,28 +84,32 @@
           {%- render 'product-variant-picker', product: product, product_form_id: product_form_id, section: section, update_url: false -%}
         {%- endunless -%}
 
-        {%- comment -%}
-          Reuses Dawn's own buy-buttons snippet (cart form, dynamic checkout,
-          error handling) instead of reimplementing add-to-cart — see
-          docs/00-principles.md on not duplicating logic. Visual styling is
-          re-skinned to DCE tokens via a scoped override in dce-offer-v1.css,
-          the underlying form/JS is untouched.
-        {%- endcomment -%}
-        <div class="dce-offer-v1__buy-buttons">
-          {%- render 'buy-buttons',
-            block: dce_buy_box_block,
-            product: product,
-            product_form_id: product_form_id,
-            section_id: section.id,
-            show_pickup_availability: false
-          -%}
-        </div>
+        {%- if section.settings.checkout_style == 'instant' -%}
+          <div class="dce-offer-v1__buy-now">
+            {%- render 'dce-buy-now-button', product: product, label: section.settings.cta_label, size: 'xl' -%}
+          </div>
+        {%- else -%}
+          {%- comment -%}
+            Reuses Dawn's own buy-buttons snippet (cart form, dynamic
+            checkout, error handling) instead of reimplementing add-to-cart
+            — see docs/00-principles.md on not duplicating logic.
+          {%- endcomment -%}
+          <div class="dce-offer-v1__buy-buttons">
+            {%- render 'buy-buttons',
+              block: dce_buy_box_block,
+              product: product,
+              product_form_id: product_form_id,
+              section_id: section.id,
+              show_pickup_availability: false
+            -%}
+          </div>
 
-        {%- if section.settings.reassurance_text != blank -%}
-          <p class="dce-offer-v1__reassurance">
-            <span class="dce-offer-v1__reassurance-icon">{%- render 'dce-icon', name: 'lock' -%}</span>
-            {{ section.settings.reassurance_text }}
-          </p>
+          {%- if section.settings.reassurance_text != blank -%}
+            <p class="dce-offer-v1__reassurance">
+              <span class="dce-offer-v1__reassurance-icon">{%- render 'dce-icon', name: 'lock' -%}</span>
+              {{ section.settings.reassurance_text }}
+            </p>
+          {%- endif -%}
         {%- endif -%}
       </product-info>
     {%- endif -%}
@@ -131,10 +145,29 @@
       "info": "Ej: \"Precio de lanzamiento\"."
     },
     {
+      "type": "select",
+      "id": "checkout_style",
+      "label": "Comportamiento del botón de compra",
+      "options": [
+        { "value": "instant", "label": "Compra directa (agrega y va al checkout)" },
+        { "value": "standard", "label": "Carrito estándar de Shopify" }
+      ],
+      "default": "instant",
+      "info": "\"Compra directa\" usa el mismo botón que el resto de la página — ver docs/00-principles.md."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto del botón",
+      "default": "Comprar ahora",
+      "info": "Solo se usa con \"Compra directa\"."
+    },
+    {
       "type": "text",
       "id": "reassurance_text",
       "label": "Texto de confianza",
-      "default": "Pago 100% seguro · Acceso inmediato al comprar"
+      "default": "Pago 100% seguro · Acceso inmediato al comprar",
+      "info": "Solo se usa con \"Carrito estándar\" — \"Compra directa\" ya muestra la fila de micro-confianza estándar."
     }
   ],
   "blocks": [

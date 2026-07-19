@@ -18,6 +18,10 @@
 {{ 'dce-button.css' | asset_url | stylesheet_tag }}
 {{ 'dce-icon.css' | asset_url | stylesheet_tag }}
 {{ 'dce-rating-stars.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.cta_primary_style == 'buy_now' -%}
+  {{ 'dce-buy-now-button.css' | asset_url | stylesheet_tag }}
+  {{ 'dce-micro-trust.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
 <script src="{{ 'dce-hero-v1.js' | asset_url }}" type="module"></script>
 
 {%- liquid
@@ -76,7 +80,11 @@
         <p class="dce-hero-v1__subheading" data-dce-animate="fade-up" style="transition-delay: 260ms">{{ section.settings.subheading }}</p>
       {%- endif -%}
 
-      {%- if dce_has_actions -%}
+      {%- if section.settings.cta_primary_style == 'buy_now' -%}
+        <div class="dce-hero-v1__actions" data-dce-animate="fade-up" style="transition-delay: 340ms">
+          {%- render 'dce-buy-now-button', product: product, label: section.settings.cta_primary_label, size: 'xl' -%}
+        </div>
+      {%- elsif dce_has_actions -%}
         <div class="dce-hero-v1__actions" data-dce-animate="fade-up" style="transition-delay: 340ms">
           {%- render 'dce-button',
             label: section.settings.cta_primary_label,
@@ -202,6 +210,17 @@
       "content": "Llamado a la acción principal"
     },
     {
+      "type": "select",
+      "id": "cta_primary_style",
+      "label": "Comportamiento del botón",
+      "options": [
+        { "value": "link", "label": "Link normal (usa la URL de abajo)" },
+        { "value": "buy_now", "label": "Compra directa (agrega al carrito y va al checkout)" }
+      ],
+      "default": "link",
+      "info": "\"Compra directa\" ignora la URL y usa el producto de esta página."
+    },
+    {
       "type": "text",
       "id": "cta_primary_label",
       "label": "Texto del botón",
@@ -210,7 +229,8 @@
     {
       "type": "url",
       "id": "cta_primary_url",
-      "label": "Link del botón"
+      "label": "Link del botón",
+      "info": "Solo se usa si el comportamiento es \"Link normal\"."
     },
     {
       "type": "header",

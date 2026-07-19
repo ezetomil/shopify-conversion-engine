@@ -1,0 +1,9 @@
+/**
+ * DCE Buy Now Button primitive. Loaded conditionally by any section that
+ * renders snippets/dce-buy-now-button.liquid.
+ */
+@layer components {
+  .dce-buy-now__form {
+    display: flex;
+  }
+}

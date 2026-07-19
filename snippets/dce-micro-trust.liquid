@@ -1,0 +1,19 @@
+{%- doc -%}
+  Small trust-signal row shown under every buy-now button — see
+  snippets/dce-buy-now-button.liquid. Kept as its own snippet so the
+  wording stays identical everywhere it appears, instead of being
+  retyped per section.
+
+  @param {string} [secure_text]
+  @param {string} [delivery_text]
+  @param {string} [access_text]
+
+  @example
+  {% render 'dce-micro-trust' %}
+{%- enddoc -%}
+
+<p class="dce-micro-trust">
+  <span>🔒 {{ secure_text | default: 'Pago 100% seguro' }}</span>
+  <span>⚡ {{ delivery_text | default: 'Descarga inmediata' }}</span>
+  <span>📄 {{ access_text | default: 'Acceso de por vida' }}</span>
+</p>

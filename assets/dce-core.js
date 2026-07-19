@@ -96,9 +96,53 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
+/**
+ * Buy-now: intercepts [data-dce-buy-now] form submits, adds the item via
+ * the Cart AJAX API, and redirects straight to /checkout — no cart drawer,
+ * no staying on the page. Every button using this markup behaves
+ * identically by design (see docs/00-principles.md, point 4 — one
+ * behavior, reused, never re-implemented per section).
+ *
+ * The form's real action/method already point at Shopify's native
+ * /cart/add with a return_to=/checkout field, so if this script never
+ * runs (blocked, failed, disabled) the form still submits natively and
+ * Shopify performs the same add-then-redirect server-side. The fetch
+ * path here only exists to skip the extra full-page round trip.
+ */
+function initBuyNow() {
+  document.querySelectorAll('[data-dce-buy-now]').forEach((form) => {
+    if (form.dataset.dceBuyNowBound) return;
+    form.dataset.dceBuyNowBound = 'true';
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const submitButton = form.querySelector('[type="submit"]');
+      submitButton?.setAttribute('disabled', 'disabled');
+
+      const variantId = form.querySelector('[name="id"]')?.value;
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: 1 }),
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error('dce-buy-now: add to cart failed');
+          window.location.href = '/checkout';
+        })
+        .catch(() => {
+          form.submit();
+        });
+    });
+  });
+}
+
 initScrollReveal();
 initMagnetic();
+initBuyNow();
 document.addEventListener('shopify:section:load', () => {
   initScrollReveal();
   initMagnetic();
+  initBuyNow();
 });

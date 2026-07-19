@@ -1,12 +1,17 @@
 {%- comment -%}
   DCE CTA — variant 1 (final close).
   Funnel role: last chance to convert before the footer. Reinforces the
-  decision, not new information — the button routes back to the Offer
-  section's buy box rather than duplicating cart/checkout logic here.
+  decision, not new information. cta_style 'buy_now' uses the same
+  add-to-cart-then-checkout behavior as every other buy button on the
+  page — see docs/00-principles.md, point 4 and snippets/dce-buy-now-button.liquid.
 {%- endcomment -%}
 
 {{ 'dce-cta-v1.css' | asset_url | stylesheet_tag }}
 {{ 'dce-button.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.cta_style == 'buy_now' -%}
+  {{ 'dce-buy-now-button.css' | asset_url | stylesheet_tag }}
+  {{ 'dce-micro-trust.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
 
 <section class="dce-cta-v1 dce-section">
   <div class="dce-container">
@@ -15,13 +20,18 @@
       {%- if section.settings.subheading != blank -%}
         <p class="dce-cta-v1__subheading">{{ section.settings.subheading }}</p>
       {%- endif -%}
-      {%- if section.settings.cta_label != blank and section.settings.cta_url != blank -%}
+
+      {%- if section.settings.cta_style == 'buy_now' -%}
+        <div class="dce-cta-v1__action">
+          {%- render 'dce-buy-now-button', product: product, label: section.settings.cta_label, size: 'xl' -%}
+        </div>
+      {%- elsif section.settings.cta_label != blank and section.settings.cta_url != blank -%}
         <div class="dce-cta-v1__action">
           {%- render 'dce-button', label: section.settings.cta_label, url: section.settings.cta_url, variant: 'primary', size: 'xl', magnetic: true -%}
         </div>
-      {%- endif -%}
-      {%- if section.settings.reassurance_text != blank -%}
-        <p class="dce-cta-v1__reassurance">{{ section.settings.reassurance_text }}</p>
+        {%- if section.settings.reassurance_text != blank -%}
+          <p class="dce-cta-v1__reassurance">{{ section.settings.reassurance_text }}</p>
+        {%- endif -%}
       {%- endif -%}
     </div>
   </div>
@@ -46,6 +56,17 @@
       "default": "El momento perfecto no existe. Lo que existe es la decisión de empezar."
     },
     {
+      "type": "select",
+      "id": "cta_style",
+      "label": "Comportamiento del botón",
+      "options": [
+        { "value": "link", "label": "Link normal (usa la URL de abajo)" },
+        { "value": "buy_now", "label": "Compra directa (agrega al carrito y va al checkout)" }
+      ],
+      "default": "link",
+      "info": "\"Compra directa\" ignora la URL y usa el producto de esta página."
+    },
+    {
       "type": "text",
       "id": "cta_label",
       "label": "Texto del botón",
@@ -55,12 +76,13 @@
       "type": "url",
       "id": "cta_url",
       "label": "Link del botón",
-      "info": "Normalmente un ancla a la sección Oferta, ej: #dce-offer-{id de la sección}."
+      "info": "Solo se usa si el comportamiento es \"Link normal\"."
     },
     {
       "type": "text",
       "id": "reassurance_text",
-      "label": "Texto de confianza"
+      "label": "Texto de confianza",
+      "info": "Solo se usa si el comportamiento es \"Link normal\" — \"Compra directa\" ya muestra la fila de micro-confianza estándar."
     }
   ],
   "presets": [

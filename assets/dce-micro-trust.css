@@ -1,0 +1,18 @@
+/**
+ * DCE Micro Trust primitive. Loaded conditionally by any section that
+ * renders snippets/dce-micro-trust.liquid.
+ */
+@layer components {
+  .dce-micro-trust {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--dce-space-2) var(--dce-space-4);
+    margin: var(--dce-space-4) 0 0;
+    color: var(--dce-color-text-muted);
+    font-size: var(--dce-text-xs);
+    font-weight: var(--dce-weight-medium);
+    text-align: center;
+  }
+}

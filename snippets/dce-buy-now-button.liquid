@@ -1,0 +1,66 @@
+{%- doc -%}
+  One-click "add to cart + go straight to checkout" button for the
+  current product. No cart drawer, no staying on the page — click adds
+  the item and redirects to /checkout immediately (see dce-core.js's
+  initBuyNow). The underlying element is a real Shopify product form
+  pointed at /cart/add with return_to=/checkout, so it still works with
+  JavaScript off — the JS layer only skips the extra page load.
+
+  Every section that needs a "buy" action should use this exact snippet
+  instead of a plain link — see docs/00-principles.md, point 4: one
+  behavior, reused, never re-implemented per component.
+
+  @param {object} product
+  @param {string} label
+  @param {string} [size] - 'sm' | 'md' | 'lg' | 'xl' (default: 'xl')
+  @param {boolean} [magnetic] - default true
+  @param {boolean} [show_micro_trust] - default true
+
+  @example
+  {% render 'dce-buy-now-button', product: product, label: 'Empezar ahora' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign dce_size = size | default: 'xl'
+  assign dce_magnetic = true
+  if magnetic == false
+    assign dce_magnetic = false
+  endif
+  assign dce_show_micro_trust = true
+  if show_micro_trust == false
+    assign dce_show_micro_trust = false
+  endif
+-%}
+
+{%- if product != blank -%}
+  <div class="dce-buy-now">
+    {%- form 'product', product, class: 'dce-buy-now__form', data-dce-buy-now: true -%}
+      <input
+        type="hidden"
+        name="id"
+        value="{{ product.selected_or_first_available_variant.id }}"
+        class="product-variant-id"
+      >
+      <input type="hidden" name="return_to" value="/checkout">
+      <button
+        type="submit"
+        class="dce-button dce-button--primary dce-button--{{ dce_size }}"
+        {%- if dce_magnetic %}
+          data-dce-magnetic
+        {%- endif %}
+        {%- if product.selected_or_first_available_variant.available == false %}
+          disabled
+        {%- endif %}
+      >
+        {%- if product.selected_or_first_available_variant.available == false -%}
+          Agotado
+        {%- else -%}
+          {{ label }}
+        {%- endif -%}
+      </button>
+    {%- endform -%}
+    {%- if dce_show_micro_trust -%}
+      {%- render 'dce-micro-trust' -%}
+    {%- endif -%}
+  </div>
+{%- endif -%}
