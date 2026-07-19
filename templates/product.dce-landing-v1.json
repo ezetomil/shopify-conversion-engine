@@ -56,7 +56,13 @@
       "settings": {
         "heading": "Mirá parte de la guía",
         "subheading": "Esto es exactamente lo que vas a recibir después de comprar."
-      }
+      },
+      "blocks": {
+        "g1": { "type": "gallery_item", "settings": { "image": "shopify://shop_images/guia-indice.png", "alt": "Índice de la guía De la Impotencia a los Ingresos" } },
+        "g2": { "type": "gallery_item", "settings": { "image": "shopify://shop_images/guia-lo-que-vas-a-descubrir.png", "alt": "Lo que vas a descubrir en este libro" } },
+        "g3": { "type": "gallery_item", "settings": { "image": "shopify://shop_images/guia-semana-3-primer-cliente.png", "alt": "Semana 3 del plan de acción: conseguí tu primer cliente" } }
+      },
+      "block_order": ["g1", "g2", "g3"]
     },
     "story": {
       "type": "dce-story-v1",
