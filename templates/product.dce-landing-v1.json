@@ -102,7 +102,7 @@
         "i3": { "type": "include_item", "settings": { "text": "Capítulo de IA aplicada a negocios digitales" } },
         "i4": { "type": "include_item", "settings": { "text": "Las 4 habilidades que cambian tu vida" } },
         "i5": { "type": "include_item", "settings": { "text": "Acceso de por vida al material" } },
-        "buy": { "type": "buy_box", "settings": { "show_dynamic_checkout": true } }
+        "buy": { "type": "buy_box", "settings": { "show_dynamic_checkout": false } }
       },
       "block_order": ["i1", "i2", "i3", "i4", "i5", "buy"]
     },
