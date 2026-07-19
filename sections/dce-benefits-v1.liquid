@@ -8,25 +8,12 @@
 {{ 'dce-benefits-v1.css' | asset_url | stylesheet_tag }}
 {{ 'dce-section-header.css' | asset_url | stylesheet_tag }}
 {{ 'dce-icon.css' | asset_url | stylesheet_tag }}
+{{ 'dce-buy-now-button.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'dce-benefits-v1.js' | asset_url }}" type="module"></script>
 
 {%- liquid
   assign dce_benefits = section.blocks | where: 'type', 'benefit_item'
   assign dce_entrances = 'fade-left,fade-right,scale-in,fade-glow' | split: ','
-
-  assign dce_result_lines = ''
-  if section.settings.result_line_1 != blank
-    assign dce_result_lines = dce_result_lines | append: section.settings.result_line_1 | append: '||'
-  endif
-  if section.settings.result_line_2 != blank
-    assign dce_result_lines = dce_result_lines | append: section.settings.result_line_2 | append: '||'
-  endif
-  if section.settings.result_line_3 != blank
-    assign dce_result_lines = dce_result_lines | append: section.settings.result_line_3 | append: '||'
-  endif
-  if section.settings.result_line_4 != blank
-    assign dce_result_lines = dce_result_lines | append: section.settings.result_line_4 | append: '||'
-  endif
-  assign dce_result_lines = dce_result_lines | split: '||'
 -%}
 
 <section
@@ -44,16 +31,25 @@
     -%}
 
     {%- if dce_benefits.size > 0 -%}
-      <ol class="dce-benefits-v1__list">
+      <div class="dce-benefits-v1__path-wrap" data-dce-benefits-path>
+        <div class="dce-benefits-v1__path" aria-hidden="true"></div>
+        <div class="dce-benefits-v1__path-fill" data-dce-benefits-fill aria-hidden="true"></div>
+        <div class="dce-benefits-v1__path-dot" data-dce-benefits-dot aria-hidden="true"></div>
+        <ol class="dce-benefits-v1__list">
         {%- for block in dce_benefits -%}
           {%- liquid
             assign dce_entrance_index = forloop.index0 | modulo: 4
             assign dce_entrance = dce_entrances[dce_entrance_index]
+            assign dce_is_last = false
+            if forloop.last
+              assign dce_is_last = true
+            endif
           -%}
           <li
             class="dce-benefits-v1__item{% if block.settings.featured %} dce-benefits-v1__item--featured{% endif %}"
             data-dce-animate="{{ dce_entrance }}"
             data-dce-press
+            data-dce-benefits-step
             style="transition-delay: {{ forloop.index0 | times: 90 }}ms"
             {{ block.shopify_attributes }}
           >
@@ -65,6 +61,10 @@
                 {%- else -%}
                   {{ forloop.index }}
                 {%- endif -%}
+                <span class="dce-benefits-v1__spark" style="--dx: -0.85rem; --dy: -0.7rem;"></span>
+                <span class="dce-benefits-v1__spark" style="--dx: 0.85rem; --dy: -0.6rem; animation-delay: 40ms;"></span>
+                <span class="dce-benefits-v1__spark" style="--dx: -0.7rem; --dy: 0.75rem; animation-delay: 80ms;"></span>
+                <span class="dce-benefits-v1__spark" style="--dx: 0.75rem; --dy: 0.8rem; animation-delay: 120ms;"></span>
               </span>
             </div>
             <div class="dce-benefits-v1__body">
@@ -73,24 +73,35 @@
                 <p class="dce-benefits-v1__text">{{ block.settings.text }}</p>
               {%- endif -%}
             </div>
+            {%- if dce_is_last -%}
+              {%- render 'dce-particles', count: 3 -%}
+            {%- endif -%}
           </li>
         {%- endfor -%}
-      </ol>
+        </ol>
+      </div>
     {%- endif -%}
 
-    {%- if dce_result_lines.size > 0 -%}
+    {%- if section.settings.result_option_b != blank -%}
       <div class="dce-benefits-v1__result" data-dce-animate="pop">
         <div class="dce-benefits-v1__result-glow" aria-hidden="true"></div>
-        <div class="dce-benefits-v1__result-lines">
-          {%- for line in dce_result_lines -%}
-            {%- unless forloop.first -%}
-              <span class="dce-benefits-v1__result-arrow" aria-hidden="true">↓</span>
-            {%- endunless -%}
-            <p class="dce-benefits-v1__result-line">{{ line }}</p>
-          {%- endfor -%}
+        {%- if section.settings.result_eyebrow != blank -%}
+          <p class="dce-benefits-v1__result-eyebrow">{{ section.settings.result_eyebrow }}</p>
+        {%- endif -%}
+        <div class="dce-benefits-v1__result-choice">
+          {%- if section.settings.result_option_a != blank -%}
+            <p class="dce-benefits-v1__result-option dce-benefits-v1__result-option--muted">{{ section.settings.result_option_a }}</p>
+          {%- endif -%}
+          <span class="dce-benefits-v1__result-or" aria-hidden="true">o</span>
+          <p class="dce-benefits-v1__result-option dce-benefits-v1__result-option--glow">{{ section.settings.result_option_b }}</p>
         </div>
         {%- if section.settings.result_footnote != blank -%}
           <p class="dce-benefits-v1__result-footnote">{{ section.settings.result_footnote }}</p>
+        {%- endif -%}
+        {%- if section.settings.result_cta_label != blank -%}
+          <div class="dce-benefits-v1__result-cta">
+            {%- render 'dce-buy-now-button', product: product, label: section.settings.result_cta_label, size: 'md', show_micro_trust: false -%}
+          </div>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -126,37 +137,37 @@
     },
     {
       "type": "header",
-      "content": "Caja de resultado"
+      "content": "Caja final (dos caminos)"
     },
     {
       "type": "text",
-      "id": "result_line_1",
-      "label": "Línea 1",
-      "default": "Más claridad."
+      "id": "result_eyebrow",
+      "label": "Eyebrow",
+      "default": "Hoy tenés dos caminos"
     },
     {
       "type": "text",
-      "id": "result_line_2",
-      "label": "Línea 2",
-      "default": "Más acción."
+      "id": "result_option_a",
+      "label": "Opción A (atenuada)",
+      "default": "Seguir exactamente igual."
     },
     {
       "type": "text",
-      "id": "result_line_3",
-      "label": "Línea 3",
-      "default": "Primer ingreso."
-    },
-    {
-      "type": "text",
-      "id": "result_line_4",
-      "label": "Línea 4",
-      "default": "Más libertad."
+      "id": "result_option_b",
+      "label": "Opción B (iluminada)",
+      "default": "Dar el primer paso."
     },
     {
       "type": "textarea",
       "id": "result_footnote",
       "label": "Frase pequeña",
-      "default": "No ocurre de un día para otro. Pero todo empieza con un primer paso."
+      "default": "No ocurre de un día para otro. Pero todas las historias empiezan con una decisión."
+    },
+    {
+      "type": "text",
+      "id": "result_cta_label",
+      "label": "Texto del botón",
+      "default": "Quiero empezar"
     }
   ],
   "blocks": [

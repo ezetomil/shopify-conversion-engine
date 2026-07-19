@@ -109,14 +109,14 @@
     transform: none;
   }
 
-  /* Fade + glow — like blur-in but the "focus" reads as light arriving rather than blur clearing. One card only (the last of a sequence), never spread across the page. */
+  /* Fade + glow — blur clears while light arrives at the same time. Reserved for the last card of a sequence (the "reward"), never spread across the page. */
   html.dce-js [data-dce-animate='fade-glow']:not(.dce-is-visible) {
     transform: scale(0.96);
-    filter: brightness(0.6) drop-shadow(0 0 0 transparent);
+    filter: blur(8px) brightness(0.6) drop-shadow(0 0 0 transparent);
   }
 
   html.dce-js [data-dce-animate='fade-glow'].dce-is-visible {
-    filter: brightness(1) drop-shadow(0 0 16px color-mix(in srgb, var(--dce-color-accent) 45%, transparent));
+    filter: blur(0) brightness(1) drop-shadow(0 0 16px color-mix(in srgb, var(--dce-color-accent) 45%, transparent));
   }
 
   [data-dce-animate].dce-is-visible {
