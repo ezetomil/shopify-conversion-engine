@@ -34,6 +34,8 @@
     margin: 0 0 var(--dce-space-5);
     font-size: var(--dce-text-lg);
     font-weight: var(--dce-weight-semibold);
+    /* !important: overrides Dawn's unlayered h3{color} — see dce-hero-v1.css */
+    color: var(--dce-color-text) !important;
   }
 
   .dce-transformation-v1__column ul {
@@ -62,7 +64,7 @@
   }
 
   .dce-transformation-v1__column--before .dce-transformation-v1__column-title {
-    color: var(--dce-color-text-muted);
+    color: var(--dce-color-text-muted) !important;
   }
 
   .dce-transformation-v1__column--before .dce-transformation-v1__row-icon {

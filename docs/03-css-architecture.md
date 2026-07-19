@@ -94,7 +94,7 @@ Breakpoints hardcodeados consistentes (no pueden ser custom properties, ver limi
 ## Qué hace mantenible esto durante años
 
 1. **Cero dependencias externas** que puedan quedar abandonadas o romper con actualizaciones de Node.
-2. **`@layer` elimina la necesidad de `!important`** — cualquier desarrollador nuevo puede predecir qué gana sin adivinar orden de carga.
+2. **`@layer` elimina la necesidad de `!important`** *entre archivos DCE*. Contra CSS de Dawn sin capa (`h1`-`h5` en `base.css`), una regla sin capa siempre gana — ahí `!important` es necesario y correcto. Ver [08-decisions-log.md](08-decisions-log.md).
 3. **1 componente = 1 archivo CSS**, nunca hay que buscar estilos de un componente en múltiples lugares.
 4. **Tokens centralizados**: cambiar el acento de marca de un producto es cambiar 1-3 líneas en `dce-tokens.css` o un setting de tema, nunca un find-and-replace de colores hardcodeados.
 5. **Utilidades mínimas por disciplina**, no por sistema — evita que el HTML se llene de 15 clases utilitarias por elemento (el anti-patrón típico de Tailwind mal usado).

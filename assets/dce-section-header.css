@@ -30,7 +30,10 @@
     font-size: var(--dce-text-3xl);
     font-weight: var(--dce-weight-bold);
     letter-spacing: var(--dce-tracking-tight);
-    color: var(--dce-color-text);
+    /* !important: overrides Dawn's unlayered `h1,h2,h3{color}` rule in
+       base.css, which otherwise always wins over @layer CSS regardless of
+       specificity — see the note in dce-hero-v1.css and docs/08-decisions-log.md. */
+    color: var(--dce-color-text) !important;
   }
 
   .dce-section-header__subheading {

@@ -2,6 +2,14 @@
 
 Cambios y hallazgos descubiertos durante la implementación que no estaban previstos (o estaban previstos distinto) en los documentos `01`-`07`. Se agregan a medida que aparecen, más recientes arriba.
 
+## Corrección: `@layer` no gana contra el CSS sin capa de Dawn — `!important` es necesario para títulos
+
+**El bug**: [03-css-architecture.md](03-css-architecture.md) afirmaba que `@layer` elimina la necesidad de `!important`. Eso es cierto *entre archivos DCE*, pero no contra Dawn: `assets/base.css` define `h1, h2, h3, h4, h5 { color: rgb(var(--color-foreground)); }` **sin ninguna capa**. Por spec de CSS Cascade Layers, **una regla sin capa le gana a cualquier regla dentro de una capa, sin importar especificidad**. Resultado real: todos los títulos (`h1`-`h5`) de secciones con fondo oscuro (Hero, Transformación, CTA) se renderizaban con el color de texto oscuro por defecto de Dawn — invisibles sobre fondo oscuro. Pasó desapercibido en `shopify theme check` (no es un error de sintaxis, es de cascada) y solo se detectó al ver la página renderizada.
+
+**El fix**: `color: var(--dce-color-text) !important;` en toda clase que estilice un `h1`-`h5` (`dce-hero-v1__heading`, `dce-section-header__heading`, `dce-cta-v1__heading`, `dce-transformation-v1__column-title`). Es el único lugar del framework donde `!important` es correcto — no un atajo, es la forma documentada de que CSS en capas gane contra CSS de terceros sin capa.
+
+**Regla para componentes futuros**: cualquier clase nueva que fije `color` sobre un elemento `h1`-`h5` necesita `!important` en esa declaración específica. Elementos que no son `h1`-`h5` (`p`, `span`, `a`, custom elements) no tienen este problema — Dawn no fija `color` sin capa sobre esos selectores.
+
 ## Iconografía: se descarta el sprite propio, se reutilizan los SVG de Dawn
 
 **Contexto**: [02-design-system.md](02-design-system.md) proponía un sprite SVG propio (`assets/dce-icons.svg` con `<symbol>`) para la iconografía del framework.

@@ -139,7 +139,12 @@
     font-size: var(--dce-text-5xl);
     font-weight: var(--dce-weight-bold);
     letter-spacing: var(--dce-tracking-tight);
-    color: var(--dce-color-text);
+    /* !important: Dawn's base.css sets `h1{color}` unlayered — per the CSS
+       Cascade Layers spec, unlayered rules always beat @layer rules
+       regardless of specificity. This is the one place in the codebase
+       where !important is the correct, documented escape hatch (not a
+       shortcut) — see docs/08-decisions-log.md. */
+    color: var(--dce-color-text) !important;
   }
 
   .dce-hero-v1__heading-accent {

@@ -44,7 +44,8 @@
 
   .dce-cta-v1__heading {
     margin: 0;
-    color: var(--dce-color-text-inverse);
+    /* !important: overrides Dawn's unlayered h2{color} — see dce-hero-v1.css */
+    color: var(--dce-color-text-inverse) !important;
     font-size: var(--dce-text-4xl);
     font-weight: var(--dce-weight-bold);
     letter-spacing: var(--dce-tracking-tight);
