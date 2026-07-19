@@ -40,13 +40,27 @@
     justify-content: center;
     gap: var(--dce-space-4);
     padding: var(--dce-space-6);
-    background-color: var(--dce-color-bg);
-    border: 1px solid var(--dce-color-border);
+    background-color: color-mix(in srgb, var(--dce-color-bg) 55%, transparent);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid color-mix(in srgb, var(--dce-color-border) 85%, transparent);
     border-radius: var(--dce-radius-xl);
     transition:
       transform var(--dce-duration-base) var(--dce-ease-out),
       box-shadow var(--dce-duration-base) var(--dce-ease-out),
       border-color var(--dce-duration-base) var(--dce-ease-out);
+  }
+
+  /* Reflection — a thin line of light along the top edge, like glass catching a source above it. Inset from the corners so it never fights the card's own border-radius. */
+  .dce-benefits-v1__item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, white 55%, transparent), transparent);
+    pointer-events: none;
   }
 
   /*

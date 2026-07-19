@@ -16,7 +16,7 @@
 
 {%- if dce_gallery_items.size > 0 -%}
   <section class="dce-gallery-v1 dce-section dce-section--seam">
-    <div class="dce-ambient-blob dce-gallery-v1__ambient" aria-hidden="true"></div>
+    <div class="dce-ambient-blob dce-gallery-v1__ambient" data-dce-animate="glow" aria-hidden="true"></div>
     <div class="dce-container">
       {%- render 'dce-section-header',
         eyebrow: section.settings.eyebrow,
@@ -25,7 +25,7 @@
       -%}
     </div>
 
-    <div class="dce-gallery-v1__viewport" data-dce-animate="fade-up" style="transition-delay: 120ms">
+    <div class="dce-gallery-v1__viewport" data-dce-animate="depth" style="transition-delay: 120ms">
       <ul class="dce-gallery-v1__track" role="list" data-dce-gallery-track>
         {%- for block in dce_gallery_items -%}
           <li

@@ -14,7 +14,8 @@
  * attribute is empty. Deliberately varied per section so consecutive
  * sections never repeat the same entrance (see docs/05-components-catalog.md
  * usage in each section file):
- *   fade-up (default) · fade-left · fade-right · blur-in · scale-in · pop · reveal
+ *   fade-up (default) · fade-left · fade-right · blur-in · scale-in · pop ·
+ *   reveal · mask · depth · glow
  *
  * All variants animate only opacity/transform/filter/clip-path —
  * compositor-friendly, no layout thrashing, safe for the Lighthouse
@@ -74,6 +75,38 @@
 
   html.dce-js [data-dce-animate='reveal'].dce-is-visible {
     clip-path: inset(0 0 0 0);
+  }
+
+  /* Mask — circular reveal, reserved for a single emotional high point (the Promise section's closing line). */
+  html.dce-js [data-dce-animate='mask']:not(.dce-is-visible) {
+    transform: none;
+    clip-path: circle(0% at 50% 50%);
+  }
+
+  html.dce-js [data-dce-animate='mask'].dce-is-visible {
+    clip-path: circle(100% at 50% 50%);
+  }
+
+  /* Depth — content emerges toward the viewer (scale + blur together), used where "profundidad" is the point, e.g. the ebook carousel. */
+  html.dce-js [data-dce-animate='depth']:not(.dce-is-visible) {
+    transform: scale(0.9) translateY(var(--dce-space-4));
+    filter: blur(6px);
+  }
+
+  /*
+    Glow — opacity-only entrance, no transform at all. Reserved for
+    decorative ambient elements (particles, backdrop blobs) that already
+    own a continuous drift/particle-drift animation on `transform` — a
+    transform-based entrance on the same element would just get silently
+    overridden by that animation the whole time it's not yet visible
+    (running @keyframes always win over a cascade value), the same class
+    of bug already fixed on the Hero visual. Opacity is untouched by
+    those keyframes, so this is the only entrance style safe to combine
+    with them.
+  */
+  html.dce-js [data-dce-animate='glow']:not(.dce-is-visible) {
+    opacity: 0;
+    transform: none;
   }
 
   [data-dce-animate].dce-is-visible {

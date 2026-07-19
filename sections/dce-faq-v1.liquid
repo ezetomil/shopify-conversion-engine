@@ -21,7 +21,8 @@
     style="background-color: {{ section.settings.background_color }};"
   {% endif %}
 >
-  <div class="dce-faq-v1__backdrop" aria-hidden="true"></div>
+  <div class="dce-faq-v1__backdrop" data-dce-animate="glow" aria-hidden="true"></div>
+  {%- render 'dce-particles', count: 3 -%}
   <div class="dce-container dce-faq-v1__layout">
     <div class="dce-faq-v1__header-col">
       {%- render 'dce-section-header',

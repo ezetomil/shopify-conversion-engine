@@ -110,4 +110,70 @@
       animation: none;
     }
   }
+
+  /*
+    Particles — shared atmosphere primitive, see snippets/dce-particles.liquid.
+    Deliberately tiny/faint/slow: this is meant to read as ambient energy
+    in the background, never as a literal starfield or anything a reader
+    would consciously notice.
+  */
+  .dce-particles {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .dce-particles span {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--dce-accent-300);
+    opacity: 0.35;
+    filter: blur(1px);
+    animation: dce-particle-drift 15s ease-in-out infinite;
+  }
+
+  .dce-particles span:nth-child(1) { top: 18%; left: 15%; animation-delay: 0s; animation-duration: 16s; }
+  .dce-particles span:nth-child(2) { top: 62%; left: 72%; animation-delay: 3s; animation-duration: 19s; }
+  .dce-particles span:nth-child(3) { top: 42%; left: 45%; animation-delay: 6s; animation-duration: 14s; }
+  .dce-particles span:nth-child(4) { top: 78%; left: 25%; animation-delay: 2s; animation-duration: 18s; }
+  .dce-particles span:nth-child(5) { top: 12%; left: 60%; animation-delay: 5s; animation-duration: 17s; }
+
+  @keyframes dce-particle-drift {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+      opacity: 0.15;
+    }
+    50% {
+      transform: translateY(-2rem) translateX(0.75rem);
+      opacity: 0.45;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-particles span {
+      animation: none;
+      opacity: 0.2;
+    }
+  }
+
+  /*
+    Breathing glow — shared keyframe for the page's two real "buy"
+    moments (Hero, Offer). Scale + glow together, always applied to a
+    plain wrapper element that owns no other transform/filter, never to
+    a button directly — see the usage note in dce-hero-v1.css.
+  */
+  @keyframes dce-breathe-glow {
+    0%, 100% {
+      transform: scale(1);
+      filter: drop-shadow(0 0 0 transparent);
+    }
+    50% {
+      transform: scale(1.015);
+      filter: drop-shadow(0 0 18px color-mix(in srgb, var(--dce-color-accent) 50%, transparent));
+    }
+  }
 }

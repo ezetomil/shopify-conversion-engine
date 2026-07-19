@@ -1,0 +1,29 @@
+{%- doc -%}
+  Shared atmosphere primitive — a small cluster of extremely faint
+  floating light particles, used by dark sections to feel like there's
+  ambient energy in the background rather than a flat color. See
+  dce-layout.css for the shared .dce-particles class/keyframe (kept
+  there, not per-component, so every section reuses the same rule
+  instead of redeclaring it — see docs/00-principles.md).
+
+  Purely decorative (aria-hidden) and gated by data-dce-animate="glow"
+  so it fades in only once the section actually scrolls into view,
+  instead of just sitting there from page load.
+
+  @param {number} [count] - How many particles (default 3). Keep this
+    low — it should read as "faint atmosphere," never as a starfield.
+    Hero is the one exception (5), because it's the one moment on the
+    page meant to feel most alive.
+
+  @example
+  {% render 'dce-particles', count: 3 %}
+{%- enddoc -%}
+
+{%- liquid
+  assign dce_particle_count = count | default: 3
+-%}
+<div class="dce-particles" data-dce-animate="glow" aria-hidden="true">
+  {%- for i in (1..dce_particle_count) -%}
+    <span></span>
+  {%- endfor -%}
+</div>

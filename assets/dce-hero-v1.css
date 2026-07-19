@@ -57,33 +57,7 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  .dce-hero-v1__particles span {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--dce-accent-300);
-    opacity: 0.4;
-    filter: blur(1px);
-    animation: dce-hero-v1-particle 14s ease-in-out infinite;
-  }
-
-  .dce-hero-v1__particles span:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; animation-duration: 16s; }
-  .dce-hero-v1__particles span:nth-child(2) { top: 65%; left: 12%; animation-delay: 2s; animation-duration: 13s; }
-  .dce-hero-v1__particles span:nth-child(3) { top: 30%; left: 48%; animation-delay: 4s; animation-duration: 18s; }
-  .dce-hero-v1__particles span:nth-child(4) { top: 78%; left: 55%; animation-delay: 1s; animation-duration: 15s; }
-  .dce-hero-v1__particles span:nth-child(5) { top: 45%; left: 35%; animation-delay: 3s; animation-duration: 20s; }
-
-  @keyframes dce-hero-v1-particle {
-    0%, 100% {
-      transform: translateY(0) translateX(0);
-      opacity: 0.15;
-    }
-    50% {
-      transform: translateY(-2.5rem) translateX(1rem);
-      opacity: 0.5;
-    }
-  }
+  /* Particles now come from the shared snippets/dce-particles.liquid + dce-layout.css primitive — see that file. */
 
   @keyframes dce-hero-v1-drift {
     0%, 100% {
@@ -213,24 +187,16 @@
   }
 
   /*
-    Breathing CTA — reserved for the Hero's primary button only (the
-    single first decision point on the page), not the shared .dce-button
-    class, so buttons elsewhere never breathe. Lives on .dce-buy-now__form
-    (a plain wrapper with no other transform use), never on the button
+    Breathing CTA — reserved for the two real "buy" decision points
+    (Hero here, Offer's own copy in dce-offer-v1.css). Shared keyframe
+    lives in dce-layout.css (dce-breathe-glow) since 2+ components use
+    it now — see the note there. Lives on .dce-buy-now__form (a plain
+    wrapper with no other transform/filter use), never on the button
     itself, so it can't fight the button's own :hover/:active transforms
     — the composition pattern used throughout this file.
   */
   .dce-hero-v1__actions .dce-buy-now__form {
-    animation: dce-hero-v1-breathe 4.5s ease-in-out infinite;
-  }
-
-  @keyframes dce-hero-v1-breathe {
-    0%, 100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.015);
-    }
+    animation: dce-breathe-glow 4.5s ease-in-out infinite;
   }
 
   @media (prefers-reduced-motion: reduce) {

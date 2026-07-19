@@ -23,7 +23,7 @@
     style="background-color: {{ section.settings.background_color }};"
   {% endif %}
 >
-  <div class="dce-ambient-blob dce-promise-v1__ambient" aria-hidden="true"></div>
+  <div class="dce-ambient-blob dce-promise-v1__ambient" data-dce-animate="glow" aria-hidden="true"></div>
   <div class="dce-container dce-promise-v1__container">
     {%- render 'dce-section-header',
       eyebrow: section.settings.eyebrow,
@@ -48,7 +48,7 @@
     {%- endif -%}
 
     {%- if section.settings.closing_statement != blank -%}
-      <p class="dce-promise-v1__closing" data-dce-animate="scale-in" style="transition-delay: 200ms">{{ section.settings.closing_statement }}</p>
+      <p class="dce-promise-v1__closing" data-dce-animate="mask" style="transition-delay: 200ms">{{ section.settings.closing_statement }}</p>
     {%- endif -%}
   </div>
 </section>

@@ -136,6 +136,21 @@
     }
   }
 
+  /*
+    Breathing CTA — the other real "buy" moment on the page, see the
+    usage note in dce-hero-v1.css. Lives on .dce-buy-now__form (a plain
+    wrapper), never the button itself.
+  */
+  .dce-offer-v1__buy-now .dce-buy-now__form {
+    animation: dce-breathe-glow 4.5s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-offer-v1__buy-now .dce-buy-now__form {
+      animation: none;
+    }
+  }
+
   .dce-offer-v1__buy-buttons .product-form__submit {
     width: 100%;
     padding: var(--dce-space-5) var(--dce-space-8);

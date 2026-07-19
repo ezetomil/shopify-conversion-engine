@@ -24,7 +24,8 @@
     style="background-color: {{ section.settings.background_color }};"
   {% endif %}
 >
-  <div class="dce-problem-v1__backdrop" aria-hidden="true"></div>
+  <div class="dce-problem-v1__backdrop" data-dce-animate="glow" aria-hidden="true"></div>
+  {%- render 'dce-particles', count: 3 -%}
   <div class="dce-container dce-problem-v1__container">
     {%- render 'dce-section-header',
       eyebrow: section.settings.eyebrow,
