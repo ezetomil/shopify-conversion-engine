@@ -26,29 +26,112 @@
     grid-template-columns: 1fr;
     grid-auto-rows: minmax(9rem, auto);
     grid-auto-flow: dense;
-    gap: var(--dce-space-5);
+    gap: var(--dce-space-4);
     max-width: 72rem;
-    margin: var(--dce-space-10) auto 0;
+    margin: var(--dce-space-8) auto 0;
     padding: 0;
+  }
+
+  /*
+    Path line + traveling dot — a thin line runs behind the step badges,
+    with a soft highlight sliding down it, like the reader is walking the
+    four steps. Both pseudo-elements on the list itself (not per-card),
+    positioned to roughly align with the badge column: card padding
+    (--dce-space-4) + half the badge width (2.75rem/2). Approximate on
+    purpose — cards are short and similar height now, so a couple of
+    pixels of drift is invisible, and getting this pixel-exact would need
+    JS measurement for a purely decorative line. Animates background-
+    position, not top/left, so it's paint-only, never triggers layout.
+    Mobile-only: at the 4-across desktop row there's no vertical path to
+    walk.
+  */
+  .dce-benefits-v1__list::before {
+    content: '';
+    position: absolute;
+    top: 1.75rem;
+    bottom: 1.75rem;
+    left: 2.375rem;
+    width: 2px;
+    background: rgba(99, 102, 241, 0.18);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .dce-benefits-v1__list::after {
+    content: '';
+    position: absolute;
+    top: 1.75rem;
+    bottom: 1.75rem;
+    left: calc(2.375rem - 3px);
+    width: 8px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 9%,
+      var(--dce-color-accent) 11%,
+      transparent 13%,
+      transparent 100%
+    );
+    background-size: 100% 500%;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 4px color-mix(in srgb, var(--dce-color-accent) 70%, transparent));
+    animation: dce-benefits-v1-dot-travel 7s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  @keyframes dce-benefits-v1-dot-travel {
+    0% {
+      background-position: 0 0%;
+    }
+    100% {
+      background-position: 0 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-benefits-v1__list::after {
+      animation: none;
+      opacity: 0;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .dce-benefits-v1__list::before,
+    .dce-benefits-v1__list::after {
+      display: none;
+    }
   }
 
   .dce-benefits-v1__item {
     position: relative;
+    z-index: 1;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    justify-content: center;
     gap: var(--dce-space-4);
-    padding: var(--dce-space-6);
+    padding: var(--dce-space-4);
     background-color: color-mix(in srgb, var(--dce-color-bg) 55%, transparent);
     backdrop-filter: blur(16px) saturate(160%);
     -webkit-backdrop-filter: blur(16px) saturate(160%);
     border: 1px solid color-mix(in srgb, var(--dce-color-border) 85%, transparent);
-    border-radius: var(--dce-radius-xl);
+    border-radius: var(--dce-radius-lg);
     transition:
       transform var(--dce-duration-base) var(--dce-ease-out),
       box-shadow var(--dce-duration-base) var(--dce-ease-out),
       border-color var(--dce-duration-base) var(--dce-ease-out);
+  }
+
+  /*
+    Every entrance variant used on these cards (fade-left/fade-right/
+    scale-in/fade-glow) settles with a spring — a small overshoot past
+    its resting value — instead of the site-wide default ease-out. That
+    overshoot is what reads as "aumenta apenas de tamaño... vuelve a su
+    posición": no separate 1.02 keyframe needed, the easing curve already
+    produces it.
+  */
+  .dce-benefits-v1__item[data-dce-animate].dce-is-visible {
+    transition-timing-function: var(--dce-ease-spring);
   }
 
   /* Reflection — a thin line of light along the top edge, like glass catching a source above it. Inset from the corners so it never fights the card's own border-radius. */
@@ -98,19 +181,21 @@
 
   .dce-benefits-v1__item--featured {
     background: linear-gradient(150deg, var(--dce-color-bg) 0%, color-mix(in srgb, var(--dce-color-accent) 22%, var(--dce-color-bg)) 140%);
-    justify-content: flex-end;
   }
 
   .dce-benefits-v1__step {
     position: relative;
+    z-index: 1;
+    flex-shrink: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: var(--dce-space-3);
+    gap: var(--dce-space-1);
   }
 
   .dce-benefits-v1__number {
     font-family: var(--dce-font-sans);
-    font-size: var(--dce-text-xs);
+    font-size: 0.625rem;
     font-weight: var(--dce-weight-bold);
     letter-spacing: 0.1em;
     color: var(--dce-color-text-muted);
@@ -121,23 +206,34 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 3.75rem;
-    height: 3.75rem;
-    border-radius: var(--dce-radius-lg);
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--dce-radius-md);
     background: linear-gradient(135deg, var(--dce-color-accent), var(--dce-accent-700));
     color: var(--dce-color-on-accent);
-    font-size: var(--dce-text-xl);
+    font-size: var(--dce-text-md);
     font-weight: var(--dce-weight-bold);
     box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--dce-color-accent) 50%, transparent);
-    transition: transform var(--dce-duration-base) var(--dce-ease-spring);
-    animation: dce-benefits-v1-breathe 4s ease-in-out infinite;
+    transition: transform var(--dce-duration-slow) var(--dce-ease-spring);
   }
 
   /*
-    Icon "breathing" — glow only, never transform, so it can't fight the
-    hover rotate/scale transition on the same element (the same
-    composition rule used throughout this project — see dce-hero-v1.css).
+    On reveal: the badge settles from a slight rotation back to neutral
+    (transform), while its glow only starts breathing once alive
+    (animation, gated the same way) — see the entrance-spring note above
+    for why the rotation and the hover rotate/scale never actually run at
+    the same moment despite touching the same property.
   */
+  html.dce-js .dce-benefits-v1__item:not(.dce-is-visible) .dce-benefits-v1__badge {
+    transform: rotate(-6deg);
+  }
+
+  .dce-benefits-v1__item.dce-is-visible .dce-benefits-v1__badge {
+    transform: rotate(0deg);
+    animation: dce-benefits-v1-breathe 4s ease-in-out infinite;
+  }
+
+  /* Icon "breathing" — glow only, never transform, so it can't fight the rotate-settle/hover transitions on the same element. */
   @keyframes dce-benefits-v1-breathe {
     0%, 100% {
       box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--dce-color-accent) 50%, transparent);
@@ -148,69 +244,120 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .dce-benefits-v1__badge {
+    .dce-benefits-v1__item.dce-is-visible .dce-benefits-v1__badge {
       animation: none;
     }
   }
 
   .dce-benefits-v1__badge .dce-icon svg {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+
+  .dce-benefits-v1__item--featured .dce-benefits-v1__badge {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .dce-benefits-v1__item--featured .dce-benefits-v1__badge .dce-icon svg {
     width: 1.75rem;
     height: 1.75rem;
   }
 
-  .dce-benefits-v1__item--featured .dce-benefits-v1__badge {
-    width: 4.75rem;
-    height: 4.75rem;
+  @media (hover: hover) and (pointer: fine) {
+    .dce-benefits-v1__item:hover .dce-benefits-v1__badge {
+      transform: scale(1.08) rotate(4deg);
+    }
   }
 
-  .dce-benefits-v1__item--featured .dce-benefits-v1__badge .dce-icon svg {
-    width: 2.25rem;
-    height: 2.25rem;
-  }
-
-  .dce-benefits-v1__item:hover .dce-benefits-v1__badge {
-    transform: scale(1.08) rotate(4deg);
+  .dce-benefits-v1__body {
+    position: relative;
+    z-index: 1;
+    padding-top: 0.3125rem;
   }
 
   .dce-benefits-v1__title {
     margin: 0;
     color: var(--dce-color-text);
     font-weight: var(--dce-weight-semibold);
-    font-size: var(--dce-text-md);
+    font-size: var(--dce-text-sm);
   }
 
   .dce-benefits-v1__item--featured .dce-benefits-v1__title {
-    font-size: var(--dce-text-xl);
+    font-size: var(--dce-text-lg);
     letter-spacing: var(--dce-tracking-tight);
   }
 
   .dce-benefits-v1__text {
-    margin: var(--dce-space-1) 0 0;
+    margin: 0.125rem 0 0;
     color: var(--dce-color-text-muted);
-    font-size: var(--dce-text-sm);
+    font-size: var(--dce-text-xs);
     line-height: var(--dce-leading-relaxed);
   }
 
-  /*
-    Connector — a small downward arrow between consecutive steps, reading
-    top-to-bottom as "step 1 leads to step 2" (see the brief this
-    implements: "Paso 1 ↓ Paso 2..."). Mobile-only by design: at the
-    4-across desktop layout the numbers alone already read as a sequence
-    left-to-right, and an arrow between grid columns would fight the
-    column gaps rather than sitting between steps.
-  */
-  .dce-benefits-v1__connector {
-    display: flex;
-    justify-content: center;
-    margin: calc(var(--dce-space-5) * -0.5) 0;
-    color: var(--dce-color-text-muted);
-    opacity: 0.6;
+  /* Result — the payoff box after the fourth step. Same frosted-glass family as the cards above, turned up: more glow, bigger type. */
+  .dce-benefits-v1__result {
+    position: relative;
+    z-index: 1;
+    margin-top: var(--dce-space-8);
+    padding: var(--dce-space-8) var(--dce-space-6);
+    text-align: center;
+    background-color: color-mix(in srgb, var(--dce-color-bg) 65%, transparent);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid color-mix(in srgb, var(--dce-color-accent) 35%, transparent);
+    border-radius: var(--dce-radius-xl);
+    box-shadow: 0 0 70px -12px color-mix(in srgb, var(--dce-color-accent) 55%, transparent);
+    overflow: hidden;
   }
 
-  .dce-benefits-v1__connector .dce-icon svg {
-    width: 1rem;
-    height: 1rem;
-    transform: rotate(90deg);
+  .dce-benefits-v1__result-glow {
+    position: absolute;
+    z-index: 0;
+    inset: -30%;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 20%, color-mix(in srgb, var(--dce-color-accent) 30%, transparent) 0%, transparent 60%);
+    animation: dce-ambient-drift 20s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-benefits-v1__result-glow {
+      animation: none;
+    }
+  }
+
+  .dce-benefits-v1__result-lines {
+    position: relative;
+    z-index: 1;
+  }
+
+  .dce-benefits-v1__result-line {
+    margin: 0;
+    font-size: var(--dce-text-2xl);
+    font-weight: var(--dce-weight-bold);
+    letter-spacing: var(--dce-tracking-tight);
+    line-height: var(--dce-leading-tight);
+    background: linear-gradient(135deg, var(--dce-color-text-inverse) 0%, var(--dce-accent-300) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .dce-benefits-v1__result-arrow {
+    display: block;
+    margin: var(--dce-space-2) 0;
+    color: var(--dce-color-accent);
+    font-size: var(--dce-text-lg);
+    opacity: 0.7;
+  }
+
+  .dce-benefits-v1__result-footnote {
+    position: relative;
+    z-index: 1;
+    margin: var(--dce-space-6) 0 0;
+    color: var(--dce-gray-400);
+    font-size: var(--dce-text-sm);
+    line-height: var(--dce-leading-relaxed);
   }
 
   @media (min-width: 768px) {
@@ -218,13 +365,17 @@
       grid-template-columns: repeat(4, 1fr);
     }
 
+    .dce-benefits-v1__item {
+      flex-direction: column;
+    }
+
     .dce-benefits-v1__item--featured {
       grid-column: span 2;
       grid-row: span 2;
     }
 
-    .dce-benefits-v1__connector {
-      display: none;
+    .dce-benefits-v1__result-line {
+      font-size: var(--dce-text-3xl);
     }
   }
 }

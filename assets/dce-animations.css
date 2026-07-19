@@ -58,7 +58,7 @@
     transform: scale(0.94);
   }
 
-  /* Pop — small spring overshoot, reserved for the highest-stakes CTAs. */
+  /* Pop — small spring overshoot, reserved for the highest-stakes CTAs and the one "reward" moment right before the offer. */
   html.dce-js [data-dce-animate='pop']:not(.dce-is-visible) {
     transform: scale(0.9);
   }
@@ -107,6 +107,16 @@
   html.dce-js [data-dce-animate='glow']:not(.dce-is-visible) {
     opacity: 0;
     transform: none;
+  }
+
+  /* Fade + glow — like blur-in but the "focus" reads as light arriving rather than blur clearing. One card only (the last of a sequence), never spread across the page. */
+  html.dce-js [data-dce-animate='fade-glow']:not(.dce-is-visible) {
+    transform: scale(0.96);
+    filter: brightness(0.6) drop-shadow(0 0 0 transparent);
+  }
+
+  html.dce-js [data-dce-animate='fade-glow'].dce-is-visible {
+    filter: brightness(1) drop-shadow(0 0 16px color-mix(in srgb, var(--dce-color-accent) 45%, transparent));
   }
 
   [data-dce-animate].dce-is-visible {

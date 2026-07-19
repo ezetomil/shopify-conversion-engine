@@ -11,6 +11,22 @@
 
 {%- liquid
   assign dce_benefits = section.blocks | where: 'type', 'benefit_item'
+  assign dce_entrances = 'fade-left,fade-right,scale-in,fade-glow' | split: ','
+
+  assign dce_result_lines = ''
+  if section.settings.result_line_1 != blank
+    assign dce_result_lines = dce_result_lines | append: section.settings.result_line_1 | append: '||'
+  endif
+  if section.settings.result_line_2 != blank
+    assign dce_result_lines = dce_result_lines | append: section.settings.result_line_2 | append: '||'
+  endif
+  if section.settings.result_line_3 != blank
+    assign dce_result_lines = dce_result_lines | append: section.settings.result_line_3 | append: '||'
+  endif
+  if section.settings.result_line_4 != blank
+    assign dce_result_lines = dce_result_lines | append: section.settings.result_line_4 | append: '||'
+  endif
+  assign dce_result_lines = dce_result_lines | split: '||'
 -%}
 
 <section
@@ -30,16 +46,20 @@
     {%- if dce_benefits.size > 0 -%}
       <ol class="dce-benefits-v1__list">
         {%- for block in dce_benefits -%}
+          {%- liquid
+            assign dce_entrance_index = forloop.index0 | modulo: 4
+            assign dce_entrance = dce_entrances[dce_entrance_index]
+          -%}
           <li
             class="dce-benefits-v1__item{% if block.settings.featured %} dce-benefits-v1__item--featured{% endif %}"
-            data-dce-animate="fade-right"
+            data-dce-animate="{{ dce_entrance }}"
             data-dce-press
-            style="transition-delay: {{ forloop.index0 | times: 70 }}ms"
+            style="transition-delay: {{ forloop.index0 | times: 90 }}ms"
             {{ block.shopify_attributes }}
           >
             <div class="dce-benefits-v1__step">
               <span class="dce-benefits-v1__number" aria-hidden="true">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
-              <span class="dce-benefits-v1__badge" style="animation-delay: {{ forloop.index0 | times: 0.4 }}s">
+              <span class="dce-benefits-v1__badge">
                 {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
                   {%- render 'dce-icon', name: block.settings.icon -%}
                 {%- else -%}
@@ -54,13 +74,25 @@
               {%- endif -%}
             </div>
           </li>
-          {%- unless forloop.last -%}
-            <li class="dce-benefits-v1__connector" aria-hidden="true">
-              {%- render 'dce-icon', name: 'arrow' -%}
-            </li>
-          {%- endunless -%}
         {%- endfor -%}
       </ol>
+    {%- endif -%}
+
+    {%- if dce_result_lines.size > 0 -%}
+      <div class="dce-benefits-v1__result" data-dce-animate="pop">
+        <div class="dce-benefits-v1__result-glow" aria-hidden="true"></div>
+        <div class="dce-benefits-v1__result-lines">
+          {%- for line in dce_result_lines -%}
+            {%- unless forloop.first -%}
+              <span class="dce-benefits-v1__result-arrow" aria-hidden="true">↓</span>
+            {%- endunless -%}
+            <p class="dce-benefits-v1__result-line">{{ line }}</p>
+          {%- endfor -%}
+        </div>
+        {%- if section.settings.result_footnote != blank -%}
+          <p class="dce-benefits-v1__result-footnote">{{ section.settings.result_footnote }}</p>
+        {%- endif -%}
+      </div>
     {%- endif -%}
   </div>
 </section>
@@ -91,6 +123,40 @@
       "type": "color",
       "id": "background_color",
       "label": "Color de fondo"
+    },
+    {
+      "type": "header",
+      "content": "Caja de resultado"
+    },
+    {
+      "type": "text",
+      "id": "result_line_1",
+      "label": "Línea 1",
+      "default": "Más claridad."
+    },
+    {
+      "type": "text",
+      "id": "result_line_2",
+      "label": "Línea 2",
+      "default": "Más acción."
+    },
+    {
+      "type": "text",
+      "id": "result_line_3",
+      "label": "Línea 3",
+      "default": "Primer ingreso."
+    },
+    {
+      "type": "text",
+      "id": "result_line_4",
+      "label": "Línea 4",
+      "default": "Más libertad."
+    },
+    {
+      "type": "textarea",
+      "id": "result_footnote",
+      "label": "Frase pequeña",
+      "default": "No ocurre de un día para otro. Pero todo empieza con un primer paso."
     }
   ],
   "blocks": [
