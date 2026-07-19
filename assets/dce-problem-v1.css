@@ -1,5 +1,5 @@
 /**
- * DCE Problem v1 (asymmetric, premium icon grid). Isolated component —
+ * DCE Problem v1 (dark, glassmorphic, asymmetric). Isolated component —
  * see docs/00-principles.md, point 4.
  */
 @layer components {
@@ -11,12 +11,12 @@
   .dce-problem-v1__backdrop {
     position: absolute;
     z-index: 0;
-    top: -15%;
+    top: -20%;
     left: -15%;
-    width: 40rem;
-    height: 40rem;
+    width: 44rem;
+    height: 44rem;
     pointer-events: none;
-    background: radial-gradient(circle, color-mix(in srgb, var(--dce-color-accent) 10%, transparent) 0%, transparent 70%);
+    background: radial-gradient(circle, color-mix(in srgb, var(--dce-color-accent) 18%, transparent) 0%, transparent 70%);
     filter: blur(10px);
   }
 
@@ -45,8 +45,10 @@
     align-items: flex-start;
     gap: var(--dce-space-4);
     padding: var(--dce-space-6);
-    background-color: var(--dce-color-bg);
-    border: 1px solid var(--dce-color-border);
+    background-color: color-mix(in srgb, var(--dce-gray-900) 55%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid var(--dce-gray-800);
     border-radius: var(--dce-radius-xl);
     overflow: hidden;
     transition:
@@ -62,7 +64,7 @@
     z-index: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, var(--dce-color-accent), transparent 60%);
+    background: linear-gradient(135deg, var(--dce-color-accent), var(--dce-accent-300) 45%, transparent 75%);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -72,7 +74,7 @@
 
   .dce-problem-v1__item:hover {
     transform: translateY(-4px);
-    box-shadow: var(--dce-shadow-lg);
+    box-shadow: 0 20px 40px -12px color-mix(in srgb, var(--dce-color-accent) 30%, transparent);
     border-color: transparent;
   }
 
@@ -90,15 +92,15 @@
     width: 2.75rem;
     height: 2.75rem;
     border-radius: var(--dce-radius-full);
-    background: linear-gradient(135deg, var(--dce-gray-100), var(--dce-gray-50));
-    color: var(--dce-gray-700);
+    background: linear-gradient(135deg, var(--dce-gray-800), var(--dce-gray-900));
+    color: var(--dce-gray-300);
     transition: background var(--dce-duration-base) var(--dce-ease-out), color var(--dce-duration-base) var(--dce-ease-out), transform var(--dce-duration-base) var(--dce-ease-spring);
   }
 
   .dce-problem-v1__item:hover .dce-problem-v1__icon {
     background: linear-gradient(135deg, var(--dce-color-accent), var(--dce-accent-700));
     color: var(--dce-color-on-accent);
-    transform: scale(1.08) rotate(-4deg);
+    transform: scale(1.1) rotate(-4deg);
   }
 
   .dce-problem-v1__text {

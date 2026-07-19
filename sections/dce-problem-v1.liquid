@@ -16,8 +16,10 @@
 -%}
 
 <section
-  class="dce-problem-v1 dce-section"
-  style="background-color: {{ section.settings.background_color | default: 'var(--dce-color-bg-subtle)' }};"
+  class="dce-problem-v1 dce-section dce-section--dark"
+  {% if section.settings.background_color != blank %}
+    style="background-color: {{ section.settings.background_color }};"
+  {% endif %}
 >
   <div class="dce-problem-v1__backdrop" aria-hidden="true"></div>
   <div class="dce-container dce-problem-v1__layout">
@@ -79,7 +81,7 @@
       "type": "color",
       "id": "background_color",
       "label": "Color de fondo",
-      "info": "Opcional. Por defecto usa un gris muy suave para diferenciarse del Hero."
+      "info": "Opcional. Sobrescribe el fondo oscuro por defecto."
     }
   ],
   "blocks": [

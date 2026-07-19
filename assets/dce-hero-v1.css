@@ -1,13 +1,14 @@
 /**
- * DCE Hero v1 (cinematic, dark by default). Isolated component — see
+ * DCE Hero v1 (fullscreen 60/40, cinematic). Isolated component — see
  * docs/00-principles.md, point 4. Never reference another component's
  * classes from here, and never let this file be referenced by another
  * component.
  *
  * Dark by default: overrides the semantic color tokens locally (same
- * two-tier token trick as dce-transformation-v1--dark) so every class
- * below that consumes var(--dce-color-text) etc. automatically adapts —
- * no per-class dark-mode duplication needed.
+ * two-tier token trick as .dce-section--dark) so every class below that
+ * consumes var(--dce-color-text) etc. automatically adapts. Hero keeps
+ * its own bespoke gradient (richer than the flat shared dark background)
+ * so it doesn't use the shared .dce-section--dark class directly.
  */
 @layer components {
   .dce-hero-v1 {
@@ -18,7 +19,13 @@
     --dce-color-text-muted: var(--dce-gray-400);
     --dce-color-border: var(--dce-gray-800);
     --dce-color-bg: var(--dce-gray-900);
-    padding-block: calc(var(--dce-section-padding-y) * 1.15);
+  }
+
+  .dce-hero-v1--viewport {
+    display: flex;
+    align-items: center;
+    min-height: 100svh;
+    padding-block: calc(var(--dce-section-padding-y) + 3rem);
   }
 
   .dce-hero-v1__backdrop {
@@ -31,15 +38,15 @@
 
   .dce-hero-v1__glow {
     position: absolute;
-    top: -20%;
-    left: 50%;
-    width: 70rem;
-    height: 50rem;
+    top: -25%;
+    left: 40%;
+    width: 80rem;
+    height: 60rem;
     transform: translateX(-50%);
     background:
-      radial-gradient(38rem 26rem at 30% 20%, color-mix(in srgb, var(--dce-color-accent) 35%, transparent) 0%, transparent 60%),
-      radial-gradient(30rem 22rem at 75% 60%, color-mix(in srgb, var(--dce-accent-300) 25%, transparent) 0%, transparent 65%);
-    animation: dce-hero-v1-drift 22s ease-in-out infinite;
+      radial-gradient(40rem 30rem at 25% 25%, color-mix(in srgb, var(--dce-color-accent) 40%, transparent) 0%, transparent 60%),
+      radial-gradient(34rem 26rem at 78% 55%, color-mix(in srgb, var(--dce-accent-300) 30%, transparent) 0%, transparent 65%);
+    animation: dce-hero-v1-drift 24s ease-in-out infinite;
   }
 
   .dce-hero-v1__noise {
@@ -50,12 +57,40 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
+  .dce-hero-v1__particles span {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--dce-accent-300);
+    opacity: 0.4;
+    filter: blur(1px);
+    animation: dce-hero-v1-particle 14s ease-in-out infinite;
+  }
+
+  .dce-hero-v1__particles span:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; animation-duration: 16s; }
+  .dce-hero-v1__particles span:nth-child(2) { top: 65%; left: 12%; animation-delay: 2s; animation-duration: 13s; }
+  .dce-hero-v1__particles span:nth-child(3) { top: 30%; left: 48%; animation-delay: 4s; animation-duration: 18s; }
+  .dce-hero-v1__particles span:nth-child(4) { top: 78%; left: 55%; animation-delay: 1s; animation-duration: 15s; }
+  .dce-hero-v1__particles span:nth-child(5) { top: 45%; left: 35%; animation-delay: 3s; animation-duration: 20s; }
+
+  @keyframes dce-hero-v1-particle {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+      opacity: 0.15;
+    }
+    50% {
+      transform: translateY(-2.5rem) translateX(1rem);
+      opacity: 0.5;
+    }
+  }
+
   @keyframes dce-hero-v1-drift {
     0%, 100% {
       transform: translateX(-50%) translateY(0) rotate(0deg);
     }
     50% {
-      transform: translateX(-48%) translateY(2%) rotate(2deg);
+      transform: translateX(-46%) translateY(2%) rotate(2deg);
     }
   }
 
@@ -65,7 +100,7 @@
     display: grid;
     grid-template-columns: 1fr;
     align-items: center;
-    gap: var(--dce-space-16);
+    gap: var(--dce-space-12);
   }
 
   .dce-hero-v1__inner {
@@ -75,10 +110,17 @@
     text-align: center;
   }
 
-  .dce-hero-v1--viewport {
+  .dce-hero-v1__proof {
     display: flex;
     align-items: center;
-    min-height: 100svh;
+    gap: var(--dce-space-3);
+    margin-bottom: var(--dce-space-4);
+  }
+
+  .dce-hero-v1__proof-text {
+    color: var(--dce-color-text-muted);
+    font-size: var(--dce-text-sm);
+    font-weight: var(--dce-weight-medium);
   }
 
   .dce-hero-v1__trust-badges {
@@ -87,7 +129,7 @@
     align-items: center;
     justify-content: center;
     gap: var(--dce-space-3);
-    margin: 0 0 var(--dce-space-6);
+    margin: var(--dce-space-8) 0 0;
     padding: 0;
   }
 
@@ -139,11 +181,10 @@
     font-size: var(--dce-text-5xl);
     font-weight: var(--dce-weight-bold);
     letter-spacing: var(--dce-tracking-tight);
+    line-height: var(--dce-leading-tight);
     /* !important: Dawn's base.css sets `h1{color}` unlayered — per the CSS
        Cascade Layers spec, unlayered rules always beat @layer rules
-       regardless of specificity. This is the one place in the codebase
-       where !important is the correct, documented escape hatch (not a
-       shortcut) — see docs/08-decisions-log.md. */
+       regardless of specificity. See docs/08-decisions-log.md. */
     color: var(--dce-color-text) !important;
   }
 
@@ -168,17 +209,27 @@
     align-items: center;
     justify-content: center;
     gap: var(--dce-space-4);
-    margin-top: var(--dce-space-10);
+    margin-top: var(--dce-space-9);
   }
 
-  /* dce-tilt custom element — perspective wrapper for the 3D hover tilt, see dce-hero-v1.js */
+  /* dce-tilt custom element — perspective wrapper + continuous float, see dce-hero-v1.js */
   .dce-hero-v1__visual {
     position: relative;
     display: block;
     width: 100%;
-    max-width: 22rem;
+    max-width: 26rem;
     margin-inline: auto;
     perspective: 1200px;
+    animation: dce-hero-v1-float 6s ease-in-out infinite;
+  }
+
+  @keyframes dce-hero-v1-float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-14px);
+    }
   }
 
   .dce-hero-v1__visual img {
@@ -193,26 +244,35 @@
     transform-style: preserve-3d;
   }
 
+  .dce-hero-v1__visual-glow {
+    position: absolute;
+    z-index: 0;
+    inset: -15%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--dce-color-accent) 45%, transparent) 0%, transparent 70%);
+    filter: blur(30px);
+    opacity: 0.6;
+  }
+
   .dce-hero-v1__visual-shadow {
     position: absolute;
     z-index: 0;
-    inset: 10% 4% -6% 4%;
+    inset: 15% 6% -8% 6%;
     background: color-mix(in srgb, var(--dce-color-accent) 55%, black 20%);
-    filter: blur(40px);
-    opacity: 0.35;
+    filter: blur(44px);
+    opacity: 0.4;
     border-radius: var(--dce-radius-lg);
-    transform: translate(calc(var(--dce-tilt-x, 0deg) * -1.2px), calc(var(--dce-tilt-y, 0deg) * 1.2px));
+    transform: translate(calc(var(--dce-tilt-x, 0deg) * -1.4px), calc(var(--dce-tilt-y, 0deg) * 1.4px));
     transition: transform var(--dce-duration-base) var(--dce-ease-out), opacity var(--dce-duration-base) var(--dce-ease-out);
   }
 
   .dce-hero-v1__visual:hover .dce-hero-v1__visual-shadow {
-    opacity: 0.5;
+    opacity: 0.6;
   }
 
   @media (min-width: 1024px) {
     .dce-hero-v1__grid {
-      grid-template-columns: 1.05fr 0.85fr;
-      text-align: left;
+      grid-template-columns: 3fr 2fr;
+      gap: var(--dce-space-16);
     }
 
     .dce-hero-v1__inner {
@@ -220,6 +280,7 @@
       text-align: left;
     }
 
+    .dce-hero-v1__proof,
     .dce-hero-v1__trust-badges,
     .dce-hero-v1__actions {
       justify-content: flex-start;
@@ -231,6 +292,16 @@
 
     .dce-hero-v1__heading {
       font-size: var(--dce-text-6xl);
+    }
+
+    .dce-hero-v1__visual {
+      max-width: none;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .dce-hero-v1__heading {
+      font-size: 5.5rem;
     }
   }
 }

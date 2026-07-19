@@ -55,7 +55,7 @@
   }
 
   .dce-benefits-v1__item--featured {
-    background: linear-gradient(150deg, var(--dce-color-bg) 0%, var(--dce-color-accent-subtle) 140%);
+    background: linear-gradient(150deg, var(--dce-color-bg) 0%, color-mix(in srgb, var(--dce-color-accent) 22%, var(--dce-color-bg)) 140%);
     justify-content: flex-end;
   }
 
@@ -64,20 +64,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: var(--dce-radius-md);
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: var(--dce-radius-lg);
     background: linear-gradient(135deg, var(--dce-color-accent), var(--dce-accent-700));
     color: var(--dce-color-on-accent);
-    font-size: var(--dce-text-sm);
+    font-size: var(--dce-text-xl);
     font-weight: var(--dce-weight-bold);
+    box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--dce-color-accent) 50%, transparent);
     transition: transform var(--dce-duration-base) var(--dce-ease-spring);
   }
 
+  .dce-benefits-v1__badge .dce-icon svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
   .dce-benefits-v1__item--featured .dce-benefits-v1__badge {
-    width: 3.5rem;
-    height: 3.5rem;
-    font-size: var(--dce-text-base);
+    width: 4.75rem;
+    height: 4.75rem;
+  }
+
+  .dce-benefits-v1__item--featured .dce-benefits-v1__badge .dce-icon svg {
+    width: 2.25rem;
+    height: 2.25rem;
   }
 
   .dce-benefits-v1__item:hover .dce-benefits-v1__badge {

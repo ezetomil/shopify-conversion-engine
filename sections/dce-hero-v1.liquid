@@ -1,12 +1,12 @@
 {%- comment -%}
-  DCE Hero — variant 1 (centered, cinematic).
+  DCE Hero — variant 1 (fullscreen 60/40, cinematic).
 
   First implementation of the Hero component family. Fixes the content
   contract (settings/block ids) that every future Hero variant (v2, v3...)
   must also implement — see docs/00-principles.md, point 2, and
-  docs/05-components-catalog.md. All additions below this comment since
-  the original v1 are additive (new optional settings/blocks) — nothing
-  already shipped was renamed or removed.
+  docs/05-components-catalog.md. Every field added since the original v1
+  is additive (new optional settings/blocks) — nothing already shipped
+  was renamed or removed.
 
   This section owns no design decisions in its content: every visible
   string, image and link comes from section settings/blocks, so a product's
@@ -17,6 +17,7 @@
 {{ 'dce-hero-v1.css' | asset_url | stylesheet_tag }}
 {{ 'dce-button.css' | asset_url | stylesheet_tag }}
 {{ 'dce-icon.css' | asset_url | stylesheet_tag }}
+{{ 'dce-rating-stars.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'dce-hero-v1.js' | asset_url }}" type="module"></script>
 
 {%- liquid
@@ -43,30 +44,22 @@
   <div class="dce-hero-v1__backdrop" aria-hidden="true">
     <div class="dce-hero-v1__glow"></div>
     <div class="dce-hero-v1__noise"></div>
+    <div class="dce-hero-v1__particles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
   </div>
 
   <div class="dce-container dce-hero-v1__grid">
     <div class="dce-hero-v1__inner">
-      {%- if dce_trust_badges.size > 0 -%}
-        <ul class="dce-hero-v1__trust-badges" role="list" data-dce-animate="fade-up">
-          {%- for block in dce_trust_badges -%}
-            <li class="dce-hero-v1__trust-badge" {{ block.shopify_attributes }}>
-              {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
-                {%- render 'dce-icon', name: block.settings.icon -%}
-              {%- endif -%}
-              {%- if block.settings.logo != blank -%}
-                {{
-                  block.settings.logo
-                  | image_url: width: 240
-                  | image_tag: loading: 'lazy', widths: '120, 180, 240', alt: block.settings.label
-                }}
-              {%- endif -%}
-              {%- if block.settings.label != blank -%}
-                <span>{{ block.settings.label }}</span>
-              {%- endif -%}
-            </li>
-          {%- endfor -%}
-        </ul>
+      {%- if section.settings.rating > 0 or section.settings.social_proof_text != blank -%}
+        <div class="dce-hero-v1__proof" data-dce-animate="fade-up">
+          {%- if section.settings.rating > 0 -%}
+            {%- render 'dce-rating-stars', rating: section.settings.rating -%}
+          {%- endif -%}
+          {%- if section.settings.social_proof_text != blank -%}
+            <span class="dce-hero-v1__proof-text">{{ section.settings.social_proof_text }}</span>
+          {%- endif -%}
+        </div>
       {%- endif -%}
 
       {%- if section.settings.badge_text != blank -%}
@@ -100,10 +93,33 @@
           -%}
         </div>
       {%- endif -%}
+
+      {%- if dce_trust_badges.size > 0 -%}
+        <ul class="dce-hero-v1__trust-badges" role="list" data-dce-animate="fade-up" style="transition-delay: 400ms">
+          {%- for block in dce_trust_badges -%}
+            <li class="dce-hero-v1__trust-badge" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
+                {%- render 'dce-icon', name: block.settings.icon -%}
+              {%- endif -%}
+              {%- if block.settings.logo != blank -%}
+                {{
+                  block.settings.logo
+                  | image_url: width: 240
+                  | image_tag: loading: 'lazy', widths: '120, 180, 240', alt: block.settings.label
+                }}
+              {%- endif -%}
+              {%- if block.settings.label != blank -%}
+                <span>{{ block.settings.label }}</span>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
     </div>
 
     {%- if section.settings.image != blank -%}
       <dce-tilt class="dce-hero-v1__visual" data-dce-animate="scale-in" style="transition-delay: 260ms">
+        <div class="dce-hero-v1__visual-glow" aria-hidden="true"></div>
         <div class="dce-hero-v1__visual-shadow" aria-hidden="true"></div>
         {{
           section.settings.image
@@ -112,7 +128,7 @@
             loading: 'eager',
             fetchpriority: 'high',
             widths: '640, 960, 1280, 1600, 1920',
-            sizes: '(min-width: 1024px) 560px, 80vw',
+            sizes: '(min-width: 1024px) 44vw, 82vw',
             alt: section.settings.image.alt | default: section.settings.heading
         }}
       </dce-tilt>
@@ -127,10 +143,30 @@
   "class": "dce-section-wrapper",
   "settings": [
     {
+      "type": "header",
+      "content": "Prueba social"
+    },
+    {
+      "type": "range",
+      "id": "rating",
+      "label": "Calificación (0 = ocultar)",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 0,
+      "info": "Usá solo si tenés una calificación real — no se muestra si queda en 0."
+    },
+    {
+      "type": "text",
+      "id": "social_proof_text",
+      "label": "Texto de prueba social",
+      "info": "Ej: \"128 reseñas verificadas\". Solo afirmaciones reales."
+    },
+    {
       "type": "text",
       "id": "badge_text",
-      "label": "Badge de prueba social",
-      "info": "Opcional. Ej: \"+1.200 alumnos\". Se muestra arriba del eyebrow."
+      "label": "Badge",
+      "info": "Opcional. Ej: \"Ebook Digital\"."
     },
     {
       "type": "text",
@@ -202,7 +238,7 @@
         { "value": "auto", "label": "Automática (según el contenido)" },
         { "value": "viewport", "label": "Pantalla completa" }
       ],
-      "default": "auto"
+      "default": "viewport"
     },
     {
       "type": "color",

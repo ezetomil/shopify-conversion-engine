@@ -1,0 +1,57 @@
+{%- comment -%}
+  DCE Inline CTA — variant 1 (slim repeated touchpoint).
+  Funnel role: a lightweight, repeatable conversion prompt used between
+  narrative sections — not the final close (see dce-cta-v1 for that),
+  just a low-friction reminder that the offer is one click away. Meant to
+  be used 2-3 times through a landing, always pointing back at the Offer
+  section's buy box rather than duplicating purchase logic.
+{%- endcomment -%}
+
+{{ 'dce-inline-cta-v1.css' | asset_url | stylesheet_tag }}
+{{ 'dce-button.css' | asset_url | stylesheet_tag }}
+
+<section class="dce-inline-cta-v1 dce-section dce-section--dark dce-inline-cta-v1--compact">
+  <div class="dce-container">
+    <div class="dce-inline-cta-v1__bar" data-dce-animate="scale-in">
+      {%- if section.settings.text != blank -%}
+        <p class="dce-inline-cta-v1__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+      {%- if section.settings.cta_label != blank and section.settings.cta_url != blank -%}
+        {%- render 'dce-button', label: section.settings.cta_label, url: section.settings.cta_url, variant: 'primary', size: 'lg', magnetic: true -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DCE — CTA en línea v1",
+  "tag": "section",
+  "class": "dce-section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Texto",
+      "default": "¿Listo para empezar?"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto del botón",
+      "default": "Ver la oferta"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Link del botón",
+      "info": "Normalmente un ancla a la sección Oferta, ej: #dce-offer-{id de la sección}."
+    }
+  ],
+  "presets": [
+    {
+      "name": "DCE — CTA en línea v1"
+    }
+  ]
+}
+{% endschema %}

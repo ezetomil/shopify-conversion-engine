@@ -4,6 +4,22 @@
     padding-block: var(--dce-section-padding-y);
   }
 
+  /*
+    Shared dark-mode override — same two-tier token trick used throughout
+    the catalog. Extracted here once several components needed the exact
+    same block (Hero, Transformación, Stats, ...) — see docs/00-principles.md
+    on not duplicating logic. Consecutive `.dce-section--dark` sections
+    share the exact same base color, so there's no visible seam between
+    them — that's deliberate, not an oversight.
+  */
+  .dce-section--dark {
+    background-color: var(--dce-color-bg-inverse);
+    --dce-color-text: var(--dce-color-text-inverse);
+    --dce-color-text-muted: var(--dce-gray-400);
+    --dce-color-border: var(--dce-gray-800);
+    --dce-color-bg: var(--dce-gray-900);
+  }
+
   .dce-container {
     width: 100%;
     max-width: var(--dce-container-max);

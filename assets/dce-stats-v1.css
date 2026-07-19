@@ -2,12 +2,10 @@
  * DCE Stats v1 (dark band, impact numbers). Isolated component.
  */
 @layer components {
+  /* Dark tokens now come from the shared .dce-section--dark class (dce-layout.css). */
   .dce-stats-v1 {
     position: relative;
     overflow: hidden;
-    background-color: var(--dce-color-bg-inverse);
-    --dce-color-text: var(--dce-color-text-inverse);
-    --dce-color-text-muted: var(--dce-gray-400);
   }
 
   .dce-stats-v1--compact {

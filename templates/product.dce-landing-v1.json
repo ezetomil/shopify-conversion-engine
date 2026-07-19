@@ -49,6 +49,14 @@
       },
       "block_order": ["c1", "c2", "c3", "c4"]
     },
+    "inline_cta_1": {
+      "type": "dce-inline-cta-v1",
+      "settings": {
+        "text": "¿Ya te identificaste con esto?",
+        "cta_label": "Ver la oferta",
+        "cta_url": "#dce-offer-offer"
+      }
+    },
     "benefits": {
       "type": "dce-benefits-v1",
       "settings": {
@@ -88,6 +96,14 @@
       },
       "block_order": ["ts1", "ts2", "ts3"]
     },
+    "inline_cta_2": {
+      "type": "dce-inline-cta-v1",
+      "settings": {
+        "text": "¿Listo para dar el primer paso?",
+        "cta_label": "Quiero mi copia",
+        "cta_url": "#dce-offer-offer"
+      }
+    },
     "offer": {
       "type": "dce-offer-v1",
       "settings": {
@@ -109,8 +125,7 @@
     "faq": {
       "type": "dce-faq-v1",
       "settings": {
-        "heading": "Preguntas frecuentes",
-        "background_color": "#F8F9FA"
+        "heading": "Preguntas frecuentes"
       },
       "blocks": {
         "f1": { "type": "faq_item", "settings": { "question": "¿Cómo recibo el ebook después de pagar?", "answer": "<p>Al completar el pago recibís acceso inmediato para descargar el PDF. También te llega la confirmación por email.</p>" } },
@@ -132,5 +147,5 @@
       }
     }
   },
-  "order": ["hero", "problem", "transformation", "benefits", "stats", "story", "offer", "faq", "cta"]
+  "order": ["hero", "problem", "transformation", "inline_cta_1", "benefits", "stats", "story", "inline_cta_2", "offer", "faq", "cta"]
 }

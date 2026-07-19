@@ -1,0 +1,42 @@
+/**
+ * DCE Inline CTA v1 (slim repeated touchpoint). Isolated component.
+ */
+@layer components {
+  .dce-inline-cta-v1--compact {
+    padding-block: var(--dce-space-8);
+  }
+
+  .dce-inline-cta-v1__bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--dce-space-5);
+    max-width: 40rem;
+    margin-inline: auto;
+    padding: var(--dce-space-6) var(--dce-space-8);
+    text-align: center;
+    background: linear-gradient(120deg, color-mix(in srgb, var(--dce-color-accent) 12%, transparent), color-mix(in srgb, var(--dce-accent-300) 8%, transparent));
+    border: 1px solid color-mix(in srgb, var(--dce-color-accent) 25%, transparent);
+    border-radius: var(--dce-radius-full);
+  }
+
+  .dce-inline-cta-v1__text {
+    margin: 0;
+    color: var(--dce-color-text);
+    font-size: var(--dce-text-md);
+    font-weight: var(--dce-weight-semibold);
+  }
+
+  @media (min-width: 640px) {
+    .dce-inline-cta-v1__bar {
+      flex-direction: row;
+      justify-content: space-between;
+      border-radius: var(--dce-radius-full);
+    }
+
+    .dce-inline-cta-v1__text {
+      text-align: left;
+    }
+  }
+}
