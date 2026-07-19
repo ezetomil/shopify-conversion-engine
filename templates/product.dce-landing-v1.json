@@ -68,7 +68,7 @@
       "type": "dce-stats-v1",
       "blocks": {
         "s1": { "type": "stat_item", "settings": { "value": "35+", "label": "Páginas de contenido real" } },
-        "s2": { "type": "stat_item", "settings": { "value": "30", "label": "Días de plan de acción" } },
+        "s2": { "type": "stat_item", "settings": { "value": "30", "label": "Días de plan de acción", "featured": true } },
         "s3": { "type": "stat_item", "settings": { "value": "4", "label": "Habilidades clave" } }
       },
       "block_order": ["s1", "s2", "s3"]

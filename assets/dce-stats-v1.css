@@ -1,27 +1,59 @@
 /**
- * DCE Stats v1 (impact numbers strip). Isolated component.
+ * DCE Stats v1 (dark band, impact numbers). Isolated component.
  */
 @layer components {
+  .dce-stats-v1 {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--dce-color-bg-inverse);
+    --dce-color-text: var(--dce-color-text-inverse);
+    --dce-color-text-muted: var(--dce-gray-400);
+  }
+
   .dce-stats-v1--compact {
-    padding-block: var(--dce-space-12);
+    padding-block: var(--dce-space-16);
+  }
+
+  .dce-stats-v1__backdrop {
+    position: absolute;
+    z-index: 0;
+    top: -30%;
+    left: 50%;
+    width: 50rem;
+    height: 30rem;
+    transform: translateX(-50%);
+    pointer-events: none;
+    background: radial-gradient(ellipse, color-mix(in srgb, var(--dce-color-accent) 25%, transparent) 0%, transparent 65%);
   }
 
   .dce-stats-v1__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-    gap: var(--dce-space-8);
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--dce-space-10) var(--dce-space-12);
     text-align: center;
+  }
+
+  .dce-stats-v1__item {
+    min-width: 8rem;
   }
 
   .dce-stats-v1__value {
     display: block;
-    font-size: var(--dce-text-5xl);
+    font-size: var(--dce-text-4xl);
     font-weight: var(--dce-weight-bold);
     letter-spacing: var(--dce-tracking-tight);
-    background: linear-gradient(135deg, var(--dce-color-text) 30%, var(--dce-color-accent) 100%);
+    background: linear-gradient(135deg, var(--dce-color-text-inverse) 30%, var(--dce-accent-300) 100%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+  }
+
+  .dce-stats-v1__item--featured .dce-stats-v1__value {
+    font-size: var(--dce-text-6xl);
   }
 
   .dce-stats-v1__label {
@@ -29,5 +61,20 @@
     color: var(--dce-color-text-muted);
     font-size: var(--dce-text-sm);
     font-weight: var(--dce-weight-medium);
+  }
+
+  .dce-stats-v1__item--featured .dce-stats-v1__label {
+    color: var(--dce-gray-300);
+    font-weight: var(--dce-weight-semibold);
+  }
+
+  @media (min-width: 768px) {
+    .dce-stats-v1__value {
+      font-size: var(--dce-text-5xl);
+    }
+
+    .dce-stats-v1__item--featured .dce-stats-v1__value {
+      font-size: 5.5rem;
+    }
   }
 }

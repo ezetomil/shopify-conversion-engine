@@ -21,12 +21,16 @@
     style="background-color: {{ section.settings.background_color }};"
   {% endif %}
 >
-  <div class="dce-container dce-faq-v1__container">
-    {%- render 'dce-section-header',
-      eyebrow: section.settings.eyebrow,
-      heading: section.settings.heading,
-      subheading: section.settings.subheading
-    -%}
+  <div class="dce-faq-v1__backdrop" aria-hidden="true"></div>
+  <div class="dce-container dce-faq-v1__layout">
+    <div class="dce-faq-v1__header-col">
+      {%- render 'dce-section-header',
+        eyebrow: section.settings.eyebrow,
+        heading: section.settings.heading,
+        subheading: section.settings.subheading,
+        alignment: 'left'
+      -%}
+    </div>
 
     {%- if dce_faqs.size > 0 -%}
       <div class="dce-faq-v1__list">

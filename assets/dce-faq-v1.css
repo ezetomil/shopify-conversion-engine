@@ -2,20 +2,46 @@
  * DCE FAQ v1 (native <details> disclosure). Isolated component.
  */
 @layer components {
-  .dce-faq-v1__container {
-    max-width: 46rem;
+  .dce-faq-v1 {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dce-faq-v1__backdrop {
+    position: absolute;
+    z-index: 0;
+    bottom: -20%;
+    left: -10%;
+    width: 36rem;
+    height: 36rem;
+    pointer-events: none;
+    background: radial-gradient(circle, color-mix(in srgb, var(--dce-color-accent) 8%, transparent) 0%, transparent 70%);
+    filter: blur(20px);
+  }
+
+  .dce-faq-v1__layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--dce-space-8);
+  }
+
+  .dce-faq-v1__header-col .dce-section-header {
+    margin-inline: 0;
   }
 
   .dce-faq-v1__list {
     display: flex;
     flex-direction: column;
     gap: var(--dce-space-3);
-    margin-top: var(--dce-space-10);
   }
 
   .dce-faq-v1__item {
     padding: var(--dce-space-5) var(--dce-space-6);
-    background-color: var(--dce-color-bg);
+    background-color: color-mix(in srgb, var(--dce-color-bg) 85%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--dce-color-border);
     border-radius: var(--dce-radius-lg);
     transition: border-color var(--dce-duration-base) var(--dce-ease-out), box-shadow var(--dce-duration-base) var(--dce-ease-out);
@@ -66,5 +92,18 @@
 
   .dce-faq-v1__answer p {
     margin: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .dce-faq-v1__layout {
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: var(--dce-space-16);
+      align-items: start;
+    }
+
+    .dce-faq-v1__header-col {
+      position: sticky;
+      top: var(--dce-space-16);
+    }
   }
 }

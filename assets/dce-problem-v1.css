@@ -1,12 +1,41 @@
 /**
- * DCE Problem v1 (premium icon grid). Isolated component — see docs/00-principles.md, point 4.
+ * DCE Problem v1 (asymmetric, premium icon grid). Isolated component —
+ * see docs/00-principles.md, point 4.
  */
 @layer components {
+  .dce-problem-v1 {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dce-problem-v1__backdrop {
+    position: absolute;
+    z-index: 0;
+    top: -15%;
+    left: -15%;
+    width: 40rem;
+    height: 40rem;
+    pointer-events: none;
+    background: radial-gradient(circle, color-mix(in srgb, var(--dce-color-accent) 10%, transparent) 0%, transparent 70%);
+    filter: blur(10px);
+  }
+
+  .dce-problem-v1__layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--dce-space-10);
+  }
+
+  .dce-problem-v1__header-col .dce-section-header {
+    margin-inline: 0;
+  }
+
   .dce-problem-v1__grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--dce-space-5);
-    margin-top: var(--dce-space-10);
     padding: 0;
   }
 
@@ -82,9 +111,25 @@
     line-height: var(--dce-leading-relaxed);
   }
 
-  @media (min-width: 768px) {
-    .dce-problem-v1__grid {
-      grid-template-columns: repeat(2, 1fr);
+  @media (min-width: 1024px) {
+    .dce-problem-v1__layout {
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: var(--dce-space-16);
+      align-items: start;
+    }
+
+    .dce-problem-v1__header-col {
+      position: sticky;
+      top: var(--dce-space-16);
+    }
+
+    /* Alternating offset — deliberately not a perfectly even grid. */
+    .dce-problem-v1__item:nth-child(2n) {
+      transform: translateY(var(--dce-space-8));
+    }
+
+    .dce-problem-v1__item:nth-child(2n):hover {
+      transform: translateY(calc(var(--dce-space-8) - 4px));
     }
   }
 }

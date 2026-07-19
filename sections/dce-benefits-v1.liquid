@@ -19,6 +19,7 @@
     style="background-color: {{ section.settings.background_color }};"
   {% endif %}
 >
+  <div class="dce-benefits-v1__backdrop" aria-hidden="true"></div>
   <div class="dce-container">
     {%- render 'dce-section-header',
       eyebrow: section.settings.eyebrow,
@@ -30,7 +31,7 @@
       <ol class="dce-benefits-v1__list">
         {%- for block in dce_benefits -%}
           <li
-            class="dce-benefits-v1__item"
+            class="dce-benefits-v1__item{% if forloop.first %} dce-benefits-v1__item--featured{% endif %}"
             data-dce-animate="fade-right"
             style="transition-delay: {{ forloop.index0 | times: 70 }}ms"
             {{ block.shopify_attributes }}

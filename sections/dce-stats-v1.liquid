@@ -14,10 +14,16 @@
 
 {%- if dce_stats.size > 0 -%}
   <section class="dce-stats-v1 dce-section dce-stats-v1--compact">
+    <div class="dce-stats-v1__backdrop" aria-hidden="true"></div>
     <div class="dce-container">
       <div class="dce-stats-v1__grid">
         {%- for block in dce_stats -%}
-          <div class="dce-stats-v1__item" data-dce-animate style="transition-delay: {{ forloop.index0 | times: 80 }}ms" {{ block.shopify_attributes }}>
+          <div
+            class="dce-stats-v1__item{% if block.settings.featured %} dce-stats-v1__item--featured{% endif %}"
+            data-dce-animate="scale-in"
+            style="transition-delay: {{ forloop.index0 | times: 80 }}ms"
+            {{ block.shopify_attributes }}
+          >
             <dce-stat class="dce-stats-v1__value" data-value="{{ block.settings.value }}">{{ block.settings.value }}</dce-stat>
             <p class="dce-stats-v1__label">{{ block.settings.label }}</p>
           </div>
@@ -50,6 +56,13 @@
           "id": "label",
           "label": "Descripción",
           "default": "Descripción del número"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Destacar (más grande)",
+          "info": "Usalo en el número más impactante — no marques más de uno.",
+          "default": false
         }
       ]
     }

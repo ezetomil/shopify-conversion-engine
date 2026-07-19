@@ -1,5 +1,5 @@
 {%- comment -%}
-  DCE Problem — variant 1 (icon grid).
+  DCE Problem — variant 1 (asymmetric layout).
 
   Funnel role: builds identification with the reader's current friction
   before the offer is introduced. Fixes the content contract for the
@@ -19,12 +19,16 @@
   class="dce-problem-v1 dce-section"
   style="background-color: {{ section.settings.background_color | default: 'var(--dce-color-bg-subtle)' }};"
 >
-  <div class="dce-container">
-    {%- render 'dce-section-header',
-      eyebrow: section.settings.eyebrow,
-      heading: section.settings.heading,
-      subheading: section.settings.subheading
-    -%}
+  <div class="dce-problem-v1__backdrop" aria-hidden="true"></div>
+  <div class="dce-container dce-problem-v1__layout">
+    <div class="dce-problem-v1__header-col">
+      {%- render 'dce-section-header',
+        eyebrow: section.settings.eyebrow,
+        heading: section.settings.heading,
+        subheading: section.settings.subheading,
+        alignment: 'left'
+      -%}
+    </div>
 
     {%- if dce_pain_points.size > 0 -%}
       <ul class="dce-problem-v1__grid" role="list">
