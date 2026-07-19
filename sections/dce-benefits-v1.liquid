@@ -31,7 +31,7 @@
       <ol class="dce-benefits-v1__list">
         {%- for block in dce_benefits -%}
           <li
-            class="dce-benefits-v1__item{% if forloop.first %} dce-benefits-v1__item--featured{% endif %}"
+            class="dce-benefits-v1__item{% if block.settings.featured %} dce-benefits-v1__item--featured{% endif %}"
             data-dce-animate="fade-right"
             style="transition-delay: {{ forloop.index0 | times: 70 }}ms"
             {{ block.shopify_attributes }}
@@ -102,7 +102,8 @@
             { "value": "heart", "label": "Corazón" },
             { "value": "clipboard", "label": "Portapapeles" },
             { "value": "plant", "label": "Planta (crecimiento)" },
-            { "value": "map_pin", "label": "Pin de mapa" }
+            { "value": "map_pin", "label": "Pin de mapa" },
+            { "value": "eye", "label": "Ojo" }
           ],
           "default": "lightning_bolt"
         },
@@ -116,6 +117,12 @@
           "type": "textarea",
           "id": "text",
           "label": "Descripción"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Destacar (tarjeta más grande)",
+          "default": false
         }
       ]
     }

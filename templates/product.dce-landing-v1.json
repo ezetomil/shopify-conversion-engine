@@ -6,7 +6,7 @@
       "settings": {
         "heading": "Todavía podés cambiar esto.",
         "heading_accent": "cambiar esto",
-        "subheading": "Una guía corta para dar el primer paso, aunque sientas que no tenés tiempo ni experiencia.",
+        "subheading": "Una guía práctica para dejar de sentirte estancado y empezar a construir ingresos digitales, incluso si hoy no sabés por dónde empezar.",
         "image": "shopify://shop_images/ChatGPTImage6jun2026_02_21_10p.m._a8be85eb-3e42-482c-9e5b-423be4ad05f5.png",
         "cta_primary_style": "buy_now",
         "cta_primary_label": "Empezar ahora",
@@ -19,9 +19,9 @@
         "heading": "¿Te suena esto?"
       },
       "blocks": {
-        "p1": { "type": "pain_point_item", "settings": { "text": "Trabajás muchas horas y sentís que no alcanza." } },
-        "p2": { "type": "pain_point_item", "settings": { "text": "Ves a otros avanzar y vos seguís en el mismo lugar." } },
-        "p3": { "type": "pain_point_item", "settings": { "text": "Una parte de vos ya empezó a pensar que esta es tu vida para siempre." } }
+        "p1": { "type": "pain_point_item", "settings": { "text": "Trabajás mucho pero sentís que no avanzás." } },
+        "p2": { "type": "pain_point_item", "settings": { "text": "Sabés que querés cambiar, pero nunca encontrás por dónde empezar." } },
+        "p3": { "type": "pain_point_item", "settings": { "text": "Cada año pasa igual y cada vez cuesta más imaginar una vida distinta." } }
       },
       "block_order": ["p1", "p2", "p3"]
     },
@@ -31,9 +31,9 @@
         "heading": "Así se siente el cambio"
       },
       "blocks": {
-        "c1": { "type": "comparison_item", "settings": { "before_text": "Postergarlo", "after_text": "Empezar hoy" } },
-        "c2": { "type": "comparison_item", "settings": { "before_text": "Depender de un sueldo", "after_text": "Tener un plan propio" } },
-        "c3": { "type": "comparison_item", "settings": { "before_text": "No saber por dónde empezar", "after_text": "Saber cuál es tu próximo paso" } },
+        "c1": { "type": "comparison_item", "settings": { "before_text": "Esperar el momento perfecto", "after_text": "Empezar hoy" } },
+        "c2": { "type": "comparison_item", "settings": { "before_text": "Vivir sin dirección", "after_text": "Tener un plan claro" } },
+        "c3": { "type": "comparison_item", "settings": { "before_text": "Consumir contenido", "after_text": "Aplicar todos los días" } },
         "c4": { "type": "comparison_item", "settings": { "before_text": "Sentir que el tiempo pasa", "after_text": "Sentir que avanzás" } }
       },
       "block_order": ["c1", "c2", "c3", "c4"]
@@ -41,22 +41,29 @@
     "benefits": {
       "type": "dce-benefits-v1",
       "settings": {
-        "eyebrow": "Recién ahora, el contenido",
         "heading": "El plan"
       },
       "blocks": {
-        "b1": { "type": "benefit_item", "settings": { "icon": "lock", "title": "De dónde salir", "text": "Entender por qué estás estancado y qué es lo primero que hay que soltar." } },
-        "b2": { "type": "benefit_item", "settings": { "icon": "map_pin", "title": "Hacia dónde ir", "text": "Una dirección clara, sin necesitar experiencia previa." } },
-        "b3": { "type": "benefit_item", "settings": { "icon": "lightning_bolt", "title": "Cómo dar el primer paso", "text": "Un plan de 30 días, pensado para alguien con poco tiempo libre." } }
+        "b1": { "type": "benefit_item", "settings": { "icon": "eye", "title": "Mentalidad", "text": "Entendé qué te mantiene frenado." } },
+        "b2": { "type": "benefit_item", "settings": { "icon": "map_pin", "title": "Dirección", "text": "Descubrí cuál es el siguiente paso." } },
+        "b3": { "type": "benefit_item", "settings": { "icon": "lightning_bolt", "title": "Acción", "text": "Un plan simple para avanzar durante 30 días." } },
+        "b4": { "type": "benefit_item", "settings": { "icon": "star", "title": "IA", "text": "Usá inteligencia artificial para acelerar el proceso." } }
       },
-      "block_order": ["b1", "b2", "b3"]
+      "block_order": ["b1", "b2", "b3", "b4"]
+    },
+    "gallery": {
+      "type": "dce-gallery-v1",
+      "settings": {
+        "heading": "Mirá parte de la guía",
+        "subheading": "Esto es exactamente lo que vas a recibir después de comprar."
+      }
     },
     "story": {
       "type": "dce-story-v1",
       "settings": {
         "eyebrow": "¿Quién escribió esto?",
-        "heading": "Alguien que estuvo exactamente ahí",
-        "body": "<p>Esto lo escribió alguien que pasó años en una fábrica, pensando que esa iba a ser toda su vida.</p><p>Hasta que decidió probar algo distinto. No fue rápido ni fácil — pero fue el primer paso real hacia algo propio.</p>",
+        "heading": "No soy un gurú.",
+        "body": "<p>Yo también estuve exactamente donde estás vos. Y no encontré una fórmula mágica.</p><p>Encontré un camino. Y funcionó.</p>",
         "closing_line": "— No vine a este mundo para hacer solamente esto. Y vos tampoco."
       }
     },
@@ -64,17 +71,16 @@
       "type": "dce-promise-v1",
       "settings": {
         "eyebrow": "Por qué es diferente",
-        "heading": "No promete lo que no puede cumplir"
+        "heading": "Nada de lo que pensás que necesitás",
+        "closing_statement": "No necesitás cambiar tu vida en un día. Solo empezar a cambiar la dirección."
       },
       "blocks": {
-        "n1": { "type": "not_item", "settings": { "text": "No promete hacerte rico." } },
-        "n2": { "type": "not_item", "settings": { "text": "No promete resultados garantizados." } },
-        "n3": { "type": "not_item", "settings": { "text": "No promete que va a ser fácil." } },
-        "y1": { "type": "promise_item", "settings": { "word": "Claridad" } },
-        "y2": { "type": "promise_item", "settings": { "word": "Dirección" } },
-        "y3": { "type": "promise_item", "settings": { "word": "Un primer paso" } }
+        "n1": { "type": "not_item", "settings": { "text": "No necesitás experiencia." } },
+        "n2": { "type": "not_item", "settings": { "text": "No necesitás miles de seguidores." } },
+        "n3": { "type": "not_item", "settings": { "text": "No necesitás dejar tu trabajo." } },
+        "n4": { "type": "not_item", "settings": { "text": "Solo necesitás empezar." } }
       },
-      "block_order": ["n1", "n2", "n3", "y1", "y2", "y3"]
+      "block_order": ["n1", "n2", "n3", "n4"]
     },
     "offer": {
       "type": "dce-offer-v1",
@@ -86,11 +92,15 @@
         "cta_label": "Comprar ahora"
       },
       "blocks": {
-        "i1": { "type": "include_item", "settings": { "text": "Guía completa en PDF (35+ páginas)" } },
+        "i1": { "type": "include_item", "settings": { "text": "35+ páginas" } },
         "i2": { "type": "include_item", "settings": { "text": "Plan de acción de 30 días" } },
-        "i3": { "type": "include_item", "settings": { "text": "Acceso de por vida al material" } }
+        "i3": { "type": "include_item", "settings": { "text": "Ejercicios prácticos" } },
+        "i4": { "type": "include_item", "settings": { "text": "Recursos descargables" } },
+        "i5": { "type": "include_item", "settings": { "text": "Prompts de IA" } },
+        "i6": { "type": "include_item", "settings": { "text": "Acceso inmediato" } },
+        "i7": { "type": "include_item", "settings": { "text": "Actualizaciones futuras" } }
       },
-      "block_order": ["i1", "i2", "i3"]
+      "block_order": ["i1", "i2", "i3", "i4", "i5", "i6", "i7"]
     },
     "faq": {
       "type": "dce-faq-v1",

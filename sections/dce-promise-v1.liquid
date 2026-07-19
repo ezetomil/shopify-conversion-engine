@@ -45,6 +45,10 @@
         {%- endfor -%}
       </p>
     {%- endif -%}
+
+    {%- if section.settings.closing_statement != blank -%}
+      <p class="dce-promise-v1__closing" data-dce-animate="scale-in" style="transition-delay: 200ms">{{ section.settings.closing_statement }}</p>
+    {%- endif -%}
   </div>
 </section>
 
@@ -70,6 +74,12 @@
       "type": "textarea",
       "id": "subheading",
       "label": "Subtítulo"
+    },
+    {
+      "type": "textarea",
+      "id": "closing_statement",
+      "label": "Declaración de cierre",
+      "info": "Frase grande al final de la sección, en el mismo estilo destacado que las palabras clave."
     },
     {
       "type": "checkbox",

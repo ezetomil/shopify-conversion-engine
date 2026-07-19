@@ -138,11 +138,38 @@ function initBuyNow() {
   });
 }
 
+/**
+ * Gallery carousel: prev/next buttons scroll the track by one card width.
+ * The track itself is a plain scrollable list (scroll-snap), so touch and
+ * trackpad scrolling already work with zero JS — these buttons are a
+ * pointer-device convenience only.
+ */
+function initGalleryCarousel() {
+  document.querySelectorAll('[data-dce-gallery-track]').forEach((track) => {
+    if (track.dataset.dceGalleryBound) return;
+    track.dataset.dceGalleryBound = 'true';
+
+    const viewport = track.closest('.dce-gallery-v1__viewport');
+    const prevButton = viewport?.querySelector('[data-dce-gallery-prev]');
+    const nextButton = viewport?.querySelector('[data-dce-gallery-next]');
+    const scrollByCard = (direction) => {
+      const card = track.querySelector('.dce-gallery-v1__item');
+      const amount = (card?.getBoundingClientRect().width || 300) + 20;
+      track.scrollBy({ left: amount * direction, behavior: 'smooth' });
+    };
+
+    prevButton?.addEventListener('click', () => scrollByCard(-1));
+    nextButton?.addEventListener('click', () => scrollByCard(1));
+  });
+}
+
 initScrollReveal();
 initMagnetic();
 initBuyNow();
+initGalleryCarousel();
 document.addEventListener('shopify:section:load', () => {
   initScrollReveal();
   initMagnetic();
   initBuyNow();
+  initGalleryCarousel();
 });

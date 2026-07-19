@@ -93,7 +93,7 @@
     --dce-space-24: 6rem;
     --dce-space-32: 8rem;
 
-    --dce-section-padding-y: clamp(2.25rem, 4.5vw, 4.5rem);
+    --dce-section-padding-y: clamp(3.5rem, 7.5vw, 8rem);
 
     /* ---- Grid & container ---- */
     --dce-container-max: 1200px;
