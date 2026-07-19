@@ -146,8 +146,19 @@
     line-height: var(--dce-leading-relaxed);
   }
 
+  /*
+    No photo, deliberately (see docs/00-principles.md on this product's
+    authenticity-over-authority framing) — a single narrower column reads
+    like a personal letter instead of leaving an empty grid track where
+    the portrait would have gone.
+  */
+  .dce-story-v1__grid--no-image {
+    max-width: 38rem;
+    margin-inline: auto;
+  }
+
   @media (min-width: 1024px) {
-    .dce-story-v1__grid {
+    .dce-story-v1__grid:not(.dce-story-v1__grid--no-image) {
       grid-template-columns: 0.8fr 1fr;
       gap: var(--dce-space-16);
     }

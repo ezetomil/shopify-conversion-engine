@@ -1,15 +1,18 @@
 {%- comment -%}
-  DCE Problem — variant 1 (asymmetric layout).
+  DCE Problem — variant 1 (statement stack).
 
   Funnel role: builds identification with the reader's current friction
   before the offer is introduced. Fixes the content contract for the
   Problem family (v2, v3...) — see docs/00-principles.md and
   docs/05-components-catalog.md.
+
+  Deliberately not a card grid: a list format reads as information, not
+  as something felt. Large sequential statements, one idea at a time,
+  read closer to how the reader actually experiences the thought.
 {%- endcomment -%}
 
 {{ 'dce-problem-v1.css' | asset_url | stylesheet_tag }}
 {{ 'dce-section-header.css' | asset_url | stylesheet_tag }}
-{{ 'dce-icon.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
   assign dce_pain_points = section.blocks | where: 'type', 'pain_point_item'
@@ -22,31 +25,23 @@
   {% endif %}
 >
   <div class="dce-problem-v1__backdrop" aria-hidden="true"></div>
-  <div class="dce-container dce-problem-v1__layout">
-    <div class="dce-problem-v1__header-col">
-      {%- render 'dce-section-header',
-        eyebrow: section.settings.eyebrow,
-        heading: section.settings.heading,
-        subheading: section.settings.subheading,
-        alignment: 'left'
-      -%}
-    </div>
+  <div class="dce-container dce-problem-v1__container">
+    {%- render 'dce-section-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      subheading: section.settings.subheading
+    -%}
 
     {%- if dce_pain_points.size > 0 -%}
-      <ul class="dce-problem-v1__grid" role="list">
+      <ul class="dce-problem-v1__stack" role="list">
         {%- for block in dce_pain_points -%}
           <li
-            class="dce-problem-v1__item"
-            data-dce-animate="fade-left"
-            style="transition-delay: {{ forloop.index0 | times: 90 }}ms"
+            class="dce-problem-v1__line"
+            data-dce-animate="fade-up"
+            style="transition-delay: {{ forloop.index0 | times: 120 }}ms"
             {{ block.shopify_attributes }}
           >
-            {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
-              <span class="dce-problem-v1__icon">
-                {%- render 'dce-icon', name: block.settings.icon -%}
-              </span>
-            {%- endif -%}
-            <p class="dce-problem-v1__text">{{ block.settings.text }}</p>
+            {{ block.settings.text }}
           </li>
         {%- endfor -%}
       </ul>
@@ -87,12 +82,13 @@
   "blocks": [
     {
       "type": "pain_point_item",
-      "name": "Punto de dolor",
+      "name": "Frase",
       "settings": [
         {
           "type": "select",
           "id": "icon",
           "label": "Ícono",
+          "info": "No se usa en esta variante — se mantiene por compatibilidad con futuras variantes del componente.",
           "options": [
             { "value": "none", "label": "Sin ícono" },
             { "value": "check_mark", "label": "Check" },
@@ -112,13 +108,13 @@
             { "value": "clipboard", "label": "Portapapeles" },
             { "value": "plant", "label": "Planta (crecimiento)" }
           ],
-          "default": "question_mark"
+          "default": "none"
         },
         {
           "type": "textarea",
           "id": "text",
           "label": "Texto",
-          "default": "Describí un punto de dolor concreto de tu audiencia."
+          "default": "Una frase corta, humana y concreta."
         }
       ]
     }

@@ -1,6 +1,7 @@
 /**
- * DCE Problem v1 (dark, glassmorphic, asymmetric). Isolated component —
- * see docs/00-principles.md, point 4.
+ * DCE Problem v1 (statement stack). Isolated component — see
+ * docs/00-principles.md, point 4. Deliberately not a card grid — see the
+ * comment in the section file for why.
  */
 @layer components {
   .dce-problem-v1 {
@@ -12,126 +13,49 @@
     position: absolute;
     z-index: 0;
     top: -20%;
-    left: -15%;
-    width: 44rem;
-    height: 44rem;
+    left: 50%;
+    width: 50rem;
+    height: 40rem;
+    transform: translateX(-50%);
     pointer-events: none;
-    background: radial-gradient(circle, color-mix(in srgb, var(--dce-color-accent) 18%, transparent) 0%, transparent 70%);
+    background: radial-gradient(circle, color-mix(in srgb, var(--dce-color-accent) 12%, transparent) 0%, transparent 70%);
     filter: blur(10px);
   }
 
-  .dce-problem-v1__layout {
+  .dce-problem-v1__container {
     position: relative;
     z-index: 1;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--dce-space-10);
+    max-width: 46rem;
   }
 
-  .dce-problem-v1__header-col .dce-section-header {
-    margin-inline: 0;
-  }
-
-  .dce-problem-v1__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--dce-space-5);
+  .dce-problem-v1__stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--dce-space-6);
+    margin: var(--dce-space-16) 0 0;
     padding: 0;
   }
 
-  .dce-problem-v1__item {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    gap: var(--dce-space-4);
-    padding: var(--dce-space-6);
-    background-color: color-mix(in srgb, var(--dce-gray-900) 55%, transparent);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
-    border: 1px solid var(--dce-gray-800);
-    border-radius: var(--dce-radius-xl);
-    overflow: hidden;
-    transition:
-      transform var(--dce-duration-base) var(--dce-ease-out),
-      box-shadow var(--dce-duration-base) var(--dce-ease-out),
-      border-color var(--dce-duration-base) var(--dce-ease-out);
-  }
-
-  .dce-problem-v1__item::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    z-index: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg, var(--dce-color-accent), var(--dce-accent-300) 45%, transparent 75%);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity var(--dce-duration-base) var(--dce-ease-out);
-  }
-
-  .dce-problem-v1__item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -12px color-mix(in srgb, var(--dce-color-accent) 30%, transparent);
-    border-color: transparent;
-  }
-
-  .dce-problem-v1__item:hover::before {
-    opacity: 1;
-  }
-
-  .dce-problem-v1__icon {
-    position: relative;
-    z-index: 1;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: var(--dce-radius-full);
-    background: linear-gradient(135deg, var(--dce-gray-800), var(--dce-gray-900));
-    color: var(--dce-gray-300);
-    transition: background var(--dce-duration-base) var(--dce-ease-out), color var(--dce-duration-base) var(--dce-ease-out), transform var(--dce-duration-base) var(--dce-ease-spring);
-  }
-
-  .dce-problem-v1__item:hover .dce-problem-v1__icon {
-    background: linear-gradient(135deg, var(--dce-color-accent), var(--dce-accent-700));
-    color: var(--dce-color-on-accent);
-    transform: scale(1.1) rotate(-4deg);
-  }
-
-  .dce-problem-v1__text {
-    position: relative;
-    z-index: 1;
+  .dce-problem-v1__line {
     margin: 0;
-    padding-top: var(--dce-space-2);
-    color: var(--dce-color-text);
-    font-size: var(--dce-text-base);
-    line-height: var(--dce-leading-relaxed);
+    color: var(--dce-color-text-muted);
+    font-size: var(--dce-text-2xl);
+    font-weight: var(--dce-weight-medium);
+    line-height: var(--dce-leading-snug);
+    letter-spacing: var(--dce-tracking-tight);
+    padding-left: var(--dce-space-6);
+    border-left: 2px solid var(--dce-gray-800);
+    transition: border-color var(--dce-duration-slow) var(--dce-ease-out), color var(--dce-duration-slow) var(--dce-ease-out);
   }
 
-  @media (min-width: 1024px) {
-    .dce-problem-v1__layout {
-      grid-template-columns: 0.85fr 1.15fr;
-      gap: var(--dce-space-16);
-      align-items: start;
-    }
+  .dce-problem-v1__line.dce-is-visible {
+    color: var(--dce-color-text);
+    border-left-color: var(--dce-color-accent);
+  }
 
-    .dce-problem-v1__header-col {
-      position: sticky;
-      top: var(--dce-space-16);
-    }
-
-    /* Alternating offset — deliberately not a perfectly even grid. */
-    .dce-problem-v1__item:nth-child(2n) {
-      transform: translateY(var(--dce-space-8));
-    }
-
-    .dce-problem-v1__item:nth-child(2n):hover {
-      transform: translateY(calc(var(--dce-space-8) - 4px));
+  @media (min-width: 768px) {
+    .dce-problem-v1__line {
+      font-size: var(--dce-text-3xl);
     }
   }
 }

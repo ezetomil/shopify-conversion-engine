@@ -1,0 +1,126 @@
+{%- comment -%}
+  DCE Promise — variant 1 (what it doesn't promise / what it does).
+
+  Funnel role: builds honesty-based trust right before the offer — by
+  naming what the product does NOT claim, the claims it does make become
+  more credible. First implementation of the Promise family — see
+  docs/00-principles.md and docs/05-components-catalog.md (extends the
+  catalog: not in the original 15, added because it earns its place in a
+  specific funnel — see docs/05-components-catalog.md's expansion rule).
+{%- endcomment -%}
+
+{{ 'dce-promise-v1.css' | asset_url | stylesheet_tag }}
+{{ 'dce-section-header.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign dce_not_items = section.blocks | where: 'type', 'not_item'
+  assign dce_promise_items = section.blocks | where: 'type', 'promise_item'
+-%}
+
+<section
+  class="dce-promise-v1 dce-section{% if section.settings.dark_mode %} dce-section--dark{% endif %}"
+  {% if section.settings.background_color != blank %}
+    style="background-color: {{ section.settings.background_color }};"
+  {% endif %}
+>
+  <div class="dce-container dce-promise-v1__container">
+    {%- render 'dce-section-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      subheading: section.settings.subheading
+    -%}
+
+    {%- if dce_not_items.size > 0 -%}
+      <ul class="dce-promise-v1__not-list" role="list" data-dce-animate="fade-up" style="transition-delay: 100ms">
+        {%- for block in dce_not_items -%}
+          <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if dce_promise_items.size > 0 -%}
+      <p class="dce-promise-v1__words" data-dce-animate="scale-in" style="transition-delay: 200ms">
+        {%- for block in dce_promise_items -%}
+          <span {{ block.shopify_attributes }}>{{ block.settings.word }}{% unless forloop.last %}.{% endunless %}</span>
+        {%- endfor -%}
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DCE — Promesa v1",
+  "tag": "section",
+  "class": "dce-section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Por qué es diferente"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "No promete lo que no puede cumplir"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "checkbox",
+      "id": "dark_mode",
+      "label": "Fondo oscuro",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "not_item",
+      "name": "No promete",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "No promete riqueza."
+        }
+      ]
+    },
+    {
+      "type": "promise_item",
+      "name": "Sí promete",
+      "settings": [
+        {
+          "type": "text",
+          "id": "word",
+          "label": "Palabra o frase corta",
+          "default": "Claridad"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DCE — Promesa v1",
+      "blocks": [
+        { "type": "not_item" },
+        { "type": "not_item" },
+        { "type": "not_item" },
+        { "type": "promise_item" },
+        { "type": "promise_item" },
+        { "type": "promise_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

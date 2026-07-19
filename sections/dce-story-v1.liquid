@@ -20,7 +20,7 @@
   {% endif %}
 >
   <div class="dce-story-v1__backdrop" aria-hidden="true"></div>
-  <div class="dce-container dce-story-v1__grid">
+  <div class="dce-container dce-story-v1__grid{% if section.settings.image == blank %} dce-story-v1__grid--no-image{% endif %}">
     {%- if section.settings.image != blank -%}
       <div class="dce-story-v1__image" data-dce-animate="fade-right">
         {{

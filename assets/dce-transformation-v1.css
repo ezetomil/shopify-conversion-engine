@@ -1,5 +1,7 @@
 /**
- * DCE Transformation v1 (connected timeline). Isolated component.
+ * DCE Transformation v1 (before → after statement lines). Isolated
+ * component. Mirrors dce-problem-v1's statement rhythm on purpose (same
+ * beat, opposite emotional weight — heavy vs. light), not a coincidence.
  */
 @layer components {
   .dce-transformation-v1 {
@@ -11,149 +13,60 @@
     position: absolute;
     z-index: 0;
     bottom: -20%;
-    right: -10%;
-    width: 40rem;
+    left: 50%;
+    width: 50rem;
     height: 40rem;
+    transform: translateX(-50%);
     pointer-events: none;
-    background: radial-gradient(circle, color-mix(in srgb, var(--dce-color-accent) 16%, transparent) 0%, transparent 70%);
+    background: radial-gradient(circle, color-mix(in srgb, var(--dce-color-accent) 20%, transparent) 0%, transparent 70%);
     filter: blur(10px);
   }
 
-  .dce-transformation-v1__labels {
+  .dce-transformation-v1__container {
     position: relative;
     z-index: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     max-width: 46rem;
-    margin: var(--dce-space-12) auto 0;
-    padding-inline: var(--dce-space-10);
-    text-align: center;
   }
 
-  .dce-transformation-v1__labels span {
-    font-size: var(--dce-text-xs);
-    font-weight: var(--dce-weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--dce-color-text-muted);
-  }
-
-  .dce-transformation-v1__labels span:last-child {
-    color: var(--dce-color-accent);
-  }
-
-  .dce-transformation-v1__timeline {
-    position: relative;
-    z-index: 1;
+  .dce-transformation-v1__stack {
     display: flex;
     flex-direction: column;
-    gap: var(--dce-space-6);
-    max-width: 46rem;
-    margin: var(--dce-space-4) auto 0;
+    gap: var(--dce-space-7);
+    margin: var(--dce-space-16) 0 0;
     padding: 0;
   }
 
-  .dce-transformation-v1__timeline::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: linear-gradient(var(--dce-color-border), var(--dce-color-accent), var(--dce-color-border));
-    opacity: 0.5;
-  }
-
-  .dce-transformation-v1__row {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: var(--dce-space-4);
-  }
-
-  .dce-transformation-v1__before,
-  .dce-transformation-v1__after {
+  .dce-transformation-v1__line {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    align-items: baseline;
     gap: var(--dce-space-3);
-    padding: var(--dce-space-4) var(--dce-space-5);
-    border-radius: var(--dce-radius-lg);
-    font-size: var(--dce-text-base);
+    font-size: var(--dce-text-xl);
+    font-weight: var(--dce-weight-medium);
     line-height: var(--dce-leading-snug);
+    letter-spacing: var(--dce-tracking-tight);
   }
 
   .dce-transformation-v1__before {
-    justify-content: flex-end;
-    text-align: right;
     color: var(--dce-color-text-muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--dce-gray-700);
+    text-decoration-thickness: 1px;
+  }
+
+  .dce-transformation-v1__arrow {
+    color: var(--dce-color-accent);
+    font-weight: var(--dce-weight-bold);
   }
 
   .dce-transformation-v1__after {
-    background: color-mix(in srgb, var(--dce-color-accent) 10%, transparent);
-    border: 1px solid color-mix(in srgb, var(--dce-color-accent) 25%, transparent);
     color: var(--dce-color-text);
-    font-weight: var(--dce-weight-medium);
+    font-weight: var(--dce-weight-semibold);
   }
 
-  .dce-transformation-v1__mark {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 50%;
-  }
-
-  .dce-transformation-v1__mark--no {
-    order: 2;
-    background-color: var(--dce-gray-800);
-    color: var(--dce-gray-500);
-  }
-
-  .dce-transformation-v1__mark--yes {
-    background: linear-gradient(135deg, var(--dce-color-accent), var(--dce-accent-700));
-    color: var(--dce-color-on-accent);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--dce-color-accent) 20%, transparent);
-  }
-
-  .dce-transformation-v1__dot {
-    position: relative;
-    z-index: 1;
-    width: 0.75rem;
-    height: 0.75rem;
-    border-radius: 50%;
-    background-color: var(--dce-color-accent);
-    box-shadow: 0 0 0 5px var(--dce-color-bg-inverse, var(--dce-color-bg));
-  }
-
-  @media (max-width: 767px) {
-    .dce-transformation-v1__row {
-      grid-template-columns: 1fr;
-      gap: var(--dce-space-3);
-    }
-
-    .dce-transformation-v1__before,
-    .dce-transformation-v1__after {
-      justify-content: flex-start;
-      text-align: left;
-    }
-
-    .dce-transformation-v1__mark--no {
-      order: 0;
-    }
-
-    .dce-transformation-v1__dot {
-      display: none;
-    }
-
-    .dce-transformation-v1__timeline::before {
-      left: 1.1rem;
-    }
-
-    .dce-transformation-v1__labels {
-      display: none;
+  @media (min-width: 768px) {
+    .dce-transformation-v1__line {
+      font-size: var(--dce-text-2xl);
     }
   }
 }

@@ -1,13 +1,14 @@
 {%- comment -%}
-  DCE Transformation — variant 1 (connected timeline).
-  Funnel role: makes the promised outcome concrete by contrasting the
-  reader's current state against the state after using the product, as a
-  single connected sequence rather than two isolated boxes.
+  DCE Transformation — variant 1 (before → after statement lines).
+  Funnel role: makes the felt experience of change concrete — not a
+  feature comparison, a single line per shift, read almost like a list of
+  small relief moments. Deliberately not two boxes / a checklist: this is
+  the emotional payoff right after Problema's identification, and should
+  read with the same big-statement rhythm, just lighter.
 {%- endcomment -%}
 
 {{ 'dce-transformation-v1.css' | asset_url | stylesheet_tag }}
 {{ 'dce-section-header.css' | asset_url | stylesheet_tag }}
-{{ 'dce-icon.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
   assign dce_rows = section.blocks | where: 'type', 'comparison_item'
@@ -20,7 +21,7 @@
   {% endif %}
 >
   <div class="dce-transformation-v1__backdrop" aria-hidden="true"></div>
-  <div class="dce-container">
+  <div class="dce-container dce-transformation-v1__container">
     {%- render 'dce-section-header',
       eyebrow: section.settings.eyebrow,
       heading: section.settings.heading,
@@ -28,31 +29,20 @@
     -%}
 
     {%- if dce_rows.size > 0 -%}
-      <div class="dce-transformation-v1__labels">
-        <span>{{ section.settings.before_label | default: 'Antes' }}</span>
-        <span>{{ section.settings.after_label | default: 'Después' }}</span>
-      </div>
-
-      <ol class="dce-transformation-v1__timeline">
+      <ul class="dce-transformation-v1__stack" role="list">
         {%- for block in dce_rows -%}
           <li
-            class="dce-transformation-v1__row"
-            data-dce-animate="{% cycle 'fade-left', 'fade-right' %}"
-            style="transition-delay: {{ forloop.index0 | times: 100 }}ms"
+            class="dce-transformation-v1__line"
+            data-dce-animate="fade-up"
+            style="transition-delay: {{ forloop.index0 | times: 120 }}ms"
             {{ block.shopify_attributes }}
           >
-            <div class="dce-transformation-v1__before">
-              <span class="dce-transformation-v1__mark dce-transformation-v1__mark--no">{%- render 'dce-icon', name: 'close' -%}</span>
-              <span>{{ block.settings.before_text }}</span>
-            </div>
-            <div class="dce-transformation-v1__dot" aria-hidden="true"></div>
-            <div class="dce-transformation-v1__after">
-              <span class="dce-transformation-v1__mark dce-transformation-v1__mark--yes">{%- render 'dce-icon', name: 'check_mark' -%}</span>
-              <span>{{ block.settings.after_text }}</span>
-            </div>
+            <span class="dce-transformation-v1__before">{{ block.settings.before_text }}</span>
+            <span class="dce-transformation-v1__arrow" aria-hidden="true">→</span>
+            <span class="dce-transformation-v1__after">{{ block.settings.after_text }}</span>
           </li>
         {%- endfor -%}
-      </ol>
+      </ul>
     {%- endif -%}
   </div>
 </section>
@@ -83,19 +73,18 @@
       "type": "text",
       "id": "before_label",
       "label": "Etiqueta — antes",
-      "default": "Antes"
+      "info": "No se usa en esta variante — se mantiene por compatibilidad."
     },
     {
       "type": "text",
       "id": "after_label",
       "label": "Etiqueta — después",
-      "default": "Después"
+      "info": "No se usa en esta variante — se mantiene por compatibilidad."
     },
     {
       "type": "checkbox",
       "id": "dark_mode",
       "label": "Fondo oscuro",
-      "info": "Genera contraste dramático con las secciones vecinas — recomendado.",
       "default": true
     },
     {
@@ -108,19 +97,19 @@
   "blocks": [
     {
       "type": "comparison_item",
-      "name": "Fila antes/después",
+      "name": "Cambio",
       "settings": [
         {
           "type": "text",
           "id": "before_text",
-          "label": "Texto — antes",
+          "label": "Antes",
           "default": "Describí el estado actual del lector."
         },
         {
           "type": "text",
           "id": "after_text",
-          "label": "Texto — después",
-          "default": "Describí el resultado después de usar el producto."
+          "label": "Después",
+          "default": "Describí cómo se siente el cambio."
         }
       ]
     }
