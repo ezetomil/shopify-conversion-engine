@@ -15,7 +15,8 @@
 -%}
 
 {%- if dce_gallery_items.size > 0 -%}
-  <section class="dce-gallery-v1 dce-section">
+  <section class="dce-gallery-v1 dce-section dce-section--seam">
+    <div class="dce-ambient-blob dce-gallery-v1__ambient" aria-hidden="true"></div>
     <div class="dce-container">
       {%- render 'dce-section-header',
         eyebrow: section.settings.eyebrow,
@@ -27,13 +28,23 @@
     <div class="dce-gallery-v1__viewport" data-dce-animate="fade-up" style="transition-delay: 120ms">
       <ul class="dce-gallery-v1__track" role="list" data-dce-gallery-track>
         {%- for block in dce_gallery_items -%}
-          <li class="dce-gallery-v1__item" {{ block.shopify_attributes }}>
+          <li
+            class="dce-gallery-v1__item"
+            data-dce-animate="reveal"
+            data-dce-press
+            style="transition-delay: {{ forloop.index0 | times: 90 }}ms"
+            {{ block.shopify_attributes }}
+          >
             {%- if block.settings.image != blank -%}
-              {{
-                block.settings.image
-                | image_url: width: 900
-                | image_tag: loading: 'lazy', widths: '450, 675, 900', alt: block.settings.alt | default: section.settings.heading
-              }}
+              <button type="button" class="dce-gallery-v1__trigger" data-dce-gallery-zoom aria-label="Ampliar imagen">
+                <div class="dce-gallery-v1__tilt" data-dce-gallery-tilt>
+                  {{
+                    block.settings.image
+                    | image_url: width: 900
+                    | image_tag: loading: 'lazy', widths: '450, 675, 900', alt: block.settings.alt | default: section.settings.heading
+                  }}
+                </div>
+              </button>
             {%- endif -%}
           </li>
         {%- endfor -%}

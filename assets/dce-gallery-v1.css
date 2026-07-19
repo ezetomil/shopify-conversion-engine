@@ -4,12 +4,31 @@
  * on purpose so the first/last cards can peek off-screen as a scroll cue).
  */
 @layer components {
+  .dce-gallery-v1 {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dce-gallery-v1__ambient {
+    top: -15%;
+    right: -12%;
+    width: 30rem;
+    height: 30rem;
+    background: color-mix(in srgb, var(--dce-color-accent) 6%, transparent);
+  }
+
+  .dce-gallery-v1 > .dce-container {
+    position: relative;
+    z-index: 1;
+  }
+
   .dce-gallery-v1 .dce-section-header {
     margin-inline: auto;
   }
 
   .dce-gallery-v1__viewport {
     position: relative;
+    z-index: 1;
     margin-top: var(--dce-space-10);
   }
 
@@ -34,25 +53,54 @@
     flex: 0 0 auto;
     width: min(78vw, 20rem);
     scroll-snap-align: center;
+    perspective: 1000px;
+    border-radius: var(--dce-radius-lg);
+    box-shadow: var(--dce-shadow-sm);
+    transition:
+      transform var(--dce-duration-fast) var(--dce-ease-standard),
+      box-shadow var(--dce-duration-base) var(--dce-ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .dce-gallery-v1__item:hover {
+      box-shadow: var(--dce-shadow-lg);
+    }
+
+    .dce-gallery-v1__item:hover .dce-gallery-v1__tilt {
+      transform: translateY(-4px) scale(1.015);
+    }
+  }
+
+  .dce-gallery-v1__trigger {
+    display: block;
+    width: 100%;
+    cursor: zoom-in;
+  }
+
+  /* Separate node from .dce-gallery-v1__item on purpose — the scroll-linked
+     3D tilt (dce-core.js initGalleryCarousel) writes this element's
+     transform every frame, and must never fight the entrance/press
+     transforms living on the parent <li>. */
+  .dce-gallery-v1__tilt {
     overflow: hidden;
     background-color: var(--dce-color-bg-subtle);
     border: 1px solid var(--dce-color-border);
     border-radius: var(--dce-radius-lg);
-    box-shadow: var(--dce-shadow-sm);
-    transition:
-      transform var(--dce-duration-base) var(--dce-ease-out),
-      box-shadow var(--dce-duration-base) var(--dce-ease-out);
+    transform-style: preserve-3d;
+    transition: transform var(--dce-duration-base) var(--dce-ease-out);
+    will-change: transform;
   }
 
-  .dce-gallery-v1__item:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--dce-shadow-lg);
-  }
-
-  .dce-gallery-v1__item img {
+  .dce-gallery-v1__tilt img {
     display: block;
     width: 100%;
     height: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-gallery-v1__tilt {
+      transform: none !important;
+    }
   }
 
   .dce-gallery-v1__nav {
@@ -77,9 +125,15 @@
       background-color var(--dce-duration-fast) var(--dce-ease-out);
   }
 
-  .dce-gallery-v1__nav:hover {
-    background-color: var(--dce-color-accent);
-    color: var(--dce-color-on-accent);
+  .dce-gallery-v1__nav:active {
+    transform: translateY(-50%) scale(0.92);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .dce-gallery-v1__nav:hover {
+      background-color: var(--dce-color-accent);
+      color: var(--dce-color-on-accent);
+    }
   }
 
   .dce-gallery-v1__nav .dce-icon svg {
@@ -106,6 +160,58 @@
 
     .dce-gallery-v1__nav {
       display: flex;
+    }
+  }
+
+  /*
+    Zoom lightbox — a single overlay shared by every card, injected once
+    into <body> by dce-core.js initGalleryZoom. Hidden via visibility (not
+    display) so the opacity transition can run, and via pointer-events so
+    it never intercepts taps while closed.
+  */
+  .dce-gallery-zoom {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--dce-space-6);
+    background: color-mix(in srgb, black 82%, transparent);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--dce-duration-base) var(--dce-ease-out);
+    cursor: zoom-out;
+  }
+
+  .dce-gallery-zoom.dce-is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .dce-gallery-zoom__image {
+    max-width: min(90vw, 34rem);
+    max-height: 86vh;
+    width: auto;
+    height: auto;
+    border-radius: var(--dce-radius-lg);
+    box-shadow: var(--dce-shadow-xl);
+    transform: scale(0.92);
+    transition: transform var(--dce-duration-base) var(--dce-ease-spring);
+  }
+
+  .dce-gallery-zoom.dce-is-open .dce-gallery-zoom__image {
+    transform: scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-gallery-zoom,
+    .dce-gallery-zoom__image {
+      transition: none;
     }
   }
 }

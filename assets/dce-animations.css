@@ -14,17 +14,19 @@
  * attribute is empty. Deliberately varied per section so consecutive
  * sections never repeat the same entrance (see docs/05-components-catalog.md
  * usage in each section file):
- *   fade-up (default) · fade-left · fade-right · blur-in · scale-in
+ *   fade-up (default) · fade-left · fade-right · blur-in · scale-in · pop · reveal
  *
- * All variants animate only opacity/transform/filter — compositor-friendly,
- * no layout thrashing, safe for the Lighthouse performance budget.
+ * All variants animate only opacity/transform/filter/clip-path —
+ * compositor-friendly, no layout thrashing, safe for the Lighthouse
+ * performance budget.
  */
 @layer components {
   [data-dce-animate] {
     transition:
       opacity var(--dce-duration-slow) var(--dce-ease-out),
       transform var(--dce-duration-slow) var(--dce-ease-out),
-      filter var(--dce-duration-slow) var(--dce-ease-out);
+      filter var(--dce-duration-slow) var(--dce-ease-out),
+      clip-path var(--dce-duration-slow) var(--dce-ease-out);
   }
 
   /*
@@ -55,6 +57,25 @@
     transform: scale(0.94);
   }
 
+  /* Pop — small spring overshoot, reserved for the highest-stakes CTAs. */
+  html.dce-js [data-dce-animate='pop']:not(.dce-is-visible) {
+    transform: scale(0.9);
+  }
+
+  [data-dce-animate='pop'].dce-is-visible {
+    transition-timing-function: var(--dce-ease-spring);
+  }
+
+  /* Reveal — soft horizontal wipe, used by the ebook carousel. */
+  html.dce-js [data-dce-animate='reveal']:not(.dce-is-visible) {
+    transform: translateX(1rem);
+    clip-path: inset(0 12% 0 0);
+  }
+
+  html.dce-js [data-dce-animate='reveal'].dce-is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+
   [data-dce-animate].dce-is-visible {
     opacity: 1;
     transform: none;
@@ -65,5 +86,51 @@
   [data-dce-magnetic] {
     transition: transform var(--dce-duration-fast) var(--dce-ease-spring);
     will-change: transform;
+  }
+
+  /*
+    Touch press feedback — any element opting in gets a small tap-down
+    scale, but only on devices that actually lack hover (touch). Pointer-
+    fine devices keep their existing :hover treatments instead; this never
+    stacks with them, so a mouse click never double-animates.
+  */
+  @media (hover: none) {
+    [data-dce-press] {
+      transition: transform var(--dce-duration-fast) var(--dce-ease-standard);
+    }
+
+    [data-dce-press]:active {
+      transform: scale(0.97);
+    }
+  }
+
+  /*
+    Ripple — a single absolutely-positioned span injected on pointerdown
+    (see dce-core.js initRipple), expands and fades, then removes itself.
+    Transform + opacity only. Host element needs position:relative and
+    overflow:hidden, already true of every button and card this targets.
+  */
+  .dce-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: color-mix(in srgb, white 60%, transparent);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    transform: scale(0);
+    opacity: 0.6;
+    animation: dce-ripple-expand 550ms var(--dce-ease-out) forwards;
+  }
+
+  @keyframes dce-ripple-expand {
+    to {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-ripple {
+      display: none;
+    }
   }
 }

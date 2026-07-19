@@ -57,4 +57,57 @@
       grid-column: span 6;
     }
   }
+
+  /*
+    Seam hairline — a soft horizontal glow at the top of a section,
+    replacing a hard color cut with a thin line of light. Cheap (one
+    pseudo-element, no animation), used only where two consecutive
+    sections actually change tone (dark→light or light→dark) — see
+    docs/00-principles.md on not decorating for its own sake. Host
+    section needs position:relative, already true of every DCE section.
+  */
+  .dce-section--seam {
+    position: relative;
+  }
+
+  .dce-section--seam::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 12%;
+    right: 12%;
+    z-index: 2;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--dce-color-border-strong) 70%, transparent), transparent);
+  }
+
+  /*
+    Ambient drift — shared slow-motion keyframe for background glow blobs.
+    Reused instead of redeclaring the same @keyframes per component (see
+    docs/00-principles.md on not duplicating logic) — Hero keeps its own
+    bespoke drift because its blob shape/timing is intentionally unique.
+  */
+  @keyframes dce-ambient-drift {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(3%, -4%) scale(1.06);
+    }
+  }
+
+  .dce-ambient-blob {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 50%;
+    filter: blur(60px);
+    animation: dce-ambient-drift 34s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-ambient-blob {
+      animation: none;
+    }
+  }
 }

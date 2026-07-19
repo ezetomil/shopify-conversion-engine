@@ -4,10 +4,12 @@
  */
 @layer components {
   .dce-button {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--dce-space-2);
+    overflow: hidden;
     font-family: var(--dce-font-sans);
     font-weight: var(--dce-weight-semibold);
     text-align: center;
@@ -23,8 +25,13 @@
       box-shadow var(--dce-duration-fast) var(--dce-ease-standard);
   }
 
+  /*
+    :active alone (no hover: gate) so tap feedback works identically on
+    touch and mouse — a light press-down, never the hover treatment
+    getting "stuck" after a tap lifts on mobile.
+  */
   .dce-button:active {
-    transform: translateY(1px);
+    transform: translateY(1px) scale(0.98);
   }
 
   /* Sizes */
@@ -55,10 +62,63 @@
     color: var(--dce-color-on-accent);
   }
 
-  .dce-button--primary:hover {
-    background-color: var(--dce-color-accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px -8px var(--dce-accent-500);
+  /*
+    Periodic shimmer — a diagonal light band that crosses the button every
+    few seconds, idle most of the cycle (see the hero sheen for the same
+    idle-then-sweep technique). Reserved for the primary variant, the
+    button used by every buy action on the page — never on secondary/
+    ghost/link, which would read as noise rather than quality.
+  */
+  .dce-button--primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 45%, color-mix(in srgb, white 45%, transparent) 50%, transparent 55%);
+    background-size: 250% 250%;
+    background-position: 120% -20%;
+    mix-blend-mode: overlay;
+    animation: dce-button-shimmer 6s ease-in-out infinite;
+  }
+
+  @keyframes dce-button-shimmer {
+    0%, 75% {
+      background-position: 120% -20%;
+    }
+    95%, 100% {
+      background-position: -20% 120%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-button--primary::after {
+      animation: none;
+      opacity: 0;
+    }
+  }
+
+  /* Hover-only treatments, gated so touch taps never leave a "stuck" hover state behind. */
+  @media (hover: hover) and (pointer: fine) {
+    .dce-button--primary:hover {
+      background-color: var(--dce-color-accent-hover);
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 14px 28px -8px var(--dce-accent-500);
+    }
+
+    .dce-button--secondary:hover {
+      background-color: var(--dce-color-bg-subtle);
+      transform: scale(1.03);
+    }
+
+    .dce-button--ghost:hover {
+      background-color: var(--dce-color-bg-subtle);
+      transform: scale(1.03);
+    }
+
+    .dce-button--link:hover {
+      color: var(--dce-color-accent-hover);
+    }
   }
 
   .dce-button--secondary {
@@ -67,17 +127,9 @@
     border-color: var(--dce-color-border-strong);
   }
 
-  .dce-button--secondary:hover {
-    background-color: var(--dce-color-bg-subtle);
-  }
-
   .dce-button--ghost {
     background-color: transparent;
     color: var(--dce-color-text);
-  }
-
-  .dce-button--ghost:hover {
-    background-color: var(--dce-color-bg-subtle);
   }
 
   .dce-button--link {
@@ -86,9 +138,5 @@
     padding-inline: 0;
     text-decoration: underline;
     text-underline-offset: 3px;
-  }
-
-  .dce-button--link:hover {
-    color: var(--dce-color-accent-hover);
   }
 }

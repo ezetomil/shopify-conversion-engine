@@ -18,7 +18,7 @@
 -%}
 
 <section
-  class="dce-promise-v1 dce-section{% if section.settings.dark_mode %} dce-section--dark{% endif %}"
+  class="dce-promise-v1 dce-section dce-section--seam{% if section.settings.dark_mode %} dce-section--dark{% endif %}"
   {% if section.settings.background_color != blank %}
     style="background-color: {{ section.settings.background_color }};"
   {% endif %}

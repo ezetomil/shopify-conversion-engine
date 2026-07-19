@@ -127,18 +127,25 @@
 
     {%- if section.settings.image != blank -%}
       <dce-tilt class="dce-hero-v1__visual" data-dce-animate="scale-in" style="transition-delay: 260ms">
-        <div class="dce-hero-v1__visual-glow" aria-hidden="true"></div>
-        <div class="dce-hero-v1__visual-shadow" aria-hidden="true"></div>
-        {{
-          section.settings.image
-          | image_url: width: 1920
-          | image_tag:
-            loading: 'eager',
-            fetchpriority: 'high',
-            widths: '640, 960, 1280, 1600, 1920',
-            sizes: '(min-width: 1024px) 44vw, 82vw',
-            alt: section.settings.image.alt | default: section.settings.heading
-        }}
+        <div class="dce-hero-v1__visual-parallax" data-dce-parallax>
+          <div class="dce-hero-v1__visual-float">
+            <div class="dce-hero-v1__visual-glow" aria-hidden="true"></div>
+            <div class="dce-hero-v1__visual-shadow" aria-hidden="true"></div>
+            <div class="dce-hero-v1__visual-frame">
+              {{
+                section.settings.image
+                | image_url: width: 1920
+                | image_tag:
+                  loading: 'eager',
+                  fetchpriority: 'high',
+                  widths: '640, 960, 1280, 1600, 1920',
+                  sizes: '(min-width: 1024px) 44vw, 82vw',
+                  alt: section.settings.image.alt | default: section.settings.heading
+              }}
+              <div class="dce-hero-v1__visual-sheen" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
       </dce-tilt>
     {%- endif -%}
   </div>

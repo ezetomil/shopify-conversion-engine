@@ -37,6 +37,7 @@
   }
 
   .dce-problem-v1__line {
+    position: relative;
     margin: 0;
     color: var(--dce-color-text-muted);
     font-size: var(--dce-text-2xl);
@@ -44,13 +45,34 @@
     line-height: var(--dce-leading-snug);
     letter-spacing: var(--dce-tracking-tight);
     padding-left: var(--dce-space-6);
-    border-left: 2px solid var(--dce-gray-800);
-    transition: border-color var(--dce-duration-slow) var(--dce-ease-out), color var(--dce-duration-slow) var(--dce-ease-out);
+    transition: color var(--dce-duration-slow) var(--dce-ease-out);
+  }
+
+  /*
+    The accent line "draws" downward on reveal instead of just appearing —
+    a plain border-left can't animate its own length, so this is a
+    separate layer scaled from the top. transform-only, compositor-friendly.
+  */
+  .dce-problem-v1__line::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--dce-gray-800);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--dce-duration-slow) var(--dce-ease-out) 120ms, background-color var(--dce-duration-slow) var(--dce-ease-out);
   }
 
   .dce-problem-v1__line.dce-is-visible {
     color: var(--dce-color-text);
-    border-left-color: var(--dce-color-accent);
+  }
+
+  .dce-problem-v1__line.dce-is-visible::before {
+    background-color: var(--dce-color-accent);
+    transform: scaleY(1);
   }
 
   @media (min-width: 768px) {

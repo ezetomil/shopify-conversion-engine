@@ -13,9 +13,9 @@
   {{ 'dce-micro-trust.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
 
-<section class="dce-cta-v1 dce-section">
+<section class="dce-cta-v1 dce-section dce-section--seam">
   <div class="dce-container">
-    <div class="dce-cta-v1__box" data-dce-animate="scale-in">
+    <div class="dce-cta-v1__box" data-dce-animate="pop">
       <h2 class="dce-cta-v1__heading">{{ section.settings.heading }}</h2>
       {%- if section.settings.subheading != blank -%}
         <p class="dce-cta-v1__subheading">{{ section.settings.subheading }}</p>

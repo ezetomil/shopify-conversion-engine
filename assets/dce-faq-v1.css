@@ -47,9 +47,11 @@
     transition: border-color var(--dce-duration-base) var(--dce-ease-out), box-shadow var(--dce-duration-base) var(--dce-ease-out);
   }
 
-  .dce-faq-v1__item:hover {
-    border-color: var(--dce-color-border-strong);
-    box-shadow: var(--dce-shadow-sm);
+  @media (hover: hover) and (pointer: fine) {
+    .dce-faq-v1__item:hover {
+      border-color: var(--dce-color-border-strong);
+      box-shadow: var(--dce-shadow-sm);
+    }
   }
 
   .dce-faq-v1__item[open] {

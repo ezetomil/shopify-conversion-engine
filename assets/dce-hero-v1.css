@@ -212,7 +212,14 @@
     margin-top: var(--dce-space-9);
   }
 
-  /* dce-tilt custom element — perspective wrapper + continuous float, see dce-hero-v1.js */
+  /*
+    dce-tilt custom element — perspective wrapper. Its own transform is
+    reserved for the scale-in entrance (data-dce-animate) only. Scroll
+    parallax and the continuous float live on separate nested layers
+    (.dce-hero-v1__visual-parallax / -float) so none of the three
+    transform sources — entrance, parallax, float — ever fight over the
+    same element's `transform` property. See dce-core.js initParallax.
+  */
   .dce-hero-v1__visual {
     position: relative;
     display: block;
@@ -220,6 +227,13 @@
     max-width: 26rem;
     margin-inline: auto;
     perspective: 1200px;
+  }
+
+  .dce-hero-v1__visual-parallax {
+    will-change: transform;
+  }
+
+  .dce-hero-v1__visual-float {
     animation: dce-hero-v1-float 6s ease-in-out infinite;
   }
 
@@ -232,6 +246,12 @@
     }
   }
 
+  .dce-hero-v1__visual-frame {
+    position: relative;
+    border-radius: var(--dce-radius-lg);
+    overflow: hidden;
+  }
+
   .dce-hero-v1__visual img {
     position: relative;
     z-index: 1;
@@ -242,6 +262,41 @@
     transform: rotateX(var(--dce-tilt-y, 0deg)) rotateY(var(--dce-tilt-x, 0deg));
     transition: transform var(--dce-duration-base) var(--dce-ease-out);
     transform-style: preserve-3d;
+  }
+
+  /*
+    Sheen — a soft diagonal band of light crossing the cover every few
+    seconds, like light catching a glossy book jacket. Idle for most of
+    the cycle (0%–72%) so it reads as an occasional detail, not a loop —
+    matches the brief's "cada algunos segundos", not continuous shimmer.
+  */
+  .dce-hero-v1__visual-sheen {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 42%, color-mix(in srgb, white 55%, transparent) 50%, transparent 58%);
+    background-size: 250% 250%;
+    background-position: 120% -20%;
+    mix-blend-mode: overlay;
+    animation: dce-hero-v1-sheen 7s ease-in-out infinite;
+  }
+
+  @keyframes dce-hero-v1-sheen {
+    0%, 72% {
+      background-position: 120% -20%;
+    }
+    92%, 100% {
+      background-position: -20% 120%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-hero-v1__visual-sheen {
+      animation: none;
+      background-position: -20% 120%;
+      opacity: 0;
+    }
   }
 
   .dce-hero-v1__visual-glow {

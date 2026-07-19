@@ -65,7 +65,11 @@
         {%- if dce_includes.size > 0 -%}
           <ul class="dce-offer-v1__includes" role="list">
             {%- for block in dce_includes -%}
-              <li {{ block.shopify_attributes }}>
+              <li
+                data-dce-animate="pop"
+                style="transition-delay: {{ forloop.index0 | times: 60 }}ms"
+                {{ block.shopify_attributes }}
+              >
                 <span class="dce-offer-v1__includes-icon">{%- render 'dce-icon', name: 'check_mark' -%}</span>
                 <span>{{ block.settings.text }}</span>
               </li>
@@ -73,7 +77,7 @@
           </ul>
         {%- endif -%}
 
-        <div class="dce-offer-v1__price" id="price-{{ section.id }}" role="status">
+        <div class="dce-offer-v1__price" id="price-{{ section.id }}" role="status" data-dce-animate="scale-in">
           {%- render 'price', product: product, use_variant: true, show_badges: true, price_class: 'price--large' -%}
         </div>
 

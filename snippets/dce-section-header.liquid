@@ -9,6 +9,10 @@
     exactly one h1 per page — normally the Hero — for correct heading
     hierarchy and SEO.
   @param {string} [alignment] - 'center' | 'left' (default: 'center')
+  @param {boolean} [animate] - Scroll-reveal entrance (default: true).
+    Fade + blur, per the funnel-wide rule that every title reads as a
+    reveal, never appears "de golpe". Pass false only if a parent element
+    already animates this header as part of a larger reveal.
 
   @example
   {% render 'dce-section-header', eyebrow: section.settings.eyebrow, heading: section.settings.heading, subheading: section.settings.subheading %}
@@ -17,8 +21,17 @@
 {%- liquid
   assign dce_heading_tag = heading_tag | default: 'h2'
   assign dce_alignment = alignment | default: 'center'
+  assign dce_animate = true
+  if animate == false
+    assign dce_animate = false
+  endif
 -%}
-<div class="dce-section-header dce-section-header--{{ dce_alignment }}">
+<div
+  class="dce-section-header dce-section-header--{{ dce_alignment }}"
+  {%- if dce_animate %}
+    data-dce-animate="blur-in"
+  {%- endif %}
+>
   {%- if eyebrow != blank -%}
     <p class="dce-section-header__eyebrow">{{ eyebrow }}</p>
   {%- endif -%}

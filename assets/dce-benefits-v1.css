@@ -33,6 +33,7 @@
   }
 
   .dce-benefits-v1__item {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -48,10 +49,37 @@
       border-color var(--dce-duration-base) var(--dce-ease-out);
   }
 
-  .dce-benefits-v1__item:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--dce-shadow-lg);
-    border-color: var(--dce-color-accent);
+  /*
+    Gradient border ring — a second layer revealed via mask, only on
+    hover. Cheaper than animating a real border-image, and composites on
+    its own layer (opacity only) instead of repainting the border.
+  */
+  .dce-benefits-v1__item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, var(--dce-color-accent), transparent 60%, var(--dce-accent-300));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity var(--dce-duration-base) var(--dce-ease-out);
+    pointer-events: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .dce-benefits-v1__item:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--dce-shadow-lg);
+      border-color: var(--dce-color-accent);
+    }
+
+    .dce-benefits-v1__item:hover::after {
+      opacity: 1;
+    }
   }
 
   .dce-benefits-v1__item--featured {

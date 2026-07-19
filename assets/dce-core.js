@@ -139,6 +139,81 @@ function initBuyNow() {
 }
 
 /**
+ * Ripple — one delegated pointerdown listener for the whole document
+ * covers every current and future `.dce-button` / `[data-dce-ripple]`
+ * element (including ones added later by shopify:section:load), so unlike
+ * the other initializers this never needs to be re-bound. Injects a
+ * single short-lived span per tap; the host element's own CSS provides
+ * position:relative + overflow:hidden so the ripple clips to its shape.
+ */
+function initRipple() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  document.addEventListener('pointerdown', (event) => {
+    const host = event.target.closest('.dce-button, [data-dce-ripple]');
+    if (!host || host.hasAttribute('disabled')) return;
+
+    const rect = host.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height) * 1.6;
+    const ripple = document.createElement('span');
+    ripple.className = 'dce-ripple';
+    ripple.style.width = `${size}px`;
+    ripple.style.height = `${size}px`;
+    ripple.style.left = `${event.clientX - rect.left - size / 2}px`;
+    ripple.style.top = `${event.clientY - rect.top - size / 2}px`;
+    ripple.addEventListener('animationend', () => ripple.remove());
+    host.appendChild(ripple);
+  });
+}
+
+/**
+ * Parallax — elements marked [data-dce-parallax] get a tiny scroll-linked
+ * translateY, active only while they're actually on screen (an
+ * IntersectionObserver adds/removes the scroll listener) and only ever
+ * written inside requestAnimationFrame. Deliberately a separate DOM node
+ * from any entrance animation or continuous keyframe on the same
+ * component — see the comment in dce-hero-v1.css — so this is the only
+ * thing ever setting this element's inline transform.
+ */
+function initParallax() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const strength = 0.06;
+
+  document.querySelectorAll('[data-dce-parallax]').forEach((target) => {
+    if (target.dataset.dceParallaxBound) return;
+    target.dataset.dceParallaxBound = 'true';
+
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const rect = target.getBoundingClientRect();
+      const offset = clamp(rect.top * strength, -24, 24);
+      target.style.transform = `translateY(${offset}px)`;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          window.addEventListener('scroll', onScroll, { passive: true });
+          onScroll();
+        } else {
+          window.removeEventListener('scroll', onScroll);
+        }
+      });
+    });
+    observer.observe(target);
+  });
+}
+
+/**
  * Gallery carousel: prev/next buttons scroll the track by one card width.
  * The track itself is a plain scrollable list (scroll-snap), so touch and
  * trackpad scrolling already work with zero JS — these buttons are a
@@ -160,6 +235,91 @@ function initGalleryCarousel() {
 
     prevButton?.addEventListener('click', () => scrollByCard(-1));
     nextButton?.addEventListener('click', () => scrollByCard(1));
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    /*
+      Subtle coverflow-style 3D tilt driven by scroll position — cards
+      away from center rotate a few degrees, like pages fanning out.
+      Written to [data-dce-gallery-tilt], never to the <li> itself (which
+      owns the entrance/press transforms) — see the comment in
+      dce-gallery-v1.css.
+    */
+    const tilts = Array.from(track.querySelectorAll('[data-dce-gallery-tilt]'));
+    let ticking = false;
+
+    const updateTilt = () => {
+      ticking = false;
+      const trackRect = track.getBoundingClientRect();
+      const center = trackRect.left + trackRect.width / 2;
+      tilts.forEach((tilt) => {
+        const itemRect = tilt.getBoundingClientRect();
+        const itemCenter = itemRect.left + itemRect.width / 2;
+        const distance = clamp((center - itemCenter) / trackRect.width, -0.5, 0.5);
+        tilt.style.transform = `rotateY(${(distance * -10).toFixed(2)}deg)`;
+      });
+    };
+
+    track.addEventListener(
+      'scroll',
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(updateTilt);
+      },
+      { passive: true }
+    );
+
+    updateTilt();
+  });
+}
+
+/**
+ * Gallery zoom — tapping a card opens a single shared lightbox overlay
+ * (created once, reused by every card) showing a larger version of that
+ * page. Closes on backdrop tap, image tap, or Escape.
+ */
+function initGalleryZoom() {
+  const triggers = document.querySelectorAll('[data-dce-gallery-zoom]');
+  if (!triggers.length) return;
+
+  let overlay = document.querySelector('[data-dce-gallery-overlay]');
+  let image;
+
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'dce-gallery-zoom';
+    overlay.setAttribute('data-dce-gallery-overlay', '');
+    image = document.createElement('img');
+    image.className = 'dce-gallery-zoom__image';
+    overlay.appendChild(image);
+    document.body.appendChild(overlay);
+
+    const close = () => {
+      overlay.classList.remove('dce-is-open');
+      document.body.style.overflow = '';
+    };
+
+    overlay.addEventListener('click', close);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') close();
+    });
+  } else {
+    image = overlay.querySelector('.dce-gallery-zoom__image');
+  }
+
+  triggers.forEach((trigger) => {
+    if (trigger.dataset.dceZoomBound) return;
+    trigger.dataset.dceZoomBound = 'true';
+
+    trigger.addEventListener('click', () => {
+      const sourceImg = trigger.querySelector('img');
+      if (!sourceImg) return;
+      image.src = sourceImg.currentSrc || sourceImg.src;
+      image.alt = sourceImg.alt;
+      overlay.classList.add('dce-is-open');
+      document.body.style.overflow = 'hidden';
+    });
   });
 }
 
@@ -167,9 +327,14 @@ initScrollReveal();
 initMagnetic();
 initBuyNow();
 initGalleryCarousel();
+initGalleryZoom();
+initParallax();
+initRipple();
 document.addEventListener('shopify:section:load', () => {
   initScrollReveal();
   initMagnetic();
   initBuyNow();
   initGalleryCarousel();
+  initGalleryZoom();
+  initParallax();
 });

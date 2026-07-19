@@ -16,7 +16,7 @@
 -%}
 
 <section
-  class="dce-faq-v1 dce-section dce-section--dark"
+  class="dce-faq-v1 dce-section dce-section--dark dce-section--seam"
   {% if section.settings.background_color != blank %}
     style="background-color: {{ section.settings.background_color }};"
   {% endif %}
@@ -41,7 +41,7 @@
             style="transition-delay: {{ forloop.index0 | times: 60 }}ms"
             {{ block.shopify_attributes }}
           >
-            <summary class="dce-faq-v1__question">
+            <summary class="dce-faq-v1__question" data-dce-press>
               <span>{{ block.settings.question }}</span>
               <span class="dce-faq-v1__caret" aria-hidden="true">{%- render 'dce-icon', name: 'caret' -%}</span>
             </summary>
