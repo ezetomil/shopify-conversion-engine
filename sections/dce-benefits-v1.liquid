@@ -37,13 +37,16 @@
             style="transition-delay: {{ forloop.index0 | times: 70 }}ms"
             {{ block.shopify_attributes }}
           >
-            <span class="dce-benefits-v1__badge">
-              {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
-                {%- render 'dce-icon', name: block.settings.icon -%}
-              {%- else -%}
-                {{ forloop.index }}
-              {%- endif -%}
-            </span>
+            <div class="dce-benefits-v1__step">
+              <span class="dce-benefits-v1__number" aria-hidden="true">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
+              <span class="dce-benefits-v1__badge" style="animation-delay: {{ forloop.index0 | times: 0.4 }}s">
+                {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
+                  {%- render 'dce-icon', name: block.settings.icon -%}
+                {%- else -%}
+                  {{ forloop.index }}
+                {%- endif -%}
+              </span>
+            </div>
             <div class="dce-benefits-v1__body">
               <p class="dce-benefits-v1__title">{{ block.settings.title }}</p>
               {%- if block.settings.text != blank -%}
@@ -51,6 +54,11 @@
               {%- endif -%}
             </div>
           </li>
+          {%- unless forloop.last -%}
+            <li class="dce-benefits-v1__connector" aria-hidden="true">
+              {%- render 'dce-icon', name: 'arrow' -%}
+            </li>
+          {%- endunless -%}
         {%- endfor -%}
       </ol>
     {%- endif -%}
@@ -104,7 +112,8 @@
             { "value": "clipboard", "label": "Portapapeles" },
             { "value": "plant", "label": "Planta (crecimiento)" },
             { "value": "map_pin", "label": "Pin de mapa" },
-            { "value": "eye", "label": "Ojo" }
+            { "value": "eye", "label": "Ojo" },
+            { "value": "plane", "label": "Avión (libertad)" }
           ],
           "default": "lightning_bolt"
         },

@@ -101,6 +101,21 @@
     justify-content: flex-end;
   }
 
+  .dce-benefits-v1__step {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--dce-space-3);
+  }
+
+  .dce-benefits-v1__number {
+    font-family: var(--dce-font-sans);
+    font-size: var(--dce-text-xs);
+    font-weight: var(--dce-weight-bold);
+    letter-spacing: 0.1em;
+    color: var(--dce-color-text-muted);
+  }
+
   .dce-benefits-v1__badge {
     flex-shrink: 0;
     display: flex;
@@ -115,6 +130,27 @@
     font-weight: var(--dce-weight-bold);
     box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--dce-color-accent) 50%, transparent);
     transition: transform var(--dce-duration-base) var(--dce-ease-spring);
+    animation: dce-benefits-v1-breathe 4s ease-in-out infinite;
+  }
+
+  /*
+    Icon "breathing" — glow only, never transform, so it can't fight the
+    hover rotate/scale transition on the same element (the same
+    composition rule used throughout this project — see dce-hero-v1.css).
+  */
+  @keyframes dce-benefits-v1-breathe {
+    0%, 100% {
+      box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--dce-color-accent) 50%, transparent);
+    }
+    50% {
+      box-shadow: 0 8px 28px -2px color-mix(in srgb, var(--dce-color-accent) 75%, transparent);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-benefits-v1__badge {
+      animation: none;
+    }
   }
 
   .dce-benefits-v1__badge .dce-icon svg {
@@ -155,6 +191,28 @@
     line-height: var(--dce-leading-relaxed);
   }
 
+  /*
+    Connector — a small downward arrow between consecutive steps, reading
+    top-to-bottom as "step 1 leads to step 2" (see the brief this
+    implements: "Paso 1 ↓ Paso 2..."). Mobile-only by design: at the
+    4-across desktop layout the numbers alone already read as a sequence
+    left-to-right, and an arrow between grid columns would fight the
+    column gaps rather than sitting between steps.
+  */
+  .dce-benefits-v1__connector {
+    display: flex;
+    justify-content: center;
+    margin: calc(var(--dce-space-5) * -0.5) 0;
+    color: var(--dce-color-text-muted);
+    opacity: 0.6;
+  }
+
+  .dce-benefits-v1__connector .dce-icon svg {
+    width: 1rem;
+    height: 1rem;
+    transform: rotate(90deg);
+  }
+
   @media (min-width: 768px) {
     .dce-benefits-v1__list {
       grid-template-columns: repeat(4, 1fr);
@@ -163,6 +221,10 @@
     .dce-benefits-v1__item--featured {
       grid-column: span 2;
       grid-row: span 2;
+    }
+
+    .dce-benefits-v1__connector {
+      display: none;
     }
   }
 }
