@@ -23,6 +23,7 @@
   {% endif %}
 >
   <div class="dce-benefits-v1__backdrop" data-dce-animate="glow" aria-hidden="true"></div>
+  <div class="dce-benefits-v1__fog" aria-hidden="true"></div>
   <div class="dce-container">
     {%- render 'dce-section-header',
       eyebrow: section.settings.eyebrow,
@@ -33,6 +34,7 @@
     {%- if dce_benefits.size > 0 -%}
       <div class="dce-benefits-v1__path-wrap" data-dce-benefits-path>
         <div class="dce-benefits-v1__path" aria-hidden="true"></div>
+        <div class="dce-benefits-v1__path-flow" aria-hidden="true"></div>
         <div class="dce-benefits-v1__path-fill" data-dce-benefits-fill aria-hidden="true"></div>
         <div class="dce-benefits-v1__path-dot" data-dce-benefits-dot aria-hidden="true"></div>
         <ol class="dce-benefits-v1__list">
@@ -61,10 +63,7 @@
                 {%- else -%}
                   {{ forloop.index }}
                 {%- endif -%}
-                <span class="dce-benefits-v1__spark" style="--dx: -0.85rem; --dy: -0.7rem;"></span>
-                <span class="dce-benefits-v1__spark" style="--dx: 0.85rem; --dy: -0.6rem; animation-delay: 40ms;"></span>
-                <span class="dce-benefits-v1__spark" style="--dx: -0.7rem; --dy: 0.75rem; animation-delay: 80ms;"></span>
-                <span class="dce-benefits-v1__spark" style="--dx: 0.75rem; --dy: 0.8rem; animation-delay: 120ms;"></span>
+                <span class="dce-benefits-v1__pulse-ring" aria-hidden="true"></span>
               </span>
             </div>
             <div class="dce-benefits-v1__body">
@@ -83,6 +82,7 @@
     {%- endif -%}
 
     {%- if section.settings.result_option_b != blank -%}
+      <div class="dce-benefits-v1__convergence" aria-hidden="true"></div>
       <div class="dce-benefits-v1__result" data-dce-animate="pop">
         <div class="dce-benefits-v1__result-glow" aria-hidden="true"></div>
         {%- if section.settings.result_eyebrow != blank -%}
@@ -96,7 +96,12 @@
           <p class="dce-benefits-v1__result-option dce-benefits-v1__result-option--glow">{{ section.settings.result_option_b }}</p>
         </div>
         {%- if section.settings.result_footnote != blank -%}
-          <p class="dce-benefits-v1__result-footnote">{{ section.settings.result_footnote }}</p>
+          <p class="dce-benefits-v1__result-footnote">
+            {{ section.settings.result_footnote }}
+            {%- if section.settings.result_footnote_emphasis != blank -%}
+              <strong>{{ section.settings.result_footnote_emphasis }}</strong>
+            {%- endif -%}
+          </p>
         {%- endif -%}
         {%- if section.settings.result_cta_label != blank -%}
           <div class="dce-benefits-v1__result-cta">
@@ -161,7 +166,13 @@
       "type": "textarea",
       "id": "result_footnote",
       "label": "Frase pequeña",
-      "default": "No ocurre de un día para otro. Pero todas las historias empiezan con una decisión."
+      "default": "No ocurre de un día para otro. Pero todas las historias empiezan exactamente igual."
+    },
+    {
+      "type": "text",
+      "id": "result_footnote_emphasis",
+      "label": "Cierre destacado",
+      "default": "Con una decisión."
     },
     {
       "type": "text",

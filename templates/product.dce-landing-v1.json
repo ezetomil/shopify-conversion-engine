@@ -47,7 +47,7 @@
         "b1": { "type": "benefit_item", "settings": { "icon": "eye", "title": "Mentalidad", "text": "Dejá de pensar como alguien que sobrevive. Empezá a pensar como alguien que construye oportunidades." } },
         "b2": { "type": "benefit_item", "settings": { "icon": "map_pin", "title": "Dirección", "text": "Aprendé exactamente qué hacer primero para dejar de perder tiempo." } },
         "b3": { "type": "benefit_item", "settings": { "icon": "lightning_bolt", "title": "Acción", "text": "Un plan simple de 30 días para pasar de pensar... a actuar." } },
-        "b4": { "type": "benefit_item", "settings": { "icon": "plane", "title": "Libertad", "text": "No libertad financiera. Libertad para elegir. Libertad para decidir. Libertad para construir una vida distinta." } }
+        "b4": { "type": "benefit_item", "settings": { "icon": "check_mark", "title": "Primer ingreso", "text": "El momento donde dejás de preguntarte si podés. Porque ya lo hiciste." } }
       },
       "block_order": ["b1", "b2", "b3", "b4"]
     },
