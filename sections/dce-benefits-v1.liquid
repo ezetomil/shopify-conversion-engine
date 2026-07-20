@@ -32,11 +32,10 @@
     -%}
 
     {%- if dce_benefits.size > 0 -%}
-      <div class="dce-benefits-v1__path-wrap" data-dce-benefits-path>
-        <div class="dce-benefits-v1__path" aria-hidden="true"></div>
-        <div class="dce-benefits-v1__path-flow" aria-hidden="true"></div>
-        <div class="dce-benefits-v1__path-fill" data-dce-benefits-fill aria-hidden="true"></div>
-        <div class="dce-benefits-v1__path-dot" data-dce-benefits-dot aria-hidden="true"></div>
+      <div class="dce-benefits-v1__energy-wrap" data-dce-benefits-path>
+        <div class="dce-benefits-v1__nebula" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
         <ol class="dce-benefits-v1__list">
         {%- for block in dce_benefits -%}
           {%- liquid
@@ -55,6 +54,7 @@
             style="transition-delay: {{ forloop.index0 | times: 90 }}ms"
             {{ block.shopify_attributes }}
           >
+            <span class="dce-benefits-v1__absorb-flash" aria-hidden="true"></span>
             <div class="dce-benefits-v1__step">
               <span class="dce-benefits-v1__number" aria-hidden="true">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
               <span class="dce-benefits-v1__badge">
@@ -82,7 +82,9 @@
     {%- endif -%}
 
     {%- if section.settings.result_option_b != blank -%}
-      <div class="dce-benefits-v1__convergence" aria-hidden="true"></div>
+      <div class="dce-benefits-v1__convergence" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
       <div class="dce-benefits-v1__result" data-dce-animate="pop">
         <div class="dce-benefits-v1__result-glow" aria-hidden="true"></div>
         {%- if section.settings.result_eyebrow != blank -%}

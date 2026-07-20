@@ -51,14 +51,14 @@
   }
 
   /*
-    Wrapper — .dce-benefits-v1__path/-fill/-dot must be siblings of the
-    <ol>, never children of it (a <div> inside <ol> is invalid HTML and
-    browsers are free to re-parent it wherever they like, which silently
-    broke :nth-of-type counting on the step <li>s the first time this was
-    tried). This div is the real positioning context for all three; the
-    top offset below already accounts for the list's own top margin.
+    Wrapper — the nebula field must be a sibling of the <ol>, never a
+    child of it (a <div> inside <ol> is invalid HTML and browsers are
+    free to re-parent it wherever they like, which silently broke
+    :nth-of-type counting on the step <li>s the first time something was
+    nested here). This div is the real positioning context for the
+    nebula layer.
   */
-  .dce-benefits-v1__path-wrap {
+  .dce-benefits-v1__energy-wrap {
     position: relative;
     z-index: 1;
     max-width: 72rem;
@@ -66,119 +66,64 @@
   }
 
   /*
-    Path line + fill + dot — a thin violet line runs behind the step
-    badges the whole height of the list; as each step reveals (see
-    dce-benefits-v1.js), the fill grows to that step's mark and the dot
-    jumps to meet it, each smoothed by its own transition so it reads as
-    continuous travel rather than a teleport. Real elements (not
-    pseudo-elements) because JS needs a style target for height/top.
-    Positioned to align with the badge column: card padding
-    (--dce-space-4) + half the badge width (2.75rem/2) — approximate on
-    purpose, see the note on .dce-benefits-v1__item for why pixel-exact
-    isn't worth chasing here. Mobile-only: the 4-across desktop row has
-    no vertical path to walk.
+    Nebula — no line, no arrows, no visible "route": a handful of soft,
+    large, blurred violet blobs drifting on irregular multi-point paths
+    behind the cards, like a slow-moving nebula rather than a mechanical
+    dot on a track. transform-only (translate + scale), so despite the
+    blur filter these composite cheaply and can run continuously.
+    Mobile-only — the 2-up desktop grid doesn't have a single column of
+    cards to drift behind.
   */
-  .dce-benefits-v1__path {
+  .dce-benefits-v1__nebula {
     position: absolute;
-    top: 1.75rem;
-    bottom: 1.75rem;
-    left: 2.375rem;
-    width: 2px;
-    background: rgba(139, 92, 246, 0.18);
+    inset: -8% -6%;
     z-index: 0;
     pointer-events: none;
+    overflow: hidden;
   }
 
-  /*
-    Flow — two faint points of light drifting slowly down the line,
-    always moving, independent of scroll progress (that's what fill/dot
-    below are for). Paint-only (background-position), not layout, so
-    it's cheap to leave running continuously. Deliberately soft/blurred
-    and very low-opacity — "energía", not a visible dot train.
-  */
-  .dce-benefits-v1__path-flow {
+  .dce-benefits-v1__nebula span {
     position: absolute;
-    top: 1.75rem;
-    bottom: 1.75rem;
-    left: calc(2.375rem - 1.5px);
-    width: 3px;
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      transparent 8%,
-      color-mix(in srgb, var(--dce-accent-300) 65%, transparent) 10%,
-      transparent 12%,
-      transparent 54%,
-      color-mix(in srgb, var(--dce-accent-300) 65%, transparent) 56%,
-      transparent 58%,
-      transparent 100%
-    );
-    background-size: 100% 500%;
-    background-repeat: no-repeat;
-    filter: blur(0.75px);
-    opacity: 0.8;
-    z-index: 0;
-    pointer-events: none;
-    animation: dce-benefits-v1-flow 9s linear infinite;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--dce-color-accent) 50%, transparent) 0%, transparent 72%);
+    filter: blur(16px);
+    opacity: 0.55;
+    animation: dce-benefits-v1-nebula-drift 23s ease-in-out infinite;
   }
 
-  @keyframes dce-benefits-v1-flow {
+  .dce-benefits-v1__nebula span:nth-child(1) { top: 2%; left: 8%; width: 4.5rem; height: 4.5rem; animation-delay: 0s; animation-duration: 21s; }
+  .dce-benefits-v1__nebula span:nth-child(2) { top: 22%; left: 68%; width: 3.5rem; height: 3.5rem; animation-delay: 3s; animation-duration: 26s; }
+  .dce-benefits-v1__nebula span:nth-child(3) { top: 45%; left: 20%; width: 5rem; height: 5rem; animation-delay: 6s; animation-duration: 19s; }
+  .dce-benefits-v1__nebula span:nth-child(4) { top: 62%; left: 75%; width: 3.75rem; height: 3.75rem; animation-delay: 2s; animation-duration: 24s; }
+  .dce-benefits-v1__nebula span:nth-child(5) { top: 80%; left: 15%; width: 4.25rem; height: 4.25rem; animation-delay: 5s; animation-duration: 22s; }
+  .dce-benefits-v1__nebula span:nth-child(6) { top: 95%; left: 60%; width: 3rem; height: 3rem; animation-delay: 8s; animation-duration: 27s; }
+
+  @keyframes dce-benefits-v1-nebula-drift {
     0% {
-      background-position: 0 0%;
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(1.5rem, -1.25rem) scale(1.18);
+    }
+    50% {
+      transform: translate(-0.75rem, 1.5rem) scale(0.88);
+    }
+    75% {
+      transform: translate(-1.75rem, -0.75rem) scale(1.08);
     }
     100% {
-      background-position: 0 100%;
+      transform: translate(0, 0) scale(1);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .dce-benefits-v1__path-flow {
+    .dce-benefits-v1__nebula span {
       animation: none;
-      opacity: 0.25;
-    }
-  }
-
-  .dce-benefits-v1__path-fill {
-    position: absolute;
-    top: 1.75rem;
-    left: 2.375rem;
-    width: 2px;
-    height: 0%;
-    background: linear-gradient(to bottom, var(--dce-accent-300), var(--dce-color-accent));
-    box-shadow: 0 0 10px 1px color-mix(in srgb, var(--dce-color-accent) 55%, transparent);
-    z-index: 0;
-    pointer-events: none;
-    transition: height 700ms var(--dce-ease-out);
-  }
-
-  .dce-benefits-v1__path-dot {
-    position: absolute;
-    top: 1.75rem;
-    left: 2.375rem;
-    width: 9px;
-    height: 9px;
-    margin-left: -3.5px;
-    margin-top: -4.5px;
-    border-radius: 50%;
-    background: var(--dce-color-text-inverse);
-    box-shadow: 0 0 12px 3px color-mix(in srgb, var(--dce-color-accent) 75%, transparent);
-    z-index: 1;
-    pointer-events: none;
-    transition: top 700ms var(--dce-ease-out);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .dce-benefits-v1__path-fill,
-    .dce-benefits-v1__path-dot {
-      transition-duration: 1ms;
     }
   }
 
   @media (min-width: 768px) {
-    .dce-benefits-v1__path,
-    .dce-benefits-v1__path-flow,
-    .dce-benefits-v1__path-fill,
-    .dce-benefits-v1__path-dot {
+    .dce-benefits-v1__nebula {
       display: none;
     }
   }
@@ -196,10 +141,25 @@
     -webkit-backdrop-filter: blur(16px) saturate(160%);
     border: 1px solid color-mix(in srgb, var(--dce-color-border) 85%, transparent);
     border-radius: var(--dce-radius-lg);
+    /* Neutral depth shadow, independent of the accent-tinted glow each tier adds below — cards should feel like they're floating even before any glow kicks in. */
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.55);
     transition:
       transform var(--dce-duration-base) var(--dce-ease-out),
       box-shadow var(--dce-duration-base) var(--dce-ease-out),
       border-color var(--dce-duration-base) var(--dce-ease-out);
+  }
+
+  /*
+    Cards bleed slightly past the container's own side padding on mobile
+    so they read as almost-full-width (~92%) with generous air around
+    the content inside, rather than one more boxed element sitting
+    inside the page's standard margins.
+  */
+  @media (max-width: 767px) {
+    .dce-benefits-v1__list {
+      margin-inline: calc(var(--dce-container-padding-x) * -0.35);
+      gap: var(--dce-space-5);
+    }
   }
 
   /*
@@ -270,18 +230,24 @@
   */
   .dce-benefits-v1__item.dce-is-visible:nth-of-type(2) {
     border-color: color-mix(in srgb, var(--dce-color-accent) 18%, var(--dce-color-border));
-    box-shadow: 0 0 20px -14px color-mix(in srgb, var(--dce-color-accent) 45%, transparent);
+    box-shadow:
+      0 20px 40px -20px rgba(0, 0, 0, 0.55),
+      0 0 20px -14px color-mix(in srgb, var(--dce-color-accent) 45%, transparent);
   }
 
   .dce-benefits-v1__item.dce-is-visible:nth-of-type(3) {
     border-color: color-mix(in srgb, var(--dce-color-accent) 32%, var(--dce-color-border));
-    box-shadow: 0 0 26px -10px color-mix(in srgb, var(--dce-color-accent) 55%, transparent);
+    box-shadow:
+      0 22px 44px -18px rgba(0, 0, 0, 0.6),
+      0 0 26px -10px color-mix(in srgb, var(--dce-color-accent) 55%, transparent);
   }
 
   .dce-benefits-v1__item.dce-is-visible:nth-of-type(4) {
     background-color: color-mix(in srgb, var(--dce-color-accent) 12%, color-mix(in srgb, var(--dce-color-bg) 55%, transparent));
     border-color: color-mix(in srgb, var(--dce-color-accent) 65%, transparent);
-    box-shadow: 0 0 44px -6px color-mix(in srgb, var(--dce-color-accent) 75%, transparent);
+    box-shadow:
+      0 24px 48px -16px rgba(0, 0, 0, 0.65),
+      0 0 44px -6px color-mix(in srgb, var(--dce-color-accent) 75%, transparent);
   }
 
   .dce-benefits-v1__item.dce-is-visible.dce-benefits-v1__item--passed {
@@ -336,6 +302,47 @@
   .dce-benefits-v1__item:nth-of-type(4) .dce-benefits-v1__badge .dce-icon svg {
     width: 1.625rem;
     height: 1.625rem;
+  }
+
+  /*
+    Absorb flash — the card-level counterpart to the badge's pulse ring:
+    a soft violet wash blooms across the whole card and fades out the
+    moment it reveals, like it absorbed a pulse of the ambient energy.
+    Sits behind the card content (z-index below .dce-benefits-v1__step/
+    -body, which are explicitly z-index:1) so it never dims the text.
+    Same paused/running gate, no JS.
+  */
+  .dce-benefits-v1__absorb-flash {
+    position: absolute;
+    inset: -15%;
+    z-index: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle, color-mix(in srgb, var(--dce-color-accent) 55%, transparent) 0%, transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    animation: dce-benefits-v1-absorb 900ms var(--dce-ease-out) forwards;
+    animation-play-state: paused;
+  }
+
+  .dce-benefits-v1__item.dce-is-visible .dce-benefits-v1__absorb-flash {
+    animation-play-state: running;
+  }
+
+  @keyframes dce-benefits-v1-absorb {
+    0% {
+      opacity: 0.55;
+      transform: scale(0.85);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.25);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-benefits-v1__absorb-flash {
+      display: none;
+    }
   }
 
   /*
@@ -461,20 +468,54 @@
     up since this is the last thing before Story/Offer.
   */
   /*
-    Convergence trail — a short fading line bridging the gap between the
-    last step and the result box, so the whole path visually "arrives"
-    at the decision instead of just stopping. A real element, not a
-    pseudo-element of .dce-benefits-v1__result — that box needs its own
-    overflow:hidden for the internal glow blob, which would clip a
-    pseudo-element positioned above its top edge. Mobile-only, matching
-    the path itself.
+    Convergence — no line bridging the gap, a small cluster of the same
+    soft nebula blobs drifting and gently narrowing toward the result
+    box, so the energy reads as gathering into the decision rather than
+    following a rail into it. A real element, not a pseudo-element of
+    .dce-benefits-v1__result — that box needs its own overflow:hidden
+    for its internal glow blob, which would clip anything positioned
+    above its top edge. Mobile-only, matching the nebula field above.
   */
   .dce-benefits-v1__convergence {
-    width: 2px;
-    height: var(--dce-space-6);
-    margin: 0 auto;
-    background: linear-gradient(to bottom, transparent, rgba(139, 92, 246, 0.4));
+    position: relative;
+    height: var(--dce-space-8);
     pointer-events: none;
+    overflow: hidden;
+  }
+
+  .dce-benefits-v1__convergence span {
+    position: absolute;
+    bottom: -20%;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--dce-color-accent) 55%, transparent) 0%, transparent 72%);
+    filter: blur(14px);
+    opacity: 0.6;
+    animation: dce-benefits-v1-converge 5s ease-in infinite;
+  }
+
+  .dce-benefits-v1__convergence span:nth-child(1) { left: 30%; width: 3rem; height: 3rem; animation-delay: 0s; }
+  .dce-benefits-v1__convergence span:nth-child(2) { left: 55%; width: 2.25rem; height: 2.25rem; animation-delay: 1.5s; }
+  .dce-benefits-v1__convergence span:nth-child(3) { left: 42%; width: 2.75rem; height: 2.75rem; animation-delay: 3s; }
+
+  @keyframes dce-benefits-v1-converge {
+    0% {
+      transform: translateY(-1.5rem) scale(1.3);
+      opacity: 0;
+    }
+    30% {
+      opacity: 0.6;
+    }
+    100% {
+      transform: translateY(1.25rem) scale(0.4);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dce-benefits-v1__convergence span {
+      animation: none;
+      opacity: 0;
+    }
   }
 
   @media (min-width: 768px) {
@@ -613,16 +654,16 @@
 
   @media (min-width: 768px) {
     .dce-benefits-v1__list {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--dce-space-6);
     }
 
     .dce-benefits-v1__item {
-      flex-direction: column;
+      padding: var(--dce-space-6);
     }
 
     .dce-benefits-v1__item--featured {
       grid-column: span 2;
-      grid-row: span 2;
     }
 
     .dce-benefits-v1__result-option--glow {
