@@ -32,9 +32,10 @@
     -%}
 
     {%- if dce_benefits.size > 0 -%}
-      <div class="dce-benefits-v1__energy-wrap" data-dce-benefits-path>
+      <div class="dce-benefits-v1__scene" data-dce-benefits-path>
+        <div class="dce-benefits-v1__current" aria-hidden="true"></div>
         <div class="dce-benefits-v1__nebula" aria-hidden="true">
-          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
         </div>
         <ol class="dce-benefits-v1__list">
         {%- for block in dce_benefits -%}
@@ -47,34 +48,41 @@
             endif
           -%}
           <li
-            class="dce-benefits-v1__item{% if block.settings.featured %} dce-benefits-v1__item--featured{% endif %}"
+            class="dce-benefits-v1__item dce-benefits-v1__item--pos-{{ forloop.index }}{% if block.settings.featured %} dce-benefits-v1__item--featured{% endif %}"
             data-dce-animate="{{ dce_entrance }}"
             data-dce-press
             data-dce-benefits-step
             style="transition-delay: {{ forloop.index0 | times: 90 }}ms"
             {{ block.shopify_attributes }}
           >
-            <span class="dce-benefits-v1__absorb-flash" aria-hidden="true"></span>
-            <div class="dce-benefits-v1__step">
-              <span class="dce-benefits-v1__number" aria-hidden="true">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
-              <span class="dce-benefits-v1__badge">
-                {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
-                  {%- render 'dce-icon', name: block.settings.icon -%}
-                {%- else -%}
-                  {{ forloop.index }}
-                {%- endif -%}
-                <span class="dce-benefits-v1__pulse-ring" aria-hidden="true"></span>
-              </span>
+            <div class="dce-benefits-v1__particle-zone dce-benefits-v1__particle-zone--{{ forloop.index }}" aria-hidden="true">
+              <span></span><span></span>
             </div>
-            <div class="dce-benefits-v1__body">
-              <p class="dce-benefits-v1__title">{{ block.settings.title }}</p>
-              {%- if block.settings.text != blank -%}
-                <p class="dce-benefits-v1__text">{{ block.settings.text }}</p>
+            <div class="dce-benefits-v1__card">
+              <span class="dce-benefits-v1__absorb-flash" aria-hidden="true"></span>
+              <div class="dce-benefits-v1__step">
+                <span class="dce-benefits-v1__number" aria-hidden="true">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
+                <span class="dce-benefits-v1__badge">
+                  {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
+                    {%- render 'dce-icon', name: block.settings.icon -%}
+                  {%- else -%}
+                    {{ forloop.index }}
+                  {%- endif -%}
+                  <span class="dce-benefits-v1__pulse-ring" aria-hidden="true"></span>
+                </span>
+              </div>
+              <div class="dce-benefits-v1__body">
+                <p class="dce-benefits-v1__title">{{ block.settings.title }}</p>
+                {%- if block.settings.text != blank -%}
+                  <p class="dce-benefits-v1__text">{{ block.settings.text }}</p>
+                {%- endif -%}
+              </div>
+              {%- if dce_is_last -%}
+                <span class="dce-benefits-v1__burst" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </span>
               {%- endif -%}
             </div>
-            {%- if dce_is_last -%}
-              {%- render 'dce-particles', count: 3 -%}
-            {%- endif -%}
           </li>
         {%- endfor -%}
         </ol>
