@@ -56,7 +56,7 @@
     position: relative;
     z-index: 1;
     max-width: 30rem;
-    margin: var(--dce-space-10) auto 0;
+    margin: var(--dce-space-12) auto 0;
   }
 
   /*
@@ -76,16 +76,20 @@
     background: linear-gradient(155deg, transparent 32%, color-mix(in srgb, var(--dce-color-accent) 18%, transparent) 52%, transparent 72%);
     filter: blur(36px);
     transform: rotate(9deg);
+    opacity: 0.8;
     animation: dce-benefits-v1-current-breathe 15s ease-in-out infinite;
     pointer-events: none;
   }
 
+  /* Opacity drifts alongside the rotation — "como humo iluminado", not just a static band that spins. */
   @keyframes dce-benefits-v1-current-breathe {
     0%, 100% {
       transform: rotate(9deg) translateY(0);
+      opacity: 0.7;
     }
     50% {
       transform: rotate(11deg) translateY(-2%);
+      opacity: 1;
     }
   }
 
@@ -121,6 +125,10 @@
   .dce-benefits-v1__nebula span:nth-child(2) { top: 38%; left: 72%; width: 3.75rem; height: 3.75rem; animation-delay: 3s; animation-duration: 26s; }
   .dce-benefits-v1__nebula span:nth-child(3) { top: 66%; left: 15%; width: 5rem; height: 5rem; animation-delay: 6s; animation-duration: 19s; }
   .dce-benefits-v1__nebula span:nth-child(4) { top: 92%; left: 60%; width: 3.25rem; height: 3.25rem; animation-delay: 2s; animation-duration: 24s; }
+
+  /* Two much smaller, dimmer points layered on top — distant light rather than more nebula mass, for a sense the scene goes back further than the four main blobs. */
+  .dce-benefits-v1__nebula span:nth-child(5) { top: 20%; left: 45%; width: 1.25rem; height: 1.25rem; opacity: 0.25; animation-delay: 5s; animation-duration: 17s; }
+  .dce-benefits-v1__nebula span:nth-child(6) { top: 78%; left: 38%; width: 1.5rem; height: 1.5rem; opacity: 0.2; animation-delay: 9s; animation-duration: 20s; }
 
   @keyframes dce-benefits-v1-nebula-drift {
     0% { transform: translate(0, 0) scale(1); }
@@ -176,9 +184,9 @@
   }
 
   .dce-benefits-v1__item--pos-1 { align-self: flex-start; width: 85%; z-index: 1; }
-  .dce-benefits-v1__item--pos-2 { align-self: flex-end; width: 89%; z-index: 2; margin-top: -0.5rem; }
-  .dce-benefits-v1__item--pos-3 { align-self: flex-start; width: 91%; z-index: 3; margin-top: -0.5rem; margin-left: 5%; }
-  .dce-benefits-v1__item--pos-4 { align-self: center; width: 100%; z-index: 4; margin-top: var(--dce-space-4); }
+  .dce-benefits-v1__item--pos-2 { align-self: flex-end; width: 89%; z-index: 2; margin-top: var(--dce-space-6); }
+  .dce-benefits-v1__item--pos-3 { align-self: flex-start; width: 91%; z-index: 3; margin-top: var(--dce-space-6); margin-left: 5%; }
+  .dce-benefits-v1__item--pos-4 { align-self: center; width: 100%; z-index: 4; margin-top: var(--dce-space-8); }
 
   /*
     Card — everything visual (background, border, shadow, the reflection/
@@ -207,16 +215,16 @@
       border-color var(--dce-duration-base) var(--dce-ease-out);
   }
 
-  .dce-benefits-v1__item--pos-1 .dce-benefits-v1__card { transform: rotate(-1.6deg) scale(0.95); }
-  .dce-benefits-v1__item--pos-2 .dce-benefits-v1__card { transform: rotate(1.3deg) scale(0.98); }
-  .dce-benefits-v1__item--pos-3 .dce-benefits-v1__card { transform: rotate(-1deg) scale(1.02); }
-  .dce-benefits-v1__item--pos-4 .dce-benefits-v1__card { transform: rotate(0deg) scale(1.05); padding: var(--dce-space-5); }
+  .dce-benefits-v1__item--pos-1 .dce-benefits-v1__card { transform: rotate(-1.6deg) scale(0.94); }
+  .dce-benefits-v1__item--pos-2 .dce-benefits-v1__card { transform: rotate(1.3deg) scale(0.97); }
+  .dce-benefits-v1__item--pos-3 .dce-benefits-v1__card { transform: rotate(-1deg) scale(1.01); }
+  .dce-benefits-v1__item--pos-4 .dce-benefits-v1__card { transform: rotate(0deg) scale(1.12); padding: var(--dce-space-6); }
 
   @media (hover: hover) and (pointer: fine) {
-    .dce-benefits-v1__item--pos-1:hover .dce-benefits-v1__card { transform: rotate(-1.6deg) scale(0.97) translateY(-6px); }
-    .dce-benefits-v1__item--pos-2:hover .dce-benefits-v1__card { transform: rotate(1.3deg) scale(1) translateY(-6px); }
-    .dce-benefits-v1__item--pos-3:hover .dce-benefits-v1__card { transform: rotate(-1deg) scale(1.04) translateY(-6px); }
-    .dce-benefits-v1__item--pos-4:hover .dce-benefits-v1__card { transform: rotate(0deg) scale(1.07) translateY(-6px); }
+    .dce-benefits-v1__item--pos-1:hover .dce-benefits-v1__card { transform: rotate(-1.6deg) scale(0.96) translateY(-6px); }
+    .dce-benefits-v1__item--pos-2:hover .dce-benefits-v1__card { transform: rotate(1.3deg) scale(0.99) translateY(-6px); }
+    .dce-benefits-v1__item--pos-3:hover .dce-benefits-v1__card { transform: rotate(-1deg) scale(1.03) translateY(-6px); }
+    .dce-benefits-v1__item--pos-4:hover .dce-benefits-v1__card { transform: rotate(0deg) scale(1.14) translateY(-6px); }
 
     .dce-benefits-v1__card:hover {
       box-shadow: var(--dce-shadow-lg);
@@ -265,25 +273,48 @@
     stays visibly "walked" rather than going dark again.
   */
   .dce-benefits-v1__item.dce-is-visible:nth-of-type(2) .dce-benefits-v1__card {
-    border-color: color-mix(in srgb, var(--dce-color-accent) 18%, var(--dce-color-border));
+    border-color: color-mix(in srgb, var(--dce-color-accent) 13%, var(--dce-color-border));
     box-shadow:
       0 20px 40px -20px rgba(0, 0, 0, 0.55),
-      0 0 20px -14px color-mix(in srgb, var(--dce-color-accent) 45%, transparent);
+      0 0 16px -14px color-mix(in srgb, var(--dce-color-accent) 35%, transparent);
   }
 
   .dce-benefits-v1__item.dce-is-visible:nth-of-type(3) .dce-benefits-v1__card {
-    border-color: color-mix(in srgb, var(--dce-color-accent) 32%, var(--dce-color-border));
+    border-color: color-mix(in srgb, var(--dce-color-accent) 24%, var(--dce-color-border));
     box-shadow:
       0 22px 44px -18px rgba(0, 0, 0, 0.6),
-      0 0 26px -10px color-mix(in srgb, var(--dce-color-accent) 55%, transparent);
+      0 0 20px -12px color-mix(in srgb, var(--dce-color-accent) 42%, transparent);
   }
 
+  /*
+    Card 4 — the hero of the composition. Everything about it is turned
+    up relative to the other three (which were just turned down slightly
+    above), not just "also glowing": background tint, border, and a
+    radial halo behind it (::before on the <li>, a layer the other
+    positions don't use) so it visually anchors the whole scene.
+  */
   .dce-benefits-v1__item.dce-is-visible:nth-of-type(4) .dce-benefits-v1__card {
-    background-color: color-mix(in srgb, var(--dce-color-accent) 14%, color-mix(in srgb, var(--dce-color-bg) 55%, transparent));
-    border-color: color-mix(in srgb, var(--dce-color-accent) 70%, transparent);
+    background-color: color-mix(in srgb, var(--dce-color-accent) 16%, color-mix(in srgb, var(--dce-color-bg) 55%, transparent));
+    border-color: color-mix(in srgb, var(--dce-color-accent) 75%, transparent);
     box-shadow:
-      0 26px 52px -16px rgba(0, 0, 0, 0.65),
-      0 0 56px -4px color-mix(in srgb, var(--dce-color-accent) 80%, transparent);
+      0 28px 56px -16px rgba(0, 0, 0, 0.7),
+      0 0 64px -2px color-mix(in srgb, var(--dce-color-accent) 85%, transparent);
+  }
+
+  .dce-benefits-v1__item--pos-4::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    inset: -25% -10%;
+    background: radial-gradient(ellipse 60% 55% at 50% 45%, color-mix(in srgb, var(--dce-color-accent) 26%, transparent) 0%, transparent 70%);
+    filter: blur(4px);
+    opacity: 0;
+    transition: opacity var(--dce-duration-slow) var(--dce-ease-out);
+    pointer-events: none;
+  }
+
+  .dce-benefits-v1__item--pos-4.dce-is-visible::before {
+    opacity: 1;
   }
 
   .dce-benefits-v1__item.dce-is-visible.dce-benefits-v1__item--passed .dce-benefits-v1__card {
@@ -331,13 +362,13 @@
 
   /* Card 4 gets a visibly bigger badge — "se siente como la recompensa final". Box-model size, not a transform, so it never competes with the rotate-settle/hover transforms on the same element. */
   .dce-benefits-v1__item:nth-of-type(4) .dce-benefits-v1__badge {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 4rem;
+    height: 4rem;
   }
 
   .dce-benefits-v1__item:nth-of-type(4) .dce-benefits-v1__badge .dce-icon svg {
-    width: 1.75rem;
-    height: 1.75rem;
+    width: 2rem;
+    height: 2rem;
   }
 
   /*
@@ -453,7 +484,11 @@
   }
 
   .dce-benefits-v1__item:nth-of-type(4) .dce-benefits-v1__title {
-    font-size: var(--dce-text-md);
+    font-size: var(--dce-text-lg);
+  }
+
+  .dce-benefits-v1__item:nth-of-type(4) .dce-benefits-v1__text {
+    font-size: var(--dce-text-sm);
   }
 
   .dce-benefits-v1__text {
@@ -548,11 +583,12 @@
   }
 
   /*
-    Burst — the story's climax: the moment card 4 reveals, three soft
-    glow rings expand outward from its center and fade, once, gated the
-    same paused/running way as everything else here. This is the one
-    place on the page an "explosion" reads as premium rather than as a
-    spark — large, soft, slow (1.2s), never a shower of points.
+    Absorption — the story's climax: the moment card 4 reveals, three
+    soft glow rings collapse inward toward its badge and vanish, once,
+    gated the same paused/running way as everything else here — reads
+    as the section's energy being drawn INTO the reward rather than
+    exploding out of it ("terminan siendo absorbidas por Primer
+    ingreso"). Large, soft, slow (1.2s), never a shower of points.
   */
   .dce-benefits-v1__burst {
     position: absolute;
@@ -563,15 +599,15 @@
 
   .dce-benefits-v1__burst span {
     position: absolute;
-    top: 50%;
-    left: 18%;
+    top: 56px;
+    left: 56px;
     width: 3rem;
     height: 3rem;
     margin: -1.5rem 0 0 -1.5rem;
     border-radius: 50%;
     background: radial-gradient(circle, color-mix(in srgb, var(--dce-color-accent) 60%, transparent) 0%, transparent 70%);
     opacity: 0;
-    animation: dce-benefits-v1-burst 1200ms var(--dce-ease-out) forwards;
+    animation: dce-benefits-v1-absorb-burst 1200ms var(--dce-ease-out) forwards;
     animation-play-state: paused;
   }
 
@@ -579,12 +615,13 @@
     animation-play-state: running;
   }
 
-  .dce-benefits-v1__burst span:nth-child(2) { width: 2rem; height: 2rem; margin: -1rem 0 0 -1rem; animation-delay: 90ms; }
-  .dce-benefits-v1__burst span:nth-child(3) { width: 4.5rem; height: 4.5rem; margin: -2.25rem 0 0 -2.25rem; animation-delay: 180ms; }
+  .dce-benefits-v1__burst span:nth-child(2) { width: 2rem; height: 2rem; margin: -1rem 0 0 -1rem; animation-delay: 120ms; }
+  .dce-benefits-v1__burst span:nth-child(3) { width: 4.5rem; height: 4.5rem; margin: -2.25rem 0 0 -2.25rem; animation-delay: 240ms; }
 
-  @keyframes dce-benefits-v1-burst {
-    0% { opacity: 0.6; transform: scale(0.3); }
-    100% { opacity: 0; transform: scale(2.4); }
+  @keyframes dce-benefits-v1-absorb-burst {
+    0% { opacity: 0; transform: scale(2.6); }
+    35% { opacity: 0.55; }
+    100% { opacity: 0; transform: scale(0.2); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -603,7 +640,7 @@
   */
   .dce-benefits-v1__convergence {
     position: relative;
-    height: var(--dce-space-8);
+    height: var(--dce-space-12);
     pointer-events: none;
     overflow: hidden;
   }
@@ -762,7 +799,7 @@
   .dce-benefits-v1__result-cta .dce-buy-now__form {
     position: relative;
     z-index: 1;
-    animation: dce-breathe-glow 4.5s ease-in-out infinite;
+    animation: dce-breathe-glow 6s ease-in-out infinite;
   }
 
   @media (prefers-reduced-motion: reduce) {
