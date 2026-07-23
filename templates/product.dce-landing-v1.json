@@ -4,58 +4,67 @@
     "hero": {
       "type": "dce-hero-v1",
       "settings": {
-        "heading": "Todavía podés cambiar esto.",
-        "heading_accent": "cambiar esto",
-        "subheading": "Una guía práctica para dejar de sentirte estancado y empezar a construir ingresos digitales, incluso si hoy no sabés por dónde empezar.",
+        "heading": "Aprendé a generar tus primeros ingresos por internet",
+        "heading_accent": "primeros ingresos",
+        "subheading": "Un ebook simple, paso a paso, para empezar a ganar dinero online aunque no sepas por dónde arrancar.",
         "image": "shopify://shop_images/ChatGPTImage6jun2026_02_21_10p.m._a8be85eb-3e42-482c-9e5b-423be4ad05f5.png",
         "cta_primary_style": "buy_now",
-        "cta_primary_label": "Empezar ahora",
+        "cta_primary_label": "Comprar ahora",
         "height": "viewport"
       }
     },
     "problem": {
       "type": "dce-problem-v1",
       "settings": {
-        "heading": "¿Te suena esto?"
+        "heading": "¿Te pasa esto?"
       },
       "blocks": {
-        "p1": { "type": "pain_point_item", "settings": { "text": "Trabajás mucho pero sentís que no avanzás." } },
-        "p2": { "type": "pain_point_item", "settings": { "text": "Sabés que querés cambiar, pero nunca encontrás por dónde empezar." } },
-        "p3": { "type": "pain_point_item", "settings": { "text": "Cada año pasa igual y cada vez cuesta más imaginar una vida distinta." } }
+        "p1": { "type": "pain_point_item", "settings": { "text": "Trabajás muchas horas y no te alcanza." } },
+        "p2": { "type": "pain_point_item", "settings": { "text": "Querés ganar más dinero por tu cuenta." } },
+        "p3": { "type": "pain_point_item", "settings": { "text": "Sabés que internet tiene oportunidades reales." } },
+        "p4": { "type": "pain_point_item", "settings": { "text": "No sabés por dónde empezar." } },
+        "p5": { "type": "pain_point_item", "settings": { "text": "Sentís que estás perdiendo el tiempo." } }
       },
-      "block_order": ["p1", "p2", "p3"]
+      "block_order": ["p1", "p2", "p3", "p4", "p5"]
     },
     "transformation": {
       "type": "dce-transformation-v1",
       "settings": {
-        "heading": "Así se siente el cambio"
+        "heading": "Este ebook te ayuda a"
       },
       "blocks": {
-        "c1": { "type": "comparison_item", "settings": { "before_text": "Esperar el momento perfecto", "after_text": "Empezar hoy" } },
-        "c2": { "type": "comparison_item", "settings": { "before_text": "Vivir sin dirección", "after_text": "Tener un plan claro" } },
-        "c3": { "type": "comparison_item", "settings": { "before_text": "Consumir contenido", "after_text": "Aplicar todos los días" } },
-        "c4": { "type": "comparison_item", "settings": { "before_text": "Sentir que el tiempo pasa", "after_text": "Sentir que avanzás" } }
+        "c1": { "type": "comparison_item", "settings": { "before_text": "No entender los ingresos digitales", "after_text": "Entender cómo funcionan" } },
+        "c2": { "type": "comparison_item", "settings": { "before_text": "No saber qué vender", "after_text": "Elegir una oportunidad" } },
+        "c3": { "type": "comparison_item", "settings": { "before_text": "No saber vender", "after_text": "Aprender a vender" } },
+        "c4": { "type": "comparison_item", "settings": { "before_text": "Perder tiempo sin IA", "after_text": "Usar IA para ahorrar tiempo" } },
+        "c5": { "type": "comparison_item", "settings": { "before_text": "No tener un plan", "after_text": "Tener un plan de acción" } }
       },
-      "block_order": ["c1", "c2", "c3", "c4"]
+      "block_order": ["c1", "c2", "c3", "c4", "c5"]
     },
     "benefits": {
       "type": "dce-benefits-v1",
       "settings": {
-        "heading": "El camino hacia tus primeros ingresos"
+        "heading": "Qué vas a encontrar adentro",
+        "result_eyebrow": "Tenés dos opciones",
+        "result_option_a": "Seguir igual.",
+        "result_option_b": "Empezar hoy.",
+        "result_footnote": "No hace falta mucho.",
+        "result_footnote_emphasis": "Solo un primer paso.",
+        "result_cta_label": "Comprar ahora"
       },
       "blocks": {
-        "b1": { "type": "benefit_item", "settings": { "icon": "eye", "title": "Mentalidad", "text": "Dejá de pensar como alguien que sobrevive. Empezá a pensar como alguien que construye oportunidades." } },
-        "b2": { "type": "benefit_item", "settings": { "icon": "map_pin", "title": "Dirección", "text": "Aprendé exactamente qué hacer primero para dejar de perder tiempo." } },
-        "b3": { "type": "benefit_item", "settings": { "icon": "lightning_bolt", "title": "Acción", "text": "Un plan simple de 30 días para pasar de pensar... a actuar." } },
-        "b4": { "type": "benefit_item", "settings": { "icon": "check_mark", "title": "Primer ingreso", "text": "El momento donde dejás de preguntarte si podés. Porque ya lo hiciste." } }
+        "b1": { "type": "benefit_item", "settings": { "icon": "eye", "title": "Por qué estás estancado", "text": "Entendé qué te frena y cómo salir." } },
+        "b2": { "type": "benefit_item", "settings": { "icon": "map_pin", "title": "Elegí qué vender", "text": "Cómo elegir una oportunidad real para vos." } },
+        "b3": { "type": "benefit_item", "settings": { "icon": "lightning_bolt", "title": "Usá la IA a tu favor", "text": "Ahorrá tiempo con inteligencia artificial." } },
+        "b4": { "type": "benefit_item", "settings": { "icon": "check_mark", "title": "Tu plan de 30 días", "text": "Un paso a paso simple para empezar ya." } }
       },
       "block_order": ["b1", "b2", "b3", "b4"]
     },
     "gallery": {
       "type": "dce-gallery-v1",
       "settings": {
-        "heading": "Mirá parte de la guía",
-        "subheading": "Esto es exactamente lo que vas a recibir después de comprar."
+        "heading": "Mirá el contenido real",
+        "subheading": "Estas son páginas reales del ebook."
       },
       "blocks": {
         "g1": { "type": "gallery_item", "settings": { "image": "shopify://shop_images/guia-indice.png", "alt": "Índice de la guía De la Impotencia a los Ingresos" } },
@@ -67,44 +76,46 @@
     "story": {
       "type": "dce-story-v1",
       "settings": {
-        "eyebrow": "¿Quién escribió esto?",
+        "eyebrow": "¿Por qué escribí esto?",
         "heading": "No soy un gurú.",
-        "body": "<p>Yo también estuve exactamente donde estás vos. Y no encontré una fórmula mágica.</p><p>Encontré un camino. Y funcionó.</p>",
-        "closing_line": "— No vine a este mundo para hacer solamente esto. Y vos tampoco."
+        "body": "<p>Hace un tiempo yo estaba donde estás vos: trabajando mucho y sin ver resultados. Probé cursos caros y consejos de gente que nunca vendió nada. Nada me servía porque no sabía por dónde empezar.</p><p>Un día encontré un camino simple y lo apliqué. Funcionó. Escribí este ebook para ahorrarte el tiempo que yo perdí.</p>",
+        "closing_line": "— Esto es lo que a mí me funcionó."
       }
     },
     "promise": {
       "type": "dce-promise-v1",
       "settings": {
-        "eyebrow": "Por qué es diferente",
-        "heading": "Nada de lo que pensás que necesitás",
-        "closing_statement": "No necesitás cambiar tu vida en un día. Solo empezar a cambiar la dirección."
+        "eyebrow": "¿Es para vos?",
+        "heading": "Leé esto antes de comprar",
+        "closing_statement": "Esto no es magia. Es un plan simple."
       },
       "blocks": {
-        "n1": { "type": "not_item", "settings": { "text": "No necesitás experiencia." } },
-        "n2": { "type": "not_item", "settings": { "text": "No necesitás miles de seguidores." } },
-        "n3": { "type": "not_item", "settings": { "text": "No necesitás dejar tu trabajo." } },
-        "n4": { "type": "not_item", "settings": { "text": "Solo necesitás empezar." } }
+        "n1": { "type": "not_item", "settings": { "text": "✔ Querés empezar desde cero." } },
+        "n2": { "type": "not_item", "settings": { "text": "✔ Querés generar ingresos extra." } },
+        "n3": { "type": "not_item", "settings": { "text": "✔ Nunca encontraste una guía clara." } },
+        "n4": { "type": "not_item", "settings": { "text": "❌ Buscás dinero fácil, sin hacer nada." } },
+        "n5": { "type": "not_item", "settings": { "text": "❌ No pensás aplicar lo que aprendés." } },
+        "n6": { "type": "not_item", "settings": { "text": "Si te identificás con lo primero, seguí leyendo." } }
       },
-      "block_order": ["n1", "n2", "n3", "n4"]
+      "block_order": ["n1", "n2", "n3", "n4", "n5", "n6"]
     },
     "offer": {
       "type": "dce-offer-v1",
       "settings": {
-        "heading": "Llevate la guía",
+        "heading": "Qué incluye la compra",
         "subheading": "Acceso inmediato. Pago único.",
         "badge_text": "Precio de lanzamiento",
         "checkout_style": "instant",
         "cta_label": "Comprar ahora"
       },
       "blocks": {
-        "i1": { "type": "include_item", "settings": { "text": "35+ páginas" } },
-        "i2": { "type": "include_item", "settings": { "text": "Plan de acción de 30 días" } },
-        "i3": { "type": "include_item", "settings": { "text": "Ejercicios prácticos" } },
-        "i4": { "type": "include_item", "settings": { "text": "Recursos descargables" } },
+        "i1": { "type": "include_item", "settings": { "text": "Acceso inmediato" } },
+        "i2": { "type": "include_item", "settings": { "text": "PDF completo (35+ páginas)" } },
+        "i3": { "type": "include_item", "settings": { "text": "Plan de acción de 30 días" } },
+        "i4": { "type": "include_item", "settings": { "text": "Capítulos fáciles de leer" } },
         "i5": { "type": "include_item", "settings": { "text": "Prompts de IA" } },
-        "i6": { "type": "include_item", "settings": { "text": "Acceso inmediato" } },
-        "i7": { "type": "include_item", "settings": { "text": "Actualizaciones futuras" } }
+        "i6": { "type": "include_item", "settings": { "text": "Actualizaciones futuras" } },
+        "i7": { "type": "include_item", "settings": { "text": "Pago único" } }
       },
       "block_order": ["i1", "i2", "i3", "i4", "i5", "i6", "i7"]
     },
@@ -114,9 +125,9 @@
         "heading": "Preguntas frecuentes"
       },
       "blocks": {
-        "f1": { "type": "faq_item", "settings": { "question": "¿Cómo recibo la guía después de pagar?", "answer": "<p>Acceso inmediato para descargar el PDF al completar el pago, más confirmación por email.</p>" } },
-        "f2": { "type": "faq_item", "settings": { "question": "¿Necesito experiencia previa?", "answer": "<p>No. Está pensada para empezar desde cero.</p>" } },
-        "f3": { "type": "faq_item", "settings": { "question": "¿Funciona si tengo poco tiempo libre?", "answer": "<p>Sí — el plan de 30 días está pensado exactamente para eso.</p>" } },
+        "f1": { "type": "faq_item", "settings": { "question": "¿Cómo recibo el ebook después de pagar?", "answer": "<p>Te llega por email al instante. Podés descargarlo y leerlo cuando quieras.</p>" } },
+        "f2": { "type": "faq_item", "settings": { "question": "¿Necesito experiencia previa?", "answer": "<p>No. Está pensado para empezar desde cero.</p>" } },
+        "f3": { "type": "faq_item", "settings": { "question": "¿Funciona si tengo poco tiempo libre?", "answer": "<p>Sí. El plan de 30 días está pensado para eso.</p>" } },
         "f4": { "type": "faq_item", "settings": { "question": "¿Puedo pagar en cuotas?", "answer": "<p>Sí, con tarjeta de crédito en el checkout.</p>" } }
       },
       "block_order": ["f1", "f2", "f3", "f4"]
@@ -124,10 +135,10 @@
     "cta": {
       "type": "dce-cta-v1",
       "settings": {
-        "heading": "¿Seguís esperando el momento perfecto?",
-        "subheading": "El momento perfecto no existe. Lo que existe es la decisión de empezar.",
+        "heading": "Empezá hoy.",
+        "subheading": "",
         "cta_style": "buy_now",
-        "cta_label": "Quiero empezar"
+        "cta_label": "Comprar ahora"
       }
     }
   },

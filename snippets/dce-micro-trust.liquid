@@ -7,13 +7,15 @@
   @param {string} [secure_text]
   @param {string} [delivery_text]
   @param {string} [access_text]
+  @param {string} [simple_text]
 
   @example
   {% render 'dce-micro-trust' %}
 {%- enddoc -%}
 
 <p class="dce-micro-trust">
-  <span>🔒 {{ secure_text | default: 'Pago 100% seguro' }}</span>
-  <span>⚡ {{ delivery_text | default: 'Descarga inmediata' }}</span>
-  <span>📄 {{ access_text | default: 'Acceso de por vida' }}</span>
+  <span>⚡ {{ delivery_text | default: 'Acceso inmediato' }}</span>
+  <span>🔒 {{ secure_text | default: 'Pago único' }}</span>
+  <span>📄 {{ access_text | default: 'PDF descargable' }}</span>
+  <span>📖 {{ simple_text | default: 'Lectura simple' }}</span>
 </p>
